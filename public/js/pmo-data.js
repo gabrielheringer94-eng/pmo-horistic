@@ -16,16 +16,21 @@ window.pmoData = (function () {
   async function loadProject(projectId) {
     const sb = window.sb;
 
-    const safe = (q) => q.then(r => r.error ? { data: [], error: r.error } : r);
+    // safe: nunca rejeita; sempre devolve {data, error}.
+    const safe = (q) => q.then(
+      r => (r && r.error) ? { data: r.data ?? null, error: r.error } : r,
+      err => ({ data: null, error: err })
+    );
 
     const [
       projectRes, phasesRes, delivsRes, subsRes,
       closersRes, actionsRes, financeRes, notesRes, stateRes
     ] = await Promise.all([
-      sb.from('projects').select('*').eq('id', projectId).single(),
-      sb.from('phases').select('*').eq('project_id', projectId).order('sort'),
-      sb.from('deliverables').select('*').eq('project_id', projectId).order('sort'),
-      sb.from('subtasks').select('*, deliverable:deliverable_id(project_id)').order('sort'),
+      safe(sb.from('projects').select('*').eq('id', projectId).single()),
+      safe(sb.from('phases').select('*').eq('project_id', projectId).order('sort')),
+      safe(sb.from('deliverables').select('*').eq('project_id', projectId).order('sort')),
+      // subtasks: filtra via inner-join no project_id do deliverable
+      safe(sb.from('subtasks').select('*, deliverables!inner(project_id)').eq('deliverables.project_id', projectId).order('sort')),
       safe(sb.from('closers').select('*').eq('project_id', projectId).order('sort')),
       safe(sb.from('actions').select('*').eq('project_id', projectId).order('sort')),
       safe(sb.from('finance').select('*').eq('project_id', projectId).maybeSingle()),
@@ -33,7 +38,22 @@ window.pmoData = (function () {
       safe(sb.from('project_state').select('*').eq('project_id', projectId).maybeSingle()),
     ]);
 
-    if (projectRes.error) throw projectRes.error;
+    // Loga cada resultado pra ficar fácil debugar quando algo vier vazio
+    console.log('[pmo-data] load', {
+      project:       projectRes.error  ? `ERR ${projectRes.error.message}`  : !!projectRes.data,
+      phases:        phasesRes.error   ? `ERR ${phasesRes.error.message}`   : (phasesRes.data?.length ?? 0),
+      deliverables:  delivsRes.error   ? `ERR ${delivsRes.error.message}`   : (delivsRes.data?.length ?? 0),
+      subtasks:      subsRes.error     ? `ERR ${subsRes.error.message}`     : (subsRes.data?.length ?? 0),
+      closers:       closersRes.error  ? `ERR ${closersRes.error.message}`  : (closersRes.data?.length ?? 0),
+      actions:       actionsRes.error  ? `ERR ${actionsRes.error.message}`  : (actionsRes.data?.length ?? 0),
+      finance:       financeRes.error  ? `ERR ${financeRes.error.message}`  : !!financeRes.data,
+      notes:         notesRes.error    ? `ERR ${notesRes.error.message}`    : !!notesRes.data,
+      project_state: stateRes.error    ? `ERR ${stateRes.error.message}`    : !!stateRes.data,
+    });
+
+    if (!projectRes.data) {
+      throw new Error('Projeto não encontrado ou sem acesso: ' + (projectRes.error?.message || 'unknown'));
+    }
     const project = projectRes.data;
 
     // Junta subtasks dentro de cada deliverable.

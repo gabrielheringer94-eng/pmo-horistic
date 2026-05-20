@@ -462,56 +462,71 @@
 <script src="./js/pmo-data.js"></script>
 <script src="./js/pmo-render.js"></script>
 <script>
+function showFatal(msg) {
+  const bar = document.createElement('div');
+  bar.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#ff4d6d;color:white;padding:12px 16px;font-family:JetBrains Mono,monospace;font-size:12px;z-index:9999;white-space:pre-wrap;';
+  bar.textContent = '⚠ ' + msg;
+  document.body.appendChild(bar);
+  console.error('[pmo]', msg);
+}
+
 (async () => {
-  const sess = await window.pmoAuth.requireSession();
-  if (!sess) return;
-
-  document.getElementById('navLogout').addEventListener('click', (e) => {
-    e.preventDefault(); window.pmoAuth.signOut();
-  });
-
-  const url = new URL(location.href);
-  let projectId = url.searchParams.get('project');
-
-  // Sem ?project — pega o único acessível ou manda pro seletor.
-  if (!projectId) {
-    const projs = await window.pmoAuth.loadAccessibleProjects();
-    if (!projs.length) {
-      document.body.innerHTML = '<div style="padding:40px;color:#f3ebe6;font-family:Inter;">Você ainda não tem acesso a nenhum projeto. Peça ao admin para adicionar você.</div>';
-      return;
-    }
-    if (projs.length === 1) {
-      location.replace('./pmo.html?project=' + projs[0].id);
-      return;
-    }
-    location.replace('./selector.html');
-    return;
-  }
-
-  const state = await window.pmoData.loadProject(projectId);
-  state.role = await window.pmoAuth.roleForProject(state.project);
-  if (!state.role) {
-    document.body.innerHTML = '<div style="padding:40px;color:#f3ebe6;font-family:Inter;">Sem acesso a este projeto.</div>';
-    return;
-  }
-
-  // Preenche cliente no header.
   try {
-    const { data: org } = await window.sb.from('organizations').select('name').eq('id', state.project.org_id).single();
-    if (org) document.getElementById('metaClient').childNodes[0].nodeValue = org.name;
-  } catch (e) {}
+    const sess = await window.pmoAuth.requireSession();
+    if (!sess) return;
 
-  document.getElementById('cronCount').textContent = `${state.project.total_days} dias úteis`;
-  document.getElementById('delivCount').textContent = `${state.deliverables.length} / ciclo`;
-  document.getElementById('closerCount').textContent = `${state.closers.length} em coaching`;
+    document.getElementById('navLogout').addEventListener('click', (e) => {
+      e.preventDefault(); window.pmoAuth.signOut();
+    });
 
-  window.pmoState = state;
-  window.pmoRender.setState(state);
-  window.pmoRender.wireGlobalInputs();
+    const url = new URL(location.href);
+    let projectId = url.searchParams.get('project');
 
-  window.pmoData.subscribeProject(projectId, (table, payload) => {
-    window.pmoRender.applyRealtime(table, payload);
-  });
+    if (!projectId) {
+      const projs = await window.pmoAuth.loadAccessibleProjects();
+      if (!projs.length) {
+        document.body.innerHTML = '<div style="padding:40px;color:#f3ebe6;font-family:Inter;">Você ainda não tem acesso a nenhum projeto. Peça ao admin.</div>';
+        return;
+      }
+      if (projs.length === 1) { location.replace('./pmo.html?project=' + projs[0].id); return; }
+      location.replace('./selector.html'); return;
+    }
+
+    const state = await window.pmoData.loadProject(projectId);
+    state.role = await window.pmoAuth.roleForProject(state.project);
+    console.log('[pmo] role:', state.role, '· user:', sess.user?.email);
+
+    if (!state.role) {
+      showFatal('Sem membership para este projeto. Logue com a conta certa ou peça pro admin te vincular.');
+      return;
+    }
+
+    try {
+      const { data: org } = await window.sb.from('organizations').select('name').eq('id', state.project.org_id).single();
+      if (org) document.getElementById('metaClient').childNodes[0].nodeValue = org.name;
+    } catch (e) {}
+
+    document.getElementById('cronCount').textContent  = `${state.project.total_days} dias úteis`;
+    document.getElementById('delivCount').textContent = `${state.deliverables.length} / ciclo`;
+    document.getElementById('closerCount').textContent = `${state.closers.length} em coaching`;
+
+    window.pmoState = state;
+    window.pmoRender.setState(state);
+    window.pmoRender.wireGlobalInputs();
+
+    window.pmoData.subscribeProject(projectId, (table, payload) => {
+      try { window.pmoRender.applyRealtime(table, payload); } catch (e) { console.warn('[pmo] realtime err', e); }
+    });
+
+    // Diagnóstico em tela quando admin vê dados vazios — caso típico de bug.
+    if (state.role === 'admin' && (state.deliverables.length === 0 || state.phases.length === 0)) {
+      showFatal('Admin sem dados visíveis. deliverables=' + state.deliverables.length +
+                ' phases=' + state.phases.length + ' closers=' + state.closers.length +
+                '. Veja Console (Cmd+Opt+J) pro detalhe das queries.');
+    }
+  } catch (e) {
+    showFatal('Erro no init: ' + (e?.message || e));
+  }
 })();
 </script>
 </body>
