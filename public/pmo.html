@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PMO · Painel de execução</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #0d0810;
+    --bg-1: #120a14;
+    --bg-2: #16101a;
+    --bg-card: rgba(243, 235, 230, 0.035);
+    --bg-card-2: rgba(243, 235, 230, 0.055);
+    --bg-card-hover: rgba(243, 235, 230, 0.08);
+    --border: rgba(243, 235, 230, 0.09);
+    --border-strong: rgba(243, 235, 230, 0.18);
+    --ink-0: #f3ebe6;
+    --ink-1: rgba(243, 235, 230, 0.78);
+    --ink-2: rgba(243, 235, 230, 0.55);
+    --ink-3: rgba(243, 235, 230, 0.32);
+    --pink: #ff2d8d;
+    --pink-soft: #ff5fa8;
+    --purple-deep: #8a1f6e;
+    --purple-mid: #c43689;
+    --accent-soft: rgba(255, 45, 141, 0.14);
+    --accent-glow: rgba(255, 45, 141, 0.35);
+    --success: #4af1bc;
+    --success-soft: rgba(74, 241, 188, 0.14);
+    --warning: #ffb347;
+    --warning-soft: rgba(255, 179, 71, 0.14);
+    --danger: #ff4d6d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--bg-0); }
+  body {
+    font-family: 'Inter', 'Inter Tight', sans-serif;
+    color: var(--ink-0);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(120% 70% at 100% -10%, rgba(255,45,141,0.16) 0%, rgba(196,54,137,0.06) 22%, rgba(13,8,16,0) 55%),
+      radial-gradient(80% 60% at -10% 110%, rgba(138,31,110,0.18) 0%, rgba(13,8,16,0) 55%),
+      linear-gradient(180deg, #0d0810 0%, #120a14 100%);
+    background-attachment: fixed;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    opacity: 0.035; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .container { max-width: 1400px; margin: 0 auto; padding: 40px 36px 64px; position: relative; z-index: 2; }
+
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3);
+    padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 36px; gap: 16px;
+  }
+  .topbar .ticks { display: flex; gap: 4px; }
+  .topbar .tick { width: 16px; height: 2px; background: currentColor; opacity: 0.35; border-radius: 1px; }
+  .topbar .tick.active { opacity: 1; background: linear-gradient(90deg, var(--pink), var(--purple-mid)); }
+  .topbar .nav { display: flex; gap: 14px; align-items: center; }
+  .topbar .nav a { color: var(--ink-2); text-decoration: none; cursor: pointer; }
+  .topbar .nav a:hover, .topbar .nav a.active { color: var(--pink); }
+
+  .header { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; margin-bottom: 56px; align-items: end; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; font-weight: 600; color: var(--pink); margin-bottom: 24px;
+  }
+  .eyebrow::before { content: ""; display: block; width: 28px; height: 1.5px; background: var(--pink); }
+  h1.display {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(40px, 5.6vw, 76px); font-weight: 700;
+    letter-spacing: -0.028em; line-height: 1.0; margin-bottom: 18px;
+  }
+  h1.display .accent {
+    background: linear-gradient(90deg, var(--pink) 0%, var(--purple-mid) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .subtitle { color: var(--ink-2); font-size: 15px; max-width: 620px; line-height: 1.55; }
+  .meta-block { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; }
+  .meta-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px;
+  }
+  .meta-value {
+    font-family: 'Inter Tight', sans-serif; font-size: 14px; font-weight: 500;
+    color: var(--ink-0); letter-spacing: -0.01em;
+  }
+  .meta-value.lg { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .meta-value .sub { display: block; font-size: 11px; color: var(--ink-2); font-weight: 400; margin-top: 2px; font-family: 'Inter', sans-serif; }
+
+  .actions-bar { display: flex; gap: 10px; margin-bottom: 36px; flex-wrap: wrap; }
+  .btn {
+    background: var(--bg-card); border: 1px solid var(--border-strong);
+    color: var(--ink-1); padding: 11px 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+    cursor: pointer; border-radius: 6px; transition: all 0.18s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn:hover { background: var(--bg-card-hover); border-color: var(--pink); color: var(--pink); }
+  .btn.primary { background: linear-gradient(180deg, var(--pink) 0%, #e51877 100%); color: white; border-color: var(--pink); }
+  .btn.primary:hover { color: white; box-shadow: 0 0 28px var(--accent-glow); filter: brightness(1.06); }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 56px; }
+  .kpi { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 22px 20px; position: relative; overflow: hidden; transition: all 0.25s; }
+  .kpi::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1.5px; background: linear-gradient(90deg, var(--pink), transparent); opacity: 0.5; }
+  .kpi:hover { background: var(--bg-card-2); border-color: var(--border-strong); }
+  .kpi-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+  .kpi-value { font-family: 'Inter Tight', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 10px; }
+  .kpi-trend { font-size: 12px; color: var(--ink-2); display: flex; align-items: center; gap: 8px; line-height: 1.4; }
+  .pill { background: var(--accent-soft); color: var(--pink); padding: 3px 9px; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+  .pill.success { background: var(--success-soft); color: var(--success); }
+  .pill.warning { background: var(--warning-soft); color: var(--warning); }
+
+  .section { margin-bottom: 56px; }
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-title { font-family: 'Inter Tight', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+  .section-title .count { color: var(--ink-3); font-weight: 500; margin-left: 8px; }
+  .section-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3); letter-spacing: 0.16em; text-transform: uppercase; }
+
+  .gantt-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 24px 28px; overflow-x: auto; }
+  .gantt-overall { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .gantt-overall-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3); letter-spacing: 0.16em; text-transform: uppercase; }
+  .gantt-overall-val { font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+  .overall-bar { height: 6px; background: rgba(243,235,230,0.06); border-radius: 100px; position: relative; margin: 6px 0 28px; overflow: visible; }
+  .overall-progress { position: absolute; inset: 0; width: 0%; background: linear-gradient(90deg, var(--pink), var(--purple-mid)); border-radius: 100px; transition: width 0.5s ease; box-shadow: 0 0 16px var(--accent-glow); }
+  .overall-today { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink-0); border-radius: 2px; box-shadow: 0 0 0 3px rgba(13,8,16,0.6); }
+  .overall-today::after { content: 'HOJE'; position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.18em; color: var(--ink-0); font-weight: 600; }
+
+  .gantt { display: grid; grid-template-columns: 200px 1fr; gap: 0; min-width: 900px; }
+  .gantt-weeks { grid-column: 2; display: grid; grid-template-columns: repeat(12, 1fr); border-bottom: 1px solid var(--border); margin-bottom: 6px; }
+  .gantt-week { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: var(--ink-3); padding: 0 0 8px; border-right: 1px dashed rgba(243,235,230,0.06); text-transform: uppercase; }
+  .gantt-week:last-child { border-right: none; }
+  .gantt-week.current { color: var(--pink); font-weight: 600; }
+  .gantt-row-label { padding: 14px 16px 14px 0; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid rgba(243,235,230,0.04); }
+  .gantt-row-label .num { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em; color: var(--ink-3); margin-bottom: 4px; }
+  .gantt-row-label .name { font-family: 'Inter Tight', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+  .gantt-row-track { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); padding: 14px 0; border-bottom: 1px solid rgba(243,235,230,0.04); align-items: center; }
+  .gantt-row-track::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, rgba(243,235,230,0.06) 0, rgba(243,235,230,0.06) 1px, transparent 1px, transparent calc(100%/12)); pointer-events: none; }
+  .gantt-bar { height: 18px; border-radius: 4px; background: linear-gradient(90deg, var(--purple-deep), var(--pink)); position: relative; cursor: pointer; transition: transform 0.15s; overflow: hidden; }
+  .gantt-bar:hover { transform: translateY(-1px); filter: brightness(1.15); }
+  .gantt-bar.diag { background: linear-gradient(90deg, #b88200, var(--warning)); }
+  .gantt-bar.proc { background: linear-gradient(90deg, #5a2a9c, #b094ff); }
+  .gantt-bar.exec { background: linear-gradient(90deg, #1c8b65, var(--success)); }
+  .gantt-bar-fill { position: absolute; inset: 0; width: 0%; background: rgba(255,255,255,0.22); border-right: 1.5px solid rgba(255,255,255,0.55); }
+  .gantt-bar-pct { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; color: white; letter-spacing: 0.04em; pointer-events: none; text-shadow: 0 0 4px rgba(0,0,0,0.4); }
+  .gantt-today-line { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--ink-0); opacity: 0.85; pointer-events: none; z-index: 2; }
+
+  .phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
+  .phase { background: rgba(0,0,0,0.22); border: 1px solid var(--border); border-radius: 10px; padding: 18px; transition: all 0.2s; cursor: pointer; }
+  .phase.active { border-color: var(--pink); background: linear-gradient(135deg, rgba(255,45,141,0.10), rgba(0,0,0,0.3)); box-shadow: 0 0 24px rgba(255,45,141,0.08); }
+  .phase.done { opacity: 0.55; }
+  .phase:hover { border-color: var(--border-strong); }
+  .phase.active:hover { border-color: var(--pink); }
+  .phase-num { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em; color: var(--ink-3); margin-bottom: 6px; text-transform: uppercase; }
+  .phase.active .phase-num { color: var(--pink); }
+  .phase-name { font-family: 'Inter Tight', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 4px; }
+  .phase-range { font-size: 11.5px; color: var(--ink-2); margin-bottom: 10px; }
+  .phase-status { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; border-radius: 100px; display: inline-block; font-weight: 600; }
+  .phase-status.todo { background: rgba(243,235,230,0.06); color: var(--ink-2); }
+  .phase-status.active { background: var(--accent-soft); color: var(--pink); }
+  .phase-status.done { background: var(--success-soft); color: var(--success); }
+
+  .deliverables { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .deliverable { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; transition: all 0.22s; }
+  .deliverable:hover { background: var(--bg-card-2); border-color: var(--border-strong); transform: translateY(-2px); }
+  .deliverable-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .deliverable-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+  .tag-diag { background: var(--warning-soft); color: var(--warning); }
+  .tag-proc { background: rgba(176,148,255,0.16); color: #c4abff; }
+  .tag-exec { background: var(--success-soft); color: var(--success); }
+  .deliverable-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.04em; }
+  .deliverable-title { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.25; letter-spacing: -0.015em; margin-bottom: 8px; }
+  .deliverable-desc { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; margin-bottom: 16px; min-height: 56px; }
+  .progress-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .progress-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+  .progress-val { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink-0); }
+  .progress-bar { height: 5px; background: rgba(243,235,230,0.05); border-radius: 100px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--pink), var(--pink-soft)); border-radius: 100px; transition: width 0.4s ease; }
+  .progress-fill.done { background: linear-gradient(90deg, var(--success), #82ffd4); }
+
+  .sub-list { list-style: none; padding: 0; margin: 16px 0 4px; border-top: 1px solid var(--border); }
+  .sub { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0 9px 2px; border-bottom: 1px solid rgba(243,235,230,0.04); cursor: pointer; transition: background 0.15s; }
+  .sub:last-child { border-bottom: none; }
+  .sub:hover { background: rgba(243,235,230,0.025); }
+  .sub-check { width: 15px; height: 15px; flex-shrink: 0; border: 1.5px solid var(--border-strong); border-radius: 4px; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.18s; position: relative; }
+  .sub.done .sub-check { background: var(--pink); border-color: var(--pink); }
+  .sub.done .sub-check::after { content: ''; width: 7px; height: 3.5px; border-left: 1.8px solid white; border-bottom: 1.8px solid white; transform: rotate(-45deg) translate(0, -1px); }
+  .sub-text { flex: 1; font-size: 12.5px; line-height: 1.5; color: var(--ink-1); outline: none; cursor: text; transition: color 0.18s; }
+  .sub.done .sub-text { color: var(--ink-3); text-decoration: line-through; }
+  .sub-del { color: var(--ink-3); cursor: pointer; font-size: 14px; padding: 0 4px; opacity: 0; transition: all 0.15s; }
+  .sub:hover .sub-del { opacity: 1; }
+  .sub-del:hover { color: var(--danger); }
+  .add-sub { margin-top: 10px; width: 100%; background: transparent; border: 1px dashed rgba(243,235,230,0.12); color: var(--ink-3); padding: 8px; border-radius: 6px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; transition: all 0.18s; }
+  .add-sub:hover { border-color: var(--pink); color: var(--pink); }
+
+  .roster { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .closer { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; transition: all 0.2s; }
+  .closer:hover { background: var(--bg-card-2); border-color: var(--border-strong); }
+  .closer-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .closer-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--purple-deep), var(--pink)); display: flex; align-items: center; justify-content: center; font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 14px; color: white; letter-spacing: -0.01em; flex-shrink: 0; }
+  .closer-name { font-family: 'Inter Tight', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; outline: none; line-height: 1.2; }
+  .closer-role { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: var(--ink-3); text-transform: uppercase; margin-top: 2px; outline: none; }
+  .closer-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .closer-metric { background: rgba(0,0,0,0.2); border-radius: 6px; padding: 8px 10px; }
+  .closer-metric-label { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+  .closer-metric-val { font-family: 'Inter Tight', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.02em; outline: none; }
+  .closer-sessions { display: flex; gap: 4px; margin-bottom: 10px; }
+  .session-dot { flex: 1; height: 6px; border-radius: 2px; background: rgba(243,235,230,0.08); cursor: pointer; transition: all 0.15s; }
+  .session-dot.done { background: linear-gradient(90deg, var(--pink), var(--pink-soft)); }
+  .session-dot:hover { transform: scaleY(1.4); }
+  .closer-sessions-label { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+
+  .finance { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+  .finance-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 26px; }
+  .finance-card.highlight { background: radial-gradient(120% 100% at 100% 0%, rgba(255,45,141,0.12), transparent 60%), var(--bg-card); border-color: rgba(255,45,141,0.25); }
+  .finance-card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; }
+  .finance-card-title { font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.015em; }
+  .finance-tag { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); padding: 3px 8px; background: rgba(243,235,230,0.05); border-radius: 4px; font-weight: 600; }
+  .finance-big { font-family: 'Inter Tight', sans-serif; font-size: 44px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+  .finance-big .cur { font-size: 22px; color: var(--ink-2); font-weight: 500; margin-right: 4px; letter-spacing: 0; }
+  .finance-sub { color: var(--ink-2); font-size: 13px; margin-bottom: 22px; }
+  .finance-line { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-top: 1px solid var(--border); font-size: 13px; }
+  .finance-line-label { color: var(--ink-2); }
+  .finance-line-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--ink-0); outline: none; }
+  .var-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px; padding: 8px 0; border-top: 1px solid var(--border); }
+  .var-row:first-of-type { border-top: none; }
+  .var-row label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+  .var-row input[type="number"] { background: rgba(0,0,0,0.25); border: 1px solid var(--border); color: var(--ink-0); border-radius: 6px; padding: 8px 12px; width: 140px; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; outline: none; text-align: right; transition: border-color 0.2s; }
+  .var-row input[type="number"]:focus { border-color: var(--pink); }
+  .finance-total { margin-top: 14px; padding: 16px 18px; background: linear-gradient(135deg, rgba(255,45,141,0.10), rgba(138,31,110,0.06)); border-radius: 10px; border: 1px solid rgba(255,45,141,0.22); display: flex; justify-content: space-between; align-items: baseline; }
+  .finance-total-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pink); font-weight: 600; }
+  .finance-total-val { font-family: 'Inter Tight', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+
+  .actions-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
+  .panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 26px; }
+  .panel-title { font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 4px; }
+  .panel-sub { font-size: 12px; color: var(--ink-3); margin-bottom: 18px; }
+  .action-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .action-item:last-child { border-bottom: none; }
+  .checkbox { width: 18px; height: 18px; border: 1.5px solid var(--border-strong); border-radius: 5px; cursor: pointer; margin-top: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+  .checkbox.checked { background: var(--pink); border-color: var(--pink); }
+  .checkbox.checked::after { content: '✓'; color: white; font-size: 12px; font-weight: 700; }
+  .action-text { flex: 1; font-size: 13.5px; color: var(--ink-1); line-height: 1.5; cursor: text; outline: none; }
+  .action-item.done .action-text { color: var(--ink-3); text-decoration: line-through; }
+  .action-meta { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--ink-2); letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; background: rgba(243,235,230,0.05); cursor: text; outline: none; white-space: nowrap; font-weight: 600; flex-shrink: 0; }
+  .action-delete { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; color: var(--ink-3); cursor: pointer; border-radius: 4px; font-size: 16px; line-height: 1; transition: all 0.15s; opacity: 0; flex-shrink: 0; }
+  .action-item:hover .action-delete { opacity: 1; }
+  .action-delete:hover { color: var(--danger); background: rgba(255,77,109,0.1); }
+  .add-action { margin-top: 18px; width: 100%; background: transparent; border: 1px dashed var(--border-strong); color: var(--ink-2); padding: 14px; border-radius: 8px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; transition: all 0.2s; }
+  .add-action:hover { border-color: var(--pink); color: var(--pink); }
+  .panel textarea { width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 8px; color: var(--ink-1); padding: 14px; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6; resize: vertical; min-height: 220px; outline: none; transition: border-color 0.2s; }
+  .panel textarea:focus { border-color: var(--pink); }
+
+  .footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+  .saved-indicator { color: var(--success); opacity: 0; transition: opacity 0.3s; }
+  .saved-indicator.visible { opacity: 1; }
+
+  /* Esconde tudo que é admin-only pro client. RLS já bloqueia os dados; isso esconde a UI. */
+  body[data-role="client"] .admin-only { display: none !important; }
+
+  @media (max-width: 1100px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .deliverables { grid-template-columns: repeat(2, 1fr); }
+    .phases { grid-template-columns: repeat(2, 1fr); }
+    .roster { grid-template-columns: repeat(3, 1fr); }
+    .header { grid-template-columns: 1fr; gap: 32px; }
+    .actions-grid { grid-template-columns: 1fr; }
+    .finance { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .container { padding: 24px 16px 48px; }
+    .kpi-grid, .deliverables, .phases, .roster { grid-template-columns: 1fr; }
+  }
+  @media print {
+    body { background: white; color: black; }
+    .actions-bar, .add-action, .action-delete, .add-sub, .topbar .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="topbar">
+    <div><span id="topbarOrg">PMO</span></div>
+    <div class="ticks"></div>
+    <div class="nav">
+      <a class="active">Painel</a>
+      <a href="./results.html" id="navResults">Resultados</a>
+      <a href="./admin.html" class="admin-only" id="navAdmin">Admin</a>
+      <a id="navLogout">Sair</a>
+      <span>v1.2 · <span id="todayStr"></span></span>
+    </div>
+  </div>
+
+  <header class="header">
+    <div>
+      <div class="eyebrow">PMO · Consultoria comercial</div>
+      <h1 class="display">Sistema comercial<br><span class="accent">em construção.</span></h1>
+      <p class="subtitle">Painel vivo do ciclo: fases, entregáveis, closers em coaching, financeiro e próximas ações. Tudo editável — clique para alterar, marque subtarefas para atualizar progresso.</p>
+    </div>
+    <div class="meta-block">
+      <div>
+        <div class="meta-label">Consultor</div>
+        <div class="meta-value">Gabriel Heringer<span class="sub">Sales Consulting</span></div>
+      </div>
+      <div>
+        <div class="meta-label">Cliente</div>
+        <div class="meta-value" id="metaClient">—<span class="sub" id="metaClientSub">Wealth Management</span></div>
+      </div>
+      <div>
+        <div class="meta-label">Ciclo</div>
+        <div class="meta-value lg" id="cycleDay">Dia 0 / 60<span class="sub" id="cycleDates"></span></div>
+      </div>
+      <div>
+        <div class="meta-label">Fase atual</div>
+        <div class="meta-value lg" id="activePhaseName">—<span class="sub" id="activePhaseRange"></span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="actions-bar admin-only">
+    <button class="btn primary" onclick="pmoRender.copyDigest()">↗ Copiar digest executivo</button>
+    <button class="btn" onclick="window.print()">⎘ Imprimir / PDF</button>
+  </div>
+
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Cronograma <span class="count" id="cronCount">60 dias úteis</span></h2>
+      <div class="section-sub">Gantt · 12 semanas · 4 fases</div>
+    </div>
+    <div class="gantt-wrap">
+      <div class="gantt-overall">
+        <div class="gantt-overall-label">Progresso geral do ciclo</div>
+        <div class="gantt-overall-val" id="overallPct">0%</div>
+      </div>
+      <div class="overall-bar">
+        <div class="overall-progress" id="overallBar"></div>
+        <div class="overall-today" id="overallToday" style="left: 0%;"></div>
+      </div>
+      <div class="gantt">
+        <div></div>
+        <div class="gantt-weeks" id="ganttWeeks"></div>
+      </div>
+      <div class="gantt" id="ganttGrid"></div>
+      <div class="phases" id="phasesContainer"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Entregáveis <span class="count" id="delivCount">12 / ciclo</span></h2>
+      <div class="section-sub">Marque as subtarefas para atualizar progresso</div>
+    </div>
+    <div class="deliverables" id="deliverablesGrid"></div>
+  </section>
+
+  <section class="section admin-only">
+    <div class="section-head">
+      <h2 class="section-title">Time de closers <span class="count" id="closerCount">em coaching</span></h2>
+      <div class="section-sub">Clique nos pontos para marcar sessões realizadas</div>
+    </div>
+    <div class="roster" id="rosterContainer"></div>
+  </section>
+
+  <section class="section admin-only">
+    <div class="section-head">
+      <h2 class="section-title">Financeiro do ciclo</h2>
+      <div class="section-sub">Fixo + variável s/ vendas geradas</div>
+    </div>
+    <div class="finance">
+      <div class="finance-card highlight">
+        <div class="finance-card-head">
+          <div class="finance-card-title">Honorário fixo</div>
+          <div class="finance-tag">Mensal · 2 parcelas</div>
+        </div>
+        <div class="finance-big" id="financeBig"><span class="cur">R$</span>10.000<span class="cur" style="font-size:18px;margin-left:6px;">,00</span></div>
+        <div class="finance-sub">Recebimento: 1ª parcela no kickoff · 2ª parcela no início do D+30</div>
+        <div class="finance-line">
+          <div class="finance-line-label">1ª parcela · kickoff</div>
+          <div class="finance-line-val" contenteditable="true" data-key="fixo1">R$ 5.000</div>
+        </div>
+        <div class="finance-line">
+          <div class="finance-line-label">2ª parcela · D+30</div>
+          <div class="finance-line-val" contenteditable="true" data-key="fixo2">R$ 5.000</div>
+        </div>
+        <div class="finance-line">
+          <div class="finance-line-label">Status do faturamento</div>
+          <div class="finance-line-val" contenteditable="true" data-key="fixoStatus" style="color:var(--warning);">Aguardando NF #1</div>
+        </div>
+      </div>
+
+      <div class="finance-card">
+        <div class="finance-card-head">
+          <div class="finance-card-title">Variável (% s/ vendas)</div>
+          <div class="finance-tag">Projeção editável</div>
+        </div>
+        <div class="finance-sub">Ajuste os números abaixo para projetar o variável do ciclo.</div>
+        <div class="var-row">
+          <label for="varVendas">Vendas geradas no ciclo</label>
+          <input id="varVendas" type="number" min="0" step="10000" value="0">
+        </div>
+        <div class="var-row">
+          <label for="varPct">% variável</label>
+          <input id="varPct" type="number" min="0" max="10" step="0.1" value="1">
+        </div>
+        <div class="finance-total">
+          <div class="finance-total-label">Variável projetado</div>
+          <div class="finance-total-val" id="varTotal">R$ 0</div>
+        </div>
+        <div class="finance-total" style="background: rgba(74,241,188,0.08); border-color: rgba(74,241,188,0.22);">
+          <div class="finance-total-label" style="color: var(--success);">Total do ciclo</div>
+          <div class="finance-total-val" id="grandTotal">R$ 10.000</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section admin-only">
+    <div class="section-head">
+      <h2 class="section-title">Próximas ações &amp; notas</h2>
+      <div class="section-sub">Editável · clique para alterar</div>
+    </div>
+    <div class="actions-grid">
+      <div class="panel">
+        <div class="panel-title">Ações desta semana</div>
+        <div class="panel-sub">Clique no checkbox para concluir. Clique no texto para editar.</div>
+        <div id="actionsContainer"></div>
+        <button class="add-action" onclick="pmoRender.addAction()">+ Adicionar ação</button>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Riscos &amp; observações</div>
+        <div class="panel-sub">Espaço livre para bloqueios e anotações</div>
+        <textarea id="notesArea" placeholder="Ex: liderança confirmou kickoff. Aguardando lista de closers. Bloqueio: acesso ao CRM pendente..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>PMO · v1.2</div>
+    <div class="saved-indicator" id="savedIndicator">✓ Salvo na nuvem</div>
+    <div>Gabriel Heringer · Sales Consulting</div>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./js/config.js"></script>
+<script src="./js/supabase-client.js"></script>
+<script src="./js/pmo-auth.js"></script>
+<script src="./js/pmo-data.js"></script>
+<script src="./js/pmo-render.js"></script>
+<script>
+(async () => {
+  const sess = await window.pmoAuth.requireSession();
+  if (!sess) return;
+
+  document.getElementById('navLogout').addEventListener('click', (e) => {
+    e.preventDefault(); window.pmoAuth.signOut();
+  });
+
+  const url = new URL(location.href);
+  let projectId = url.searchParams.get('project');
+
+  // Sem ?project — pega o único acessível ou manda pro seletor.
+  if (!projectId) {
+    const projs = await window.pmoAuth.loadAccessibleProjects();
+    if (!projs.length) {
+      document.body.innerHTML = '<div style="padding:40px;color:#f3ebe6;font-family:Inter;">Você ainda não tem acesso a nenhum projeto. Peça ao admin para adicionar você.</div>';
+      return;
+    }
+    if (projs.length === 1) {
+      location.replace('./pmo.html?project=' + projs[0].id);
+      return;
+    }
+    location.replace('./selector.html');
+    return;
+  }
+
+  const state = await window.pmoData.loadProject(projectId);
+  state.role = await window.pmoAuth.roleForProject(state.project);
+  if (!state.role) {
+    document.body.innerHTML = '<div style="padding:40px;color:#f3ebe6;font-family:Inter;">Sem acesso a este projeto.</div>';
+    return;
+  }
+
+  // Preenche cliente no header.
+  try {
+    const { data: org } = await window.sb.from('organizations').select('name').eq('id', state.project.org_id).single();
+    if (org) document.getElementById('metaClient').childNodes[0].nodeValue = org.name;
+  } catch (e) {}
+
+  document.getElementById('cronCount').textContent = `${state.project.total_days} dias úteis`;
+  document.getElementById('delivCount').textContent = `${state.deliverables.length} / ciclo`;
+  document.getElementById('closerCount').textContent = `${state.closers.length} em coaching`;
+
+  window.pmoState = state;
+  window.pmoRender.setState(state);
+  window.pmoRender.wireGlobalInputs();
+
+  window.pmoData.subscribeProject(projectId, (table, payload) => {
+    window.pmoRender.applyRealtime(table, payload);
+  });
+})();
+</script>
+</body>
+</html>

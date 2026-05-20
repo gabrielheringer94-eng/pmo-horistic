@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados · Operação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #0d0810; --bg-card: rgba(243,235,230,0.045);
+    --border: rgba(243,235,230,0.10); --border-strong: rgba(243,235,230,0.22);
+    --ink-0: #f3ebe6; --ink-1: rgba(243,235,230,0.78); --ink-2: rgba(243,235,230,0.55); --ink-3: rgba(243,235,230,0.32);
+    --pink: #ff2d8d; --pink-soft: #ff5fa8; --purple-deep: #8a1f6e; --purple-mid: #c43689;
+    --success: #4af1bc; --warning: #ffb347; --danger: #ff4d6d;
+    --accent-soft: rgba(255,45,141,0.14); --success-soft: rgba(74,241,188,0.14); --warning-soft: rgba(255,179,71,0.14);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg-0); color: var(--ink-0); min-height: 100vh; padding: 40px 36px 64px;
+    font-family: 'Inter', sans-serif;
+    background-image:
+      radial-gradient(120% 70% at 100% -10%, rgba(255,45,141,0.16) 0%, rgba(196,54,137,0.06) 22%, rgba(13,8,16,0) 55%),
+      linear-gradient(180deg, #0d0810 0%, #120a14 100%);
+  }
+  .wrap { max-width: 1400px; margin: 0 auto; }
+
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
+  .topbar .nav { display: flex; gap: 14px; align-items: center; }
+  .topbar .nav a { color: var(--ink-2); text-decoration: none; cursor: pointer; }
+  .topbar .nav a:hover, .topbar .nav a.active { color: var(--pink); }
+
+  h1 { font-family: 'Inter Tight', sans-serif; font-size: 44px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+  h1 .accent { background: linear-gradient(90deg, var(--pink), var(--purple-mid)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--ink-2); font-size: 15px; margin-bottom: 36px; max-width: 720px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 48px; }
+  .kpi { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; position: relative; overflow: hidden; }
+  .kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1.5px; background: linear-gradient(90deg, var(--pink), transparent); opacity: 0.5; }
+  .kpi-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+  .kpi-value { font-family: 'Inter Tight', sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+  .kpi-trend { font-size: 12px; color: var(--ink-2); }
+
+  .section { margin-bottom: 48px; }
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-title { font-family: 'Inter Tight', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  .section-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3); letter-spacing: 0.16em; text-transform: uppercase; }
+
+  table { width: 100%; border-collapse: collapse; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; }
+  th { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; background: rgba(0,0,0,0.18); }
+  td.num, th.num { text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+  td input { background: transparent; border: 1px solid transparent; color: var(--ink-0); padding: 6px 8px; border-radius: 4px; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 13px; outline: none; text-align: right; }
+  td input:focus, td input:hover { border-color: var(--border-strong); background: rgba(0,0,0,0.2); }
+
+  .btn { padding: 10px 16px; background: linear-gradient(180deg, var(--pink), #e51877); color: white; border: none; border-radius: 6px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; }
+  .btn.ghost { background: transparent; color: var(--ink-1); border: 1px solid var(--border-strong); }
+  .btn.ghost:hover { color: var(--pink); border-color: var(--pink); }
+
+  .funnel { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
+  .funnel-step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .funnel-step .step-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+  .funnel-step .step-val { font-family: 'Inter Tight', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+  .funnel-step .step-pct { font-size: 11px; color: var(--ink-2); margin-top: 4px; }
+
+  .add-row { margin-top: 12px; }
+  .empty { color: var(--ink-2); font-size: 13px; padding: 20px; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div><span id="topbarOrg">Operação</span></div>
+      <div class="nav">
+        <a id="navPmo">Painel</a>
+        <a class="active">Resultados</a>
+        <a id="navLogout">Sair</a>
+        <span><span id="todayStr"></span></span>
+      </div>
+    </div>
+
+    <h1>Resultado da <span class="accent">operação.</span></h1>
+    <div class="sub">Funil semanal, receita projetada e performance individual dos closers. Mensuramos o que a consultoria está colhendo em produção — separado do PMO de execução.</div>
+
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Funil acumulado</h2>
+        <div class="section-sub">soma das semanas registradas</div>
+      </div>
+      <div class="funnel" id="funnel"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Operação por semana</h2>
+        <div class="section-sub" id="opEditHint">admin · editável</div>
+      </div>
+      <table id="opTable">
+        <thead>
+          <tr>
+            <th>Semana</th>
+            <th class="num">Sessões</th>
+            <th class="num">Conversas</th>
+            <th class="num">Propostas</th>
+            <th class="num">Fechadas</th>
+            <th class="num">Receita (R$)</th>
+            <th class="num">Conv. %</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="opBody"><tr><td colspan="8" class="empty">Carregando…</td></tr></tbody>
+      </table>
+      <div class="add-row admin-only">
+        <button class="btn ghost" onclick="addOpRow()">+ Nova semana</button>
+      </div>
+    </section>
+
+    <section class="section admin-only">
+      <div class="section-head">
+        <h2 class="section-title">Performance dos closers</h2>
+        <div class="section-sub">apenas admin</div>
+      </div>
+      <table id="cpTable">
+        <thead>
+          <tr>
+            <th>Closer</th>
+            <th>Semana</th>
+            <th class="num">Sessões</th>
+            <th class="num">Conv. %</th>
+            <th class="num">Deals</th>
+            <th class="num">Receita (R$)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="cpBody"><tr><td colspan="7" class="empty">Carregando…</td></tr></tbody>
+      </table>
+      <div class="add-row">
+        <button class="btn ghost" onclick="addCpRow()">+ Novo registro</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/supabase-client.js"></script>
+  <script src="./js/pmo-auth.js"></script>
+  <script>
+    const sb = window.sb;
+    let role = 'client', projectId = null, project = null, closers = [];
+
+    function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+    function moneyBR(v) { return Math.round(v || 0).toLocaleString('pt-BR'); }
+    function todayStr() { return new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric' }); }
+    function thisMonday() {
+      const d = new Date(); const day = d.getDay(); // 0=Sun
+      const diff = (day === 0 ? -6 : 1 - day);
+      d.setDate(d.getDate() + diff); d.setHours(0,0,0,0);
+      return d.toISOString().slice(0, 10);
+    }
+
+    async function loadAll() {
+      const [opRes, cpRes, closersRes] = await Promise.all([
+        sb.from('operation_metrics').select('*').eq('project_id', projectId).order('week_start'),
+        (role === 'admin')
+          ? sb.from('closer_performance').select('*, closer:closer_id(name, initials, project_id)').order('week_start')
+          : Promise.resolve({ data: [] }),
+        (role === 'admin')
+          ? sb.from('closers').select('id, name, initials, project_id').eq('project_id', projectId).order('sort')
+          : Promise.resolve({ data: [] }),
+      ]);
+      renderKPIs(opRes.data || []);
+      renderFunnel(opRes.data || []);
+      renderOpTable(opRes.data || []);
+      if (role === 'admin') {
+        closers = closersRes.data || [];
+        renderCpTable((cpRes.data || []).filter(r => r.closer?.project_id === projectId));
+      } else {
+        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+      }
+    }
+
+    function renderKPIs(rows) {
+      const tot = (k) => rows.reduce((s, r) => s + Number(r[k] || 0), 0);
+      const sessions = tot('sessions'), conv = tot('conversations'), prop = tot('proposals'), closed = tot('closed'), rev = tot('revenue');
+      const convPct = sessions ? Math.round((closed / sessions) * 100) : 0;
+      const ticket = closed ? Math.round(rev / closed) : 0;
+      const grid = document.getElementById('kpiGrid');
+      grid.innerHTML = [
+        { l: 'Receita acumulada', v: 'R$ ' + moneyBR(rev), t: `${rows.length} sem. registradas` },
+        { l: 'Deals fechados', v: String(closed), t: `${prop} propostas` },
+        { l: 'Ticket médio', v: ticket ? 'R$ ' + moneyBR(ticket) : '—', t: 'receita / deals' },
+        { l: 'Conv. sessões → deal', v: convPct + '%', t: `${sessions} sessões` },
+      ].map(k => `
+        <div class="kpi">
+          <div class="kpi-label">${k.l}</div>
+          <div class="kpi-value">${k.v}</div>
+          <div class="kpi-trend">${k.t}</div>
+        </div>`).join('');
+    }
+
+    function renderFunnel(rows) {
+      const tot = (k) => rows.reduce((s, r) => s + Number(r[k] || 0), 0);
+      const s = tot('sessions'), c = tot('conversations'), p = tot('proposals'), w = tot('closed');
+      const pct = (n, base) => base ? Math.round((n / base) * 100) + '%' : '—';
+      const steps = [
+        { l: 'Sessões',    v: s, p: '100%' },
+        { l: 'Conversas',  v: c, p: pct(c, s) },
+        { l: 'Propostas',  v: p, p: pct(p, c) },
+        { l: 'Fechadas',   v: w, p: pct(w, p) },
+      ];
+      document.getElementById('funnel').innerHTML = steps.map(st => `
+        <div class="funnel-step">
+          <div class="step-label">${st.l}</div>
+          <div class="step-val">${st.v}</div>
+          <div class="step-pct">${st.p}</div>
+        </div>`).join('');
+    }
+
+    const saveOp = debounce(async (id, patch) => {
+      const { error } = await sb.from('operation_metrics').update(patch).eq('id', id);
+      if (error) console.warn('saveOp', error.message);
+    }, 400);
+
+    function renderOpTable(rows) {
+      const body = document.getElementById('opBody');
+      if (!rows.length) {
+        body.innerHTML = `<tr><td colspan="8" class="empty">Sem registros. ${role === 'admin' ? 'Clique em "Nova semana".' : ''}</td></tr>`;
+        return;
+      }
+      const ro = role !== 'admin' ? 'readonly' : '';
+      body.innerHTML = rows.map(r => {
+        const conv = r.sessions ? Math.round((r.closed / r.sessions) * 100) : 0;
+        return `
+        <tr data-id="${r.id}">
+          <td><input type="date" value="${r.week_start}" ${ro} data-field="week_start"></td>
+          <td class="num"><input type="number" value="${r.sessions}" ${ro} data-field="sessions"></td>
+          <td class="num"><input type="number" value="${r.conversations}" ${ro} data-field="conversations"></td>
+          <td class="num"><input type="number" value="${r.proposals}" ${ro} data-field="proposals"></td>
+          <td class="num"><input type="number" value="${r.closed}" ${ro} data-field="closed"></td>
+          <td class="num"><input type="number" value="${r.revenue}" step="100" ${ro} data-field="revenue"></td>
+          <td class="num">${conv}%</td>
+          <td class="num">${role === 'admin' ? `<a onclick="delOp('${r.id}')" style="cursor:pointer; color:var(--danger);">×</a>` : ''}</td>
+        </tr>`;
+      }).join('');
+
+      if (role !== 'admin') return;
+      body.querySelectorAll('input[data-field]').forEach(inp => {
+        inp.addEventListener('input', () => {
+          const tr = inp.closest('tr');
+          const id = tr.dataset.id;
+          const field = inp.dataset.field;
+          let val = inp.value;
+          if (field !== 'week_start') val = Number(val) || 0;
+          saveOp(id, { [field]: val });
+          if (['sessions','conversations','proposals','closed','revenue'].includes(field)) {
+            // recalcula KPIs + funil em memória
+            const rows = Array.from(body.querySelectorAll('tr[data-id]')).map(tr => {
+              const o = { id: tr.dataset.id, week_start: tr.querySelector('[data-field=week_start]').value };
+              ['sessions','conversations','proposals','closed','revenue'].forEach(f => o[f] = Number(tr.querySelector(`[data-field=${f}]`).value) || 0);
+              return o;
+            });
+            renderKPIs(rows); renderFunnel(rows);
+          }
+        });
+      });
+    }
+
+    async function addOpRow() {
+      const { data, error } = await sb.from('operation_metrics')
+        .insert({ project_id: projectId, week_start: thisMonday(), sessions: 0, conversations: 0, proposals: 0, closed: 0, revenue: 0 })
+        .select().single();
+      if (error) { alert(error.message); return; }
+      loadAll();
+    }
+
+    async function delOp(id) {
+      if (!confirm('Remover esta semana?')) return;
+      await sb.from('operation_metrics').delete().eq('id', id);
+      loadAll();
+    }
+
+    const saveCp = debounce(async (id, patch) => {
+      const { error } = await sb.from('closer_performance').update(patch).eq('id', id);
+      if (error) console.warn('saveCp', error.message);
+    }, 400);
+
+    function renderCpTable(rows) {
+      const body = document.getElementById('cpBody');
+      if (!rows.length) {
+        body.innerHTML = `<tr><td colspan="7" class="empty">Sem registros. Clique em "Novo registro".</td></tr>`;
+        return;
+      }
+      body.innerHTML = rows.map(r => `
+        <tr data-id="${r.id}">
+          <td>${r.closer?.name || '—'}</td>
+          <td><input type="date" value="${r.week_start}" data-field="week_start"></td>
+          <td class="num"><input type="number" value="${r.sessions}" data-field="sessions"></td>
+          <td class="num"><input type="number" value="${r.conv}" step="0.1" data-field="conv"></td>
+          <td class="num"><input type="number" value="${r.deals}" data-field="deals"></td>
+          <td class="num"><input type="number" value="${r.revenue}" step="100" data-field="revenue"></td>
+          <td class="num"><a onclick="delCp('${r.id}')" style="cursor:pointer; color:var(--danger);">×</a></td>
+        </tr>`).join('');
+      body.querySelectorAll('input[data-field]').forEach(inp => {
+        inp.addEventListener('input', () => {
+          const id = inp.closest('tr').dataset.id;
+          const field = inp.dataset.field;
+          let val = inp.value;
+          if (field !== 'week_start') val = Number(val) || 0;
+          saveCp(id, { [field]: val });
+        });
+      });
+    }
+
+    async function addCpRow() {
+      if (!closers.length) { alert('Cadastre closers no painel primeiro.'); return; }
+      const id = prompt('Qual closer? Cole o ID ou deixe vazio para selecionar:\n' + closers.map(c => `${c.id}  ·  ${c.name}`).join('\n'));
+      const closer_id = (id || '').trim() || closers[0].id;
+      const { error } = await sb.from('closer_performance')
+        .insert({ closer_id, week_start: thisMonday(), sessions: 0, conv: 0, deals: 0, revenue: 0 });
+      if (error) { alert(error.message); return; }
+      loadAll();
+    }
+
+    async function delCp(id) {
+      if (!confirm('Remover este registro?')) return;
+      await sb.from('closer_performance').delete().eq('id', id);
+      loadAll();
+    }
+
+    (async () => {
+      const sess = await window.pmoAuth.requireSession(); if (!sess) return;
+      document.getElementById('navLogout').addEventListener('click', (e) => { e.preventDefault(); window.pmoAuth.signOut(); });
+      document.getElementById('todayStr').textContent = todayStr();
+
+      const url = new URL(location.href);
+      projectId = url.searchParams.get('project');
+      if (!projectId) {
+        const projs = await window.pmoAuth.loadAccessibleProjects();
+        if (!projs.length) { document.body.innerHTML = '<div style="padding:40px;">Sem projetos acessíveis.</div>'; return; }
+        projectId = projs[0].id;
+      }
+
+      const { data: p } = await sb.from('projects').select('*, organizations:org_id(name)').eq('id', projectId).single();
+      project = p;
+      if (project) document.getElementById('topbarOrg').textContent = (project.organizations?.name || project.name) + ' · operação';
+      document.getElementById('navPmo').href = './pmo.html?project=' + projectId;
+
+      role = (await window.pmoAuth.roleForProject(project)) || 'client';
+      document.body.dataset.role = role;
+      if (role !== 'admin') document.getElementById('opEditHint').textContent = 'somente leitura';
+
+      loadAll();
+
+      const ch = sb.channel('results:' + projectId)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'operation_metrics', filter: 'project_id=eq.' + projectId }, loadAll)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'closer_performance' }, loadAll)
+        .subscribe();
+    })();
+  </script>
+</body>
+</html>

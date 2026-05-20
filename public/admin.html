@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · PMO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #0d0810; --bg-card: rgba(243,235,230,0.045);
+    --border: rgba(243,235,230,0.10); --border-strong: rgba(243,235,230,0.22);
+    --ink-0: #f3ebe6; --ink-1: rgba(243,235,230,0.78); --ink-2: rgba(243,235,230,0.55); --ink-3: rgba(243,235,230,0.32);
+    --pink: #ff2d8d; --purple-mid: #c43689; --success: #4af1bc; --danger: #ff4d6d; --warning: #ffb347;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg-0); color: var(--ink-0); min-height: 100vh; padding: 40px 36px;
+    font-family: 'Inter', sans-serif;
+    background-image:
+      radial-gradient(120% 70% at 100% -10%, rgba(255,45,141,0.16) 0%, rgba(196,54,137,0.06) 22%, rgba(13,8,16,0) 55%),
+      linear-gradient(180deg, #0d0810 0%, #120a14 100%);
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+  .top a { color: var(--ink-2); cursor: pointer; text-decoration: none; margin-left: 14px; }
+  .top a:hover { color: var(--pink); }
+  h1 { font-family: 'Inter Tight', sans-serif; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+  h1 .accent { background: linear-gradient(90deg, var(--pink), var(--purple-mid)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--ink-2); font-size: 14px; margin-bottom: 28px; }
+  .section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 18px; }
+  .section h2 { font-family: 'Inter Tight', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 4px; }
+  .section .sec-sub { color: var(--ink-3); font-size: 12px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; }
+  .row { display: grid; gap: 10px; margin: 10px 0; }
+  .row.cols-2 { grid-template-columns: 1fr 1fr; }
+  .row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; font-weight: 600; }
+  input, select { width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--border); color: var(--ink-0); border-radius: 8px; padding: 10px 12px; font-family: 'Inter', sans-serif; font-size: 14px; outline: none; }
+  input:focus, select:focus { border-color: var(--pink); }
+  button {
+    margin-top: 14px; padding: 11px 18px;
+    background: linear-gradient(180deg, var(--pink), #e51877); color: white; border: none;
+    border-radius: 8px; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+  }
+  button:hover { filter: brightness(1.08); }
+  button.ghost { background: transparent; color: var(--ink-1); border: 1px solid var(--border-strong); }
+  button.ghost:hover { color: var(--pink); border-color: var(--pink); }
+  ul { list-style: none; padding: 0; }
+  li { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+  li:last-child { border-bottom: none; }
+  .pill { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: 100px; background: rgba(255,45,141,0.14); color: var(--pink); font-weight: 600; margin-left: 8px; }
+  .pill.client { background: rgba(74,241,188,0.14); color: var(--success); }
+  .msg { font-size: 13px; margin-top: 10px; }
+  .msg.ok { color: var(--success); } .msg.err { color: var(--danger); } .msg.warn { color: var(--warning); }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; color: var(--ink-1); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>Sales Consulting · admin</div>
+      <div>
+        <a href="./selector.html">Projetos</a>
+        <a id="navLogout">Sair</a>
+      </div>
+    </div>
+    <h1>Console <span class="accent">admin</span></h1>
+    <div class="sub">Crie organizações, projetos e gerencie memberships. Esta página só funciona para usuários com role <code>admin</code>.</div>
+
+    <div class="section">
+      <h2>Nova organização</h2>
+      <div class="sec-sub">Cliente / empresa</div>
+      <div class="row cols-2">
+        <div><label>Nome</label><input id="orgName" placeholder="Horistic Investimentos"></div>
+        <div><label>Slug</label><input id="orgSlug" placeholder="horistic"></div>
+      </div>
+      <button onclick="createOrg()">Criar organização</button>
+      <div class="msg" id="orgMsg"></div>
+    </div>
+
+    <div class="section">
+      <h2>Novo projeto</h2>
+      <div class="sec-sub">Sob uma organização existente</div>
+      <div class="row cols-3">
+        <div><label>Organização</label><select id="projOrg"></select></div>
+        <div><label>Nome do projeto</label><input id="projName" placeholder="PMO Horistic 60 dias"></div>
+        <div><label>Slug</label><input id="projSlug" placeholder="pmo-60d"></div>
+      </div>
+      <div class="row cols-2">
+        <div><label>Início (YYYY-MM-DD)</label><input id="projStart" type="date"></div>
+        <div><label>Total dias úteis</label><input id="projDays" type="number" value="60" min="1"></div>
+      </div>
+      <button onclick="createProject()">Criar projeto</button>
+      <div class="msg" id="projMsg"></div>
+    </div>
+
+    <div class="section">
+      <h2>Convidar / vincular usuário</h2>
+      <div class="sec-sub">Cria a membership de um usuário já existente no Supabase Auth</div>
+      <div class="row cols-3">
+        <div><label>Organização</label><select id="memOrg"></select></div>
+        <div><label>E-mail do usuário</label><input id="memEmail" type="email" placeholder="cliente@empresa.com"></div>
+        <div><label>Papel</label>
+          <select id="memRole"><option value="client">client</option><option value="admin">admin</option></select>
+        </div>
+      </div>
+      <button onclick="grantMembership()">Vincular</button>
+      <div class="msg" id="memMsg"></div>
+      <div class="msg warn">⚠ O usuário precisa existir antes em <strong>Supabase → Authentication → Users</strong>. (A criação automática vem na próxima versão via Edge Function.)</div>
+    </div>
+
+    <div class="section">
+      <h2>Suas organizações</h2>
+      <div class="sec-sub">Onde você é admin</div>
+      <ul id="orgList"><li style="color:var(--ink-2);">Carregando…</li></ul>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/supabase-client.js"></script>
+  <script src="./js/pmo-auth.js"></script>
+  <script>
+    const sb = window.sb;
+
+    function setMsg(id, type, text) {
+      const el = document.getElementById(id);
+      el.className = 'msg ' + type; el.textContent = text;
+    }
+
+    async function loadOrgs() {
+      const mems = await window.pmoAuth.loadMemberships();
+      const adminOrgs = mems.filter(m => m.role === 'admin');
+      const opts = adminOrgs.map(m => `<option value="${m.org_id}">${m.organizations?.name || m.org_id}</option>`).join('');
+      document.getElementById('projOrg').innerHTML = opts;
+      document.getElementById('memOrg').innerHTML = opts;
+
+      const list = document.getElementById('orgList');
+      if (!adminOrgs.length) { list.innerHTML = '<li style="color:var(--ink-2);">Você ainda não é admin de nenhuma organização.</li>'; return; }
+      const { data: projs } = await sb.from('projects').select('id, name, org_id, start_date, total_days');
+      list.innerHTML = adminOrgs.map(m => {
+        const ps = (projs || []).filter(p => p.org_id === m.org_id);
+        return `
+          <li>
+            <div>
+              <strong>${m.organizations?.name || m.org_id}</strong>
+              <span class="pill">admin</span>
+              <div style="color:var(--ink-2); font-size:12px; margin-top:4px;">
+                ${ps.length ? ps.map(p => `<a href="./pmo.html?project=${p.id}" style="color:var(--ink-1); text-decoration:none; margin-right:10px;">→ ${p.name}</a>`).join('') : 'sem projetos'}
+              </div>
+            </div>
+          </li>`;
+      }).join('');
+    }
+
+    async function createOrg() {
+      setMsg('orgMsg', '', '');
+      const name = document.getElementById('orgName').value.trim();
+      const slug = document.getElementById('orgSlug').value.trim();
+      if (!name || !slug) return setMsg('orgMsg', 'err', 'Nome e slug obrigatórios.');
+      const { error } = await sb.from('organizations').insert({ name, slug });
+      if (error) return setMsg('orgMsg', 'err', error.message);
+      setMsg('orgMsg', 'ok', '✓ Organização criada. Vincule-se como admin abaixo.');
+      document.getElementById('orgName').value = ''; document.getElementById('orgSlug').value = '';
+      loadOrgs();
+    }
+
+    async function createProject() {
+      setMsg('projMsg', '', '');
+      const org_id = document.getElementById('projOrg').value;
+      const name = document.getElementById('projName').value.trim();
+      const slug = document.getElementById('projSlug').value.trim();
+      const start_date = document.getElementById('projStart').value || null;
+      const total_days = parseInt(document.getElementById('projDays').value) || 60;
+      if (!org_id || !name || !slug) return setMsg('projMsg', 'err', 'Org, nome e slug obrigatórios.');
+      const payload = { org_id, name, slug, total_days };
+      if (start_date) payload.start_date = start_date;
+      const { error } = await sb.from('projects').insert(payload);
+      if (error) return setMsg('projMsg', 'err', error.message);
+      setMsg('projMsg', 'ok', '✓ Projeto criado.');
+      document.getElementById('projName').value = ''; document.getElementById('projSlug').value = '';
+      loadOrgs();
+    }
+
+    async function grantMembership() {
+      setMsg('memMsg', '', '');
+      const org_id = document.getElementById('memOrg').value;
+      const email = document.getElementById('memEmail').value.trim();
+      const role = document.getElementById('memRole').value;
+      if (!org_id || !email) return setMsg('memMsg', 'err', 'Org e e-mail obrigatórios.');
+      // Sem service_role no client, não conseguimos resolver email→user_id direto.
+      // O caminho recomendado é o SQL Editor; aqui orientamos o admin.
+      setMsg('memMsg', 'warn',
+        `Sem Edge Function, rode no SQL Editor:\n` +
+        `insert into memberships (user_id, org_id, role) ` +
+        `select id, '${org_id}', '${role}' from auth.users where email = '${email.replace(/'/g, "''")}';`
+      );
+    }
+
+    (async () => {
+      const sess = await window.pmoAuth.requireSession(); if (!sess) return;
+      document.getElementById('navLogout').addEventListener('click', (e) => { e.preventDefault(); window.pmoAuth.signOut(); });
+      loadOrgs();
+    })();
+  </script>
+</body>
+</html>

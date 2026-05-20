@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PMO · entrada</title>
+<style>
+  body { background: #0d0810; color: #f3ebe6; font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+</style>
+</head>
+<body>
+  <div>Redirecionando…</div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/supabase-client.js"></script>
+  <script src="./js/pmo-auth.js"></script>
+  <script>
+    (async () => {
+      const sess = await window.pmoAuth.requireSession();
+      if (!sess) return;
+      const projs = await window.pmoAuth.loadAccessibleProjects();
+      if (!projs.length) {
+        document.body.innerHTML = '<div style="padding:32px;">Você ainda não tem acesso a nenhum projeto. Peça ao admin.</div>';
+        return;
+      }
+      if (projs.length === 1) {
+        location.replace('./pmo.html?project=' + projs[0].id);
+      } else {
+        location.replace('./selector.html');
+      }
+    })();
+  </script>
+</body>
+</html>
