@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook Comercial · Horistic</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --bg:         #FFFFFF;
+  --bg2:        #F7F7F7;
+  --bg3:        #EFEFEF;
+  --border:     #E6E6E6;
+  --border2:    #D4D4D4;
+  --accent:     #FF8300;
+  --accent-dim: rgba(255,131,0,0.08);
+  --accent-mid: rgba(255,131,0,0.22);
+  --text:       #141413;
+  --text2:      #828E9D;
+  --text3:      #AEAEAE;
+  --green:      #1A7F4B;
+  --green-dim:  rgba(26,127,75,0.08);
+  --red:        #C0392B;
+  --red-dim:    rgba(192,57,43,0.08);
+  --red-mid:    rgba(192,57,43,0.18);
+  --blue:       #1C62C8;
+  --blue-dim:   rgba(28,98,200,0.08);
+  --blue-mid:   rgba(28,98,200,0.18);
+  --purple:     #7C3AED;
+  --purple-dim: rgba(124,58,237,0.08);
+  --purple-mid: rgba(124,58,237,0.18);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.6;display:flex;min-height:100vh}
+
+/* ─── SIDEBAR ─── */
+.sidebar{width:248px;min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:100}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid var(--border)}
+.sb-logo .eye{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;font-family:'Instrument Sans',sans-serif}
+.sb-logo .brand{font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
+.sb-logo .brand b{color:var(--accent)}
+.sb-logo .sub{font-size:11px;color:var(--text3);margin-top:2px}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto}
+.sb-group{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:10px 20px 5px;font-family:'Instrument Sans',sans-serif}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;border-left:2px solid transparent;transition:all .15s;color:var(--text2);font-size:13px;text-decoration:none}
+.sb-item:hover{background:var(--bg3);color:var(--text)}
+.sb-item.active{border-left-color:var(--accent);background:var(--accent-dim);color:var(--text);font-weight:500}
+.sb-item .ic{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+.sb-foot{padding:14px 20px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)}
+
+/* ─── MAIN ─── */
+.main{margin-left:248px;flex:1;min-height:100vh}
+.topbar{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px 0 28px;height:56px;display:flex;align-items:center;gap:16px;z-index:50}
+.tb-crumb{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px;font-family:'Instrument Sans',sans-serif;white-space:nowrap;min-width:0}
+.tb-crumb span{color:var(--text2)}
+
+/* search */
+.tb-search{flex:1;max-width:420px;position:relative}
+.tb-search input{width:100%;background:var(--bg2);border:1.5px solid var(--border);border-radius:9px;padding:7px 14px 7px 36px;font-size:13px;font-family:'Space Grotesk',sans-serif;color:var(--text);outline:none;transition:border-color .15s}
+.tb-search input::placeholder{color:var(--text3)}
+.tb-search input:focus{border-color:var(--accent);background:#fff}
+.tb-search .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none}
+.search-results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid var(--border2);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:200;overflow:hidden;display:none}
+.search-results.show{display:block}
+.sr-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:background .1s;border-bottom:1px solid var(--border)}
+.sr-item:last-child{border-bottom:none}
+.sr-item:hover{background:var(--bg2)}
+.sr-icon{width:28px;height:28px;border-radius:7px;background:var(--accent-dim);border:1px solid var(--accent-mid);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;color:var(--accent)}
+.sr-meta{flex:1;min-width:0}
+.sr-name{font-size:12px;font-weight:600;color:var(--text)}
+.sr-section{font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif}
+.sr-match{font-size:11px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-empty{padding:14px;text-align:center;font-size:13px;color:var(--text3)}
+
+.tb-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.tb-level{font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:20px;font-family:'Instrument Sans',sans-serif;cursor:pointer;transition:all .15s}
+.tb-level.junior{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-mid)}
+.tb-level.pleno{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid)}
+.tb-level:hover{opacity:.75}
+.tb-tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid);padding:4px 11px;border-radius:20px;font-family:'Instrument Sans',sans-serif}
+
+/* ─── PAGES ─── */
+.page{display:none}.page.active{display:block}
+
+/* ─── LEVEL FILTER ─── */
+.level-junior .pleno-only{display:none!important}
+.level-pleno .junior-only{display:none!important}
+
+/* ─── SECTION ─── */
+.section{padding:36px 40px 0;max-width:920px}
+.section:last-child{padding-bottom:60px}
+.sec-header{margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+.eyebrow::after{content:'';height:1px;width:36px;background:var(--accent-mid);display:inline-block}
+.sec-title{font-size:24px;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:6px}
+.sec-desc{font-size:14px;color:var(--text2);max-width:620px;line-height:1.7}
+.divider{height:1px;background:var(--border);margin:26px 0}
+
+/* ─── DIFFICULTY BADGE ─── */
+.diff{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-family:'Instrument Sans',sans-serif;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:20px;border:1px solid transparent}
+.diff-easy{background:var(--green-dim);color:var(--green);border-color:rgba(26,127,75,.2)}
+.diff-med{background:var(--accent-dim);color:var(--accent);border-color:var(--accent-mid)}
+.diff-hard{background:var(--red-dim);color:var(--red);border-color:var(--red-mid)}
+.diff-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ─── LEVEL BADGE ─── */
+.lv-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:'Instrument Sans',sans-serif;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:20px}
+.lv-j{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-mid)}
+.lv-p{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid)}
+
+/* ─── PILL TAGS ─── */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag{font-size:11px;padding:3px 10px;border-radius:20px;font-family:'Instrument Sans',sans-serif;border:1px solid var(--border2);color:var(--text2);background:var(--bg3)}
+.tag.g{color:var(--green);background:var(--green-dim);border-color:rgba(26,127,75,.2)}
+.tag.o{color:var(--accent);background:var(--accent-dim);border-color:var(--accent-mid)}
+.tag.r{color:var(--red);background:var(--red-dim);border-color:var(--red-mid)}
+.tag.b{color:var(--blue);background:var(--blue-dim);border-color:var(--blue-mid)}
+
+/* ─── CARDS ─── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:12px}
+.card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{font-size:10px;font-family:'Instrument Sans',sans-serif;background:var(--bg3);color:var(--text3);padding:2px 7px;border-radius:4px;border:1px solid var(--border2)}
+.card p{color:var(--text2);font-size:13px;line-height:1.7;margin-bottom:7px}
+.card p:last-child{margin-bottom:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+
+/* ─── TABLE ─── */
+.tbl-wrap{overflow-x:auto;margin-bottom:12px;border-radius:10px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);text-align:left;padding:8px 12px;background:var(--bg3);border-bottom:1px solid var(--border2);font-family:'Instrument Sans',sans-serif}
+td{font-size:13px;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,0,0,.018)}
+td strong{color:var(--text);font-weight:500}
+
+/* ─── TIMELINE ─── */
+.timeline{margin-bottom:12px}
+.tl-item{display:flex;gap:16px;padding-bottom:20px;position:relative}
+.tl-item::before{content:'';position:absolute;left:15px;top:32px;width:1px;height:calc(100% - 16px);background:var(--border2)}
+.tl-item:last-child::before{display:none}
+.tl-dot{width:30px;height:30px;border-radius:50%;border:1px solid var(--border2);background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+.tl-dot.ac{border-color:var(--accent);background:var(--accent-dim)}
+.tl-content{flex:1}
+.tl-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:3px}
+.tl-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.tl-desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* ─── CHECKLIST ─── */
+.checklist{list-style:none}
+.checklist li{font-size:13px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:9px;line-height:1.5}
+.checklist li:last-child{border-bottom:none}
+.checklist li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:1px;font-size:11px}
+
+/* ─── RITUAL ─── */
+.ritual-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.ritual-freq{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;color:var(--accent);background:var(--accent-dim);border:1px solid var(--accent-mid);padding:3px 9px;border-radius:4px}
+.ritual-title{font-size:14px;font-weight:600;color:var(--text)}
+.ritual-time{font-size:12px;color:var(--text3);margin-left:auto}
+
+/* ─── SCORING ─── */
+.score-item{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px}
+.score-pts{min-width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;font-family:'Instrument Sans',sans-serif;flex-shrink:0}
+.score-pts.hi{background:var(--green-dim);color:var(--green)}
+.score-pts.md{background:var(--accent-dim);color:var(--accent)}
+.score-pts.lo{background:var(--bg3);color:var(--text3)}
+.score-pts.ng{background:var(--red-dim);color:var(--red)}
+.score-label{font-size:13px;font-weight:500;color:var(--text)}
+.score-sub{font-size:12px;color:var(--text3);margin-top:2px}
+
+/* ─── HOME TOOL GRID ─── */
+.home-wrap{padding:0 36px 48px;max-width:920px}
+.home-section-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.home-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* primary grid 2col */
+.tool-grid-primary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.tool-card-primary{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:20px 22px 18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.tool-card-primary:hover{border-color:var(--accent-mid);box-shadow:0 4px 20px rgba(255,131,0,.1);transform:translateY(-2px)}
+.tool-card-primary.featured{background:linear-gradient(135deg,#fff8f0 0%,#fff 60%);border-color:var(--accent-mid)}
+.tc-accent-bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);border-radius:14px 14px 0 0;opacity:0;transition:opacity .2s}
+.tool-card-primary:hover .tc-accent-bar{opacity:1}
+.tc-icon-wrap{width:40px;height:40px;border-radius:10px;background:var(--accent-dim);border:1px solid var(--accent-mid);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px;color:var(--accent)}
+.tc-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px}
+.tc-desc{font-size:12px;color:var(--text3);line-height:1.55}
+.tc-footer{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.tc-tag{font-size:10px;font-family:'Instrument Sans',sans-serif;padding:2px 8px;border-radius:20px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid)}
+.tc-arrow{font-size:16px;color:var(--text3);transition:all .2s}
+.tool-card-primary:hover .tc-arrow{color:var(--accent);transform:translateX(3px)}
+
+/* secondary list */
+.tool-grid-secondary{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.tool-card-secondary{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:13px 16px;cursor:pointer;transition:all .15s}
+.tool-card-secondary:hover{background:var(--bg3);border-color:var(--border2);transform:translateX(2px)}
+.tcs-icon{width:32px;height:32px;border-radius:8px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:var(--text3)}
+.tcs-body{flex:1}
+.tcs-name{font-size:13px;font-weight:600;color:var(--text)}
+.tcs-desc{font-size:11px;color:var(--text3);line-height:1.4}
+.tcs-arrow{font-size:15px;color:var(--text3);transition:all .15s}
+.tool-card-secondary:hover .tcs-arrow{color:var(--accent);transform:translateX(2px)}
+
+/* launches */
+.tool-card-launch{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#FFF8F0 0%,#FFFCF9 100%);border:1.5px solid var(--accent-mid);border-radius:12px;padding:14px 18px;cursor:pointer;transition:all .15s;margin-bottom:12px}
+.tool-card-launch:hover{background:linear-gradient(135deg,#FFF3E5,#FFF8F0);border-color:var(--accent);transform:translateX(2px);box-shadow:0 4px 16px rgba(255,131,0,.12)}
+.tcl-icon{width:38px;height:38px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.tcl-body{flex:1}
+.tcl-name{font-size:14px;font-weight:700;color:var(--text)}
+.tcl-desc{font-size:11px;color:var(--amber, #B85C00);line-height:1.4}
+.tcl-badge{font-size:10px;font-family:'Instrument Sans',sans-serif;background:var(--accent);color:#fff;padding:3px 9px;border-radius:20px;white-space:nowrap}
+
+/* ─── LAUNCHES PAGE ─── */
+.cal-wrap{padding:36px 40px 60px;max-width:920px}
+
+.launch-hero{background:linear-gradient(135deg,#FFF5E8 0%,#FFFFFF 50%);border:1.5px solid var(--accent-mid);border-radius:16px;padding:28px 32px;margin-bottom:28px;position:relative;overflow:hidden}
+.launch-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,131,0,.12) 0%,transparent 70%);border-radius:50%}
+.launch-hero-eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:8px}
+.launch-hero-title{font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px}
+.launch-hero-desc{font-size:13px;color:var(--text2);max-width:500px;line-height:1.65}
+
+/* calendar */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.cal-nav{display:flex;align-items:center;gap:10px}
+.cal-nav button{width:30px;height:30px;border-radius:8px;border:1px solid var(--border2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text2);transition:all .15s}
+.cal-nav button:hover{border-color:var(--accent);color:var(--accent)}
+.cal-month-label{font-size:16px;font-weight:700;color:var(--text)}
+.cal-grid{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px}
+.cal-days-header{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border)}
+.cal-day-name{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;text-align:center;padding:10px 4px}
+.cal-days-body{display:grid;grid-template-columns:repeat(7,1fr)}
+.cal-day{min-height:72px;padding:8px 6px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;vertical-align:top;transition:background .12s}
+.cal-day:nth-child(7n){border-right:none}
+.cal-day.other-month .cal-dn{color:var(--text3)}
+.cal-day.today .cal-dn{background:var(--accent);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.cal-day:hover{background:var(--bg2);cursor:pointer}
+.cal-dn{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1}
+.cal-event{font-size:9px;background:var(--accent);color:#fff;border-radius:4px;padding:2px 5px;margin-top:2px;line-height:1.3;cursor:pointer;transition:opacity .1s;font-family:'Instrument Sans',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-event:hover{opacity:.8}
+.cal-event.green{background:var(--green)}
+.cal-event.blue{background:var(--blue)}
+.cal-event.purple{background:var(--purple)}
+
+/* launch list */
+.launch-list{display:flex;flex-direction:column;gap:12px}
+.launch-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px 22px;transition:all .15s;display:flex;gap:18px;align-items:flex-start}
+.launch-item:hover{border-color:var(--accent-mid);box-shadow:0 4px 16px rgba(255,131,0,.08)}
+.launch-item.hot{border-color:var(--accent-mid);background:linear-gradient(135deg,#FFF8F0,#fff)}
+.li-date-col{display:flex;flex-direction:column;align-items:center;min-width:52px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px 8px;flex-shrink:0}
+.li-date-day{font-size:22px;font-weight:700;color:var(--accent);line-height:1}
+.li-date-mon{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-top:2px}
+.li-body{flex:1}
+.li-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.li-name{font-size:14px;font-weight:700;color:var(--text)}
+.li-status{font-size:10px;font-family:'Instrument Sans',sans-serif;padding:2px 8px;border-radius:20px}
+.li-status.upcoming{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid)}
+.li-status.open{background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)}
+.li-status.closed{background:var(--bg3);color:var(--text3);border:1px solid var(--border2)}
+.li-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:10px}
+.li-why{font-size:12px;color:var(--text);background:var(--bg2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:8px 12px;margin-bottom:10px;line-height:1.6}
+.li-meta{display:flex;gap:8px;flex-wrap:wrap}
+
+/* modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:16px;padding:28px;max-width:480px;width:calc(100% - 48px);box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative}
+.modal-close{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text3)}
+.modal-close:hover{background:var(--bg3)}
+.modal-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+.modal-date{font-size:12px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:16px}
+.modal-body p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:8px}
+.modal-body p:last-child{margin-bottom:0}
+
+/* ─── HERO ─── */
+.hero{padding:48px 40px 32px;max-width:760px}
+.hero .eyebrow{margin-bottom:14px}
+.hero h1{font-size:36px;font-weight:700;line-height:1.15;color:var(--text);margin-bottom:12px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{font-size:15px;color:var(--text2);line-height:1.75;max-width:560px}
+
+/* ─── GAMIFIED OBJECTION CARD ─── */
+.obj-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;transition:border-color .15s}
+.obj-card:hover{border-color:var(--border2)}
+.obj-card.open{border-color:var(--accent-mid)}
+
+.obj-head{display:flex;align-items:flex-start;gap:14px;padding:18px 20px;cursor:pointer}
+.obj-head-left{flex:1}
+.obj-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.obj-question-text{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.obj-chevron{font-size:18px;color:var(--text3);transition:transform .2s;flex-shrink:0;margin-top:2px}
+.obj-card.open .obj-chevron{transform:rotate(90deg);color:var(--accent)}
+
+.obj-body{display:none;padding:0 20px 20px}
+.obj-card.open .obj-body{display:block}
+
+/* Pain block */
+.pain-block{background:#FFF8F3;border:1px solid rgba(255,131,0,.18);border-left:3px solid var(--accent);border-radius:7px;padding:13px 15px;margin-bottom:12px}
+.pain-block .blk-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:5px}
+.pain-block p{font-size:13px;color:#7A4500;line-height:1.65;margin:0}
+
+/* Wrong block */
+.wrong-block{background:var(--red-dim);border:1px solid var(--red-mid);border-left:3px solid var(--red);border-radius:7px;padding:13px 15px;margin-bottom:12px}
+.wrong-block .blk-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);font-family:'Instrument Sans',sans-serif;margin-bottom:5px}
+.wrong-block p{font-size:13px;color:#7A1A1A;line-height:1.65;margin:0}
+
+/* Right block */
+.right-block{background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-left:3px solid var(--green);border-radius:7px;padding:13px 15px;margin-bottom:12px}
+.right-block .blk-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-family:'Instrument Sans',sans-serif;margin-bottom:5px}
+.right-block p{font-size:13px;color:#0F4D2A;line-height:1.65;margin:0}
+
+/* Script in objection */
+.obj-script{background:#fff;border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:7px;padding:13px 15px;margin-bottom:12px;font-size:13px;color:var(--text2);line-height:1.7}
+.obj-script .script-role{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:5px}
+.obj-script.blue{border-left-color:var(--blue)}
+.obj-script.blue .script-role{color:var(--blue)}
+.obj-script.pleno-only .script-role::after{content:' · Pleno';color:var(--purple);font-size:9px}
+
+/* Checklist inside obj */
+.obj-checklist{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:12px 15px;margin-bottom:12px}
+.obj-checklist .blk-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:8px}
+.obj-checklist ul{list-style:none}
+.obj-checklist ul li{font-size:12px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.obj-checklist ul li:last-child{border-bottom:none}
+.obj-checklist ul li::before{content:'✓';color:var(--green);font-size:11px;flex-shrink:0;margin-top:1px}
+
+/* ─── SCRIPT BLOCKS (regular) ─── */
+.script-block{background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:7px;padding:13px 15px;margin-bottom:10px;font-size:13px;color:var(--text2);line-height:1.7}
+.script-block .script-role{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:5px}
+.script-block.blue{border-left-color:var(--blue)}
+.script-block.blue .script-role{color:var(--blue)}
+.script-block.green{border-left-color:var(--green)}
+.script-block.green .script-role{color:var(--green)}
+.script-block .level-hint{display:inline-block;font-size:10px;font-family:'Instrument Sans',sans-serif;padding:1px 7px;border-radius:10px;margin-left:6px;vertical-align:middle}
+.script-block .lh-j{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-mid)}
+.script-block .lh-p{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid)}
+
+/* Wrong/right inline (scripts page) */
+.tip-wrong{background:var(--red-dim);border:1px solid var(--red-mid);border-radius:7px;padding:10px 13px;margin-bottom:8px;font-size:12px;color:#7A1A1A;line-height:1.6}
+.tip-wrong strong{color:var(--red);font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px;font-family:'Instrument Sans',sans-serif}
+.tip-right{background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-radius:7px;padding:10px 13px;margin-bottom:8px;font-size:12px;color:#0F4D2A;line-height:1.6}
+.tip-right strong{color:var(--green);font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px;font-family:'Instrument Sans',sans-serif}
+
+/* ─── TREINO MODE ─── */
+.treino-wrapper{margin-bottom:14px}
+.treino-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.treino-question-area{padding:20px}
+.treino-q-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:8px}
+.treino-q{font-size:15px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:16px}
+.treino-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.treino-opt{background:#fff;border:1px solid var(--border2);border-radius:8px;padding:12px 14px;cursor:pointer;font-size:13px;color:var(--text2);line-height:1.5;transition:all .15s;text-align:left}
+.treino-opt:hover{border-color:var(--border2);background:var(--bg3)}
+.treino-opt.correct{border-color:rgba(26,127,75,.4)!important;background:var(--green-dim)!important;color:var(--green)!important}
+.treino-opt.wrong{border-color:var(--red-mid)!important;background:var(--red-dim)!important;color:var(--red)!important}
+.treino-opt.disabled{pointer-events:none;opacity:.6}
+.treino-feedback{display:none;padding:14px 16px;border-top:1px solid var(--border);background:#fff}
+.treino-feedback.show{display:block}
+.treino-fb-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;margin-bottom:5px}
+.treino-fb-label.ok{color:var(--green)}
+.treino-fb-label.ng{color:var(--red)}
+.treino-fb-text{font-size:13px;color:var(--text2);line-height:1.65}
+.treino-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-top:1px solid var(--border);background:var(--bg3)}
+.treino-progress{font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif}
+.treino-btn{font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif;background:var(--accent);color:#fff;border:none;padding:7px 16px;border-radius:7px;cursor:pointer;transition:opacity .15s;display:none}
+.treino-btn:hover{opacity:.85}
+.treino-score-bar{height:4px;background:var(--border);border-radius:2px;margin:0 20px 0;overflow:hidden}
+.treino-score-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .4s}
+
+/* ─── HISTORIA ─── */
+.hist-topic{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;transition:border-color .15s}
+.hist-topic:hover{border-color:var(--border2)}
+.hist-topic.open{border-color:var(--accent-mid)}
+.hist-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer}
+.hist-icon{width:38px;height:38px;border-radius:9px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.hist-topic.open .hist-icon{background:var(--accent-dim);border-color:var(--accent-mid)}
+.hist-meta{flex:1}
+.hist-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.hist-sub{font-size:12px;color:var(--text3)}
+.hist-chev{font-size:16px;color:var(--text3);transition:transform .2s}
+.hist-topic.open .hist-chev{transform:rotate(90deg);color:var(--accent)}
+.hist-body{display:none;padding:16px 20px 18px;border-top:1px solid var(--border)}
+.hist-topic.open .hist-body{display:block}
+.hist-body p{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:9px}
+.hist-body p:last-child{margin-bottom:0}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ─── PROGRESS WIDGET ─── */
+.progress-bar-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.pb-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.pb-title{font-size:12px;font-weight:600;color:var(--text)}
+.pb-score{font-size:20px;font-weight:700;color:var(--accent)}
+.pb-sub{font-size:10px;color:var(--text3);font-family:'Instrument Sans',sans-serif}
+.pb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pb-item{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 10px 8px;cursor:pointer;transition:border-color .15s}
+.pb-item:hover{border-color:var(--accent-mid)}
+.pb-item-icon{font-size:16px;margin-bottom:5px}
+.pb-item-label{font-size:10px;color:var(--text3);font-family:'Instrument Sans',sans-serif;line-height:1.3;margin-bottom:5px}
+.pb-item-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.pb-item-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .4s}
+.pb-item-pct{font-size:10px;color:var(--text2);margin-top:3px;font-family:'Instrument Sans',sans-serif}
+.pb-reset{font-size:11px;color:var(--text3);cursor:pointer;font-family:'Instrument Sans',sans-serif;text-decoration:underline;background:none;border:none;padding:0}
+.pb-reset:hover{color:var(--red)}
+
+/* ─── FUNIL INTERATIVO ─── */
+.funnel-wrap{padding:36px 40px 60px;max-width:920px}
+.funnel-stage{display:flex;gap:0;margin-bottom:2px;cursor:pointer;position:relative}
+.fs-bar{flex:1;padding:0;position:relative}
+.fs-shape{border-radius:0;padding:16px 20px 16px 40px;transition:all .18s;position:relative;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%)}
+.funnel-stage:first-child .fs-shape{clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%);border-radius:10px 0 0 10px}
+.fs-num{font-size:10px;font-family:'Instrument Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.fs-name{font-size:13px;font-weight:700}
+.fs-sla{font-size:11px;opacity:.75;margin-top:2px;font-family:'Instrument Sans',sans-serif}
+
+.fs-s1{background:#FFF0E0}.fs-s1:hover,.fs-s1.active{background:#FF8300;color:#fff}
+.fs-s2{background:#FFE4C4}.fs-s2:hover,.fs-s2.active{background:#E67300;color:#fff}
+.fs-s3{background:#FFD9A8}.fs-s3:hover,.fs-s3.active{background:#CC6600;color:#fff}
+.fs-s4{background:#FFCE8C}.fs-s4:hover,.fs-s4.active{background:#B35900;color:#fff}
+.fs-s5{background:#FFC370}.fs-s5:hover,.fs-s5.active{background:#994D00;color:#fff}
+.fs-s6{background:#FFB854}.fs-s6:hover,.fs-s6.active{background:#804000;color:#fff}
+
+.funnel-detail{background:#fff;border:1.5px solid var(--accent-mid);border-radius:12px;padding:24px;margin-top:16px;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.fd-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.fd-num{width:36px;height:36px;border-radius:9px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.fd-title{font-size:16px;font-weight:700;color:var(--text)}
+.fd-sla{font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-top:2px}
+.fd-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.fd-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+.fd-block-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:5px}
+.fd-block-text{font-size:12px;color:var(--text2);line-height:1.55}
+.fd-actions-title{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:8px}
+.fd-action-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.fd-action-list li{font-size:12px;color:var(--text2);display:flex;gap:8px;line-height:1.5}
+.fd-action-list li::before{content:'→';color:var(--accent);flex-shrink:0;font-size:11px}
+.fd-nav{display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+.fd-btn{font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif;padding:7px 16px;border-radius:8px;cursor:pointer;border:1px solid var(--border2);background:#fff;color:var(--text2);transition:all .15s}
+.fd-btn:hover{border-color:var(--accent);color:var(--accent)}
+.fd-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.fd-btn.primary:hover{opacity:.85}
+
+/* ─── CANAL PAGE ─── */
+.canal-wrap{padding:36px 40px 60px;max-width:920px}
+.canal-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.canal-tab{font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif;padding:7px 16px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;color:var(--text2);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
+.canal-tab:hover{border-color:var(--border2);background:var(--bg2)}
+.canal-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.canal-panel{display:none}.canal-panel.active{display:block}
+.msg-thread{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.msg-bubble{max-width:72%;padding:11px 14px;border-radius:12px;font-size:13px;line-height:1.6;position:relative}
+.msg-bubble.closer{background:var(--accent);color:#fff;border-radius:12px 12px 3px 12px;align-self:flex-end}
+.msg-bubble.client{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:12px 12px 12px 3px;align-self:flex-start}
+.msg-meta{font-size:10px;font-family:'Instrument Sans',sans-serif;margin-top:4px;opacity:.7}
+.msg-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:6px;margin-top:2px}
+.msg-dont{background:var(--red-dim);border:1px solid var(--red-mid);border-radius:8px;padding:10px 14px;margin-bottom:10px}
+.msg-dont-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-family:'Instrument Sans',sans-serif;margin-bottom:4px}
+.msg-dont p{font-size:12px;color:#7A1A1A;line-height:1.6;margin:0}
+.rule-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.rule-row:last-child{border-bottom:none}
+.rule-icon{width:28px;height:28px;border-radius:7px;background:var(--accent-dim);border:1px solid var(--accent-mid);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:1px}
+.rule-text{font-size:13px;color:var(--text2);line-height:1.6}
+.rule-text strong{color:var(--text)}
+
+/* ─── SCRIPT TREINO ─── */
+.st-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.st-head{display:flex;align-items:flex-start;gap:14px;padding:18px 20px;cursor:pointer}
+.st-head-left{flex:1}
+.st-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px}
+.st-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.st-chevron{font-size:18px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.st-card.open .st-chevron{transform:rotate(90deg);color:var(--accent)}
+.st-body{display:none;padding:0 20px 20px}
+.st-card.open .st-body{display:block}
+.st-situation{background:#FFF8F0;border:1px solid rgba(255,131,0,.2);border-left:3px solid var(--accent);border-radius:7px;padding:12px 14px;margin-bottom:14px}
+.st-situation-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:5px}
+.st-situation p{font-size:13px;color:#7A4500;line-height:1.6;margin:0}
+.st-choices{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.st-choice{background:var(--bg2);border:1.5px solid var(--border2);border-radius:8px;padding:11px 14px;cursor:pointer;font-size:13px;color:var(--text2);line-height:1.5;transition:all .15s;text-align:left;font-family:'Space Grotesk',sans-serif}
+.st-choice:hover:not(.disabled){border-color:var(--accent-mid);background:#FFF8F0}
+.st-choice.correct{border-color:rgba(26,127,75,.4)!important;background:var(--green-dim)!important;color:var(--green)!important}
+.st-choice.wrong{border-color:var(--red-mid)!important;background:var(--red-dim)!important;color:var(--red)!important}
+.st-choice.disabled{pointer-events:none;opacity:.6}
+.st-feedback{display:none;margin-top:12px}
+.st-feedback.show{display:block}
+.st-fb-ok{background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-radius:7px;padding:10px 13px;margin-bottom:8px;font-size:12px;color:#0F4D2A;line-height:1.6}
+.st-fb-ng{background:var(--red-dim);border:1px solid var(--red-mid);border-radius:7px;padding:10px 13px;margin-bottom:8px;font-size:12px;color:#7A1A1A;line-height:1.6}
+.st-fb-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;display:block;margin-bottom:3px;font-weight:600}
+.st-reset{font-size:11px;color:var(--text3);cursor:pointer;background:none;border:none;padding:4px 0;font-family:'Instrument Sans',sans-serif;text-decoration:underline}
+.st-reset:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="eye">Acervo Comercial</div>
+    <div class="brand">Horistic <b>·</b> Playbook</div>
+    <div class="sub">Versão 2.0 · 2025</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-group">Início</div>
+    <a class="sb-item active" onclick="nav('home',this)"><span class="ic">⊞</span>Visão geral</a>
+
+    <div class="sb-group" style="margin-top:6px">Ferramentas</div>
+    <a class="sb-item" onclick="nav('lancamentos',this)"><span class="ic">🚀</span>Lançamentos</a>
+    <a class="sb-item" onclick="nav('funil',this)"><span class="ic">◑</span>Funil interativo</a>
+    <a class="sb-item" onclick="nav('canal',this)"><span class="ic">💬</span>Comunicação</a>
+    <a class="sb-item" onclick="nav('scripts',this)"><span class="ic">✦</span>Scripts de venda</a>
+    <a class="sb-item" onclick="nav('objecoes',this)"><span class="ic">⊘</span>Contornos de objeção</a>
+    <a class="sb-item" onclick="nav('treino',this)"><span class="ic">◈</span>Modo treino</a>
+    <a class="sb-item" onclick="nav('priorizacao',this)"><span class="ic">◐</span>Priorização da base</a>
+    <a class="sb-item" onclick="nav('cadencia',this)"><span class="ic">◎</span>Cadência de contato</a>
+    <a class="sb-item" onclick="nav('rituais',this)"><span class="ic">⊡</span>Rituais do comercial</a>
+
+    <div class="sb-group" style="margin-top:6px">Contexto</div>
+    <a class="sb-item" onclick="nav('produtos',this)"><span class="ic">◧</span>Preço &amp; Produtos</a>
+    <a class="sb-item" onclick="nav('historia',this)"><span class="ic">◉</span>História e mais</a>
+  </nav>
+  <div class="sb-foot">Gabriel Heringer · Sales Consulting</div>
+</aside>
+
+<!-- MAIN -->
+<main class="main" id="main-content">
+
+  <div class="topbar">
+    <div class="tb-crumb">Horistic <span>·</span> <span id="crumb-label">Visão geral</span></div>
+
+    <div class="tb-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="O que você está procurando?" autocomplete="off"
+        oninput="searchPlaybook(this.value)"
+        onblur="setTimeout(()=>document.getElementById('search-results').classList.remove('show'),180)"
+        onfocus="if(this.value.length>1)document.getElementById('search-results').classList.add('show')"
+      />
+      <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="tb-right">
+      <div class="tb-level junior" id="level-toggle" onclick="toggleLevel()" title="Alternar nível">
+        👤 Júnior
+      </div>
+      <div class="tb-tag">v2.0</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ HOME ════════════════════ -->
+  <div class="page active" id="page-home">
+    <div style="padding:40px 36px 12px;max-width:920px">
+      <div class="eyebrow">Playbook Comercial</div>
+      <h1 style="font-size:32px;font-weight:700;line-height:1.15;color:var(--text);margin-bottom:8px">Venda com método,<br>não no <span style="color:var(--accent)">achismo.</span></h1>
+      <p style="font-size:14px;color:var(--text2);max-width:520px;line-height:1.7;margin-bottom:32px">Tudo que você precisa para fechar mais. Use o filtro de nível no topo para ver o conteúdo certo para você.</p>
+    </div>
+
+    <div class="home-wrap" style="padding-top:0">
+
+      <!-- Lançamentos highlight -->
+      <div class="tool-card-launch" onclick="nav('lancamentos',document.querySelector('[onclick*=lancamentos]'))">
+        <div class="tcl-icon">🚀</div>
+        <div class="tcl-body">
+          <div class="tcl-name">Próximos Lançamentos</div>
+          <div class="tcl-desc">Formação Cripto Trader · Horus Live Jul/25 · condições, por quê vender e calendário completo</div>
+        </div>
+        <span class="tcl-badge">2 em breve</span>
+        <span style="font-size:18px;color:var(--accent);margin-left:8px">›</span>
+      </div>
+
+      <!-- Progress widget -->
+      <div class="progress-bar-wrap">
+        <div class="pb-header">
+          <div>
+            <div class="pb-title">Seu progresso no playbook</div>
+            <div class="pb-sub">Clique nas seções para marcar como revisado</div>
+          </div>
+          <div style="text-align:right">
+            <div class="pb-score" id="pb-score-num">0%</div>
+            <button class="pb-reset" onclick="resetProgress()">Resetar</button>
+          </div>
+        </div>
+        <div class="pb-grid" id="pb-grid"></div>
+      </div>
+
+      <!-- Primary tools -->
+      <div class="home-section-label">Ferramentas de venda</div>
+      <div class="tool-grid-primary">
+
+        <div class="tool-card-primary featured" onclick="nav('scripts',document.querySelector('[onclick*=scripts]'))">
+          <div class="tc-accent-bar"></div>
+          <div class="tc-icon-wrap">✦</div>
+          <div class="tc-name">Scripts de venda</div>
+          <div class="tc-desc">Do primeiro contato ao fechamento — por produto e perfil. Com erros comuns e por que cada script funciona.</div>
+          <div class="tc-footer">
+            <span class="tc-tag">5 scripts</span>
+            <span class="tc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="tool-card-primary" onclick="nav('objecoes',document.querySelector('[onclick*=objecoes]'))">
+          <div class="tc-accent-bar"></div>
+          <div class="tc-icon-wrap">⊘</div>
+          <div class="tc-name">Contornos de objeção</div>
+          <div class="tc-desc">Dor real do cliente · erro do júnior · resposta certa · checklist. Por nível de dificuldade.</div>
+          <div class="tc-footer">
+            <span class="tc-tag">9 objeções</span>
+            <span class="tc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="tool-card-primary" onclick="nav('treino',document.querySelector('[onclick*=treino]'))">
+          <div class="tc-accent-bar"></div>
+          <div class="tc-icon-wrap" style="background:var(--purple-dim);border-color:var(--purple-mid);color:var(--purple)">◈</div>
+          <div class="tc-name">Modo treino</div>
+          <div class="tc-desc">Quiz interativo · 6 situações reais de objeção. Errar aqui é de graça, errar na call não é.</div>
+          <div class="tc-footer">
+            <span class="tc-tag" style="background:var(--purple-dim);color:var(--purple);border-color:var(--purple-mid)">6 questões</span>
+            <span class="tc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="tool-card-primary" onclick="nav('priorizacao',document.querySelector('[onclick*=priorizacao]'))">
+          <div class="tc-accent-bar"></div>
+          <div class="tc-icon-wrap" style="background:var(--blue-dim);border-color:var(--blue-mid);color:var(--blue)">◐</div>
+          <div class="tc-name">Priorização da base</div>
+          <div class="tc-desc">Scoring de oportunidades · quente, pipeline, frio e inativo. Quem atacar primeiro.</div>
+          <div class="tc-footer">
+            <span class="tc-tag" style="background:var(--blue-dim);color:var(--blue);border-color:var(--blue-mid)">Scoring</span>
+            <span class="tc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="tool-card-primary" onclick="nav('funil',document.querySelector('[onclick*=funil]'))">
+          <div class="tc-accent-bar"></div>
+          <div class="tc-icon-wrap" style="background:rgba(26,127,75,.08);border-color:rgba(26,127,75,.2);color:var(--green)">◑</div>
+          <div class="tc-name">Funil interativo</div>
+          <div class="tc-desc">Clique em qualquer etapa e veja o que fazer, critério de avanço, SLA e ações imediatas.</div>
+          <div class="tc-footer">
+            <span class="tc-tag" style="background:rgba(26,127,75,.08);color:var(--green);border-color:rgba(26,127,75,.2)">6 etapas</span>
+            <span class="tc-arrow">→</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Secondary tools -->
+      <div class="home-section-label">Processo e gestão</div>
+      <div class="tool-grid-secondary">
+        <div class="tool-card-secondary" onclick="nav('canal',document.querySelector('[onclick*=canal]'))">
+          <div class="tcs-icon" style="background:var(--blue-dim);border-color:var(--blue-mid);color:var(--blue)">💬</div>
+          <div class="tcs-body">
+            <div class="tcs-name">Comunicação por canal</div>
+            <div class="tcs-desc">WhatsApp, ligação, reativação · mensagens prontas · quando usar cada canal</div>
+          </div>
+          <span class="tcs-arrow">›</span>
+        </div>
+        <div class="tool-card-secondary" onclick="nav('cadencia',document.querySelector('[onclick*=cadencia]'))">
+          <div class="tcs-icon" style="background:var(--accent-dim);border-color:var(--accent-mid);color:var(--accent)">◎</div>
+          <div class="tcs-body">
+            <div class="tcs-name">Cadência de contato</div>
+            <div class="tcs-desc">Régua D+1 ao D+30 · manutenção mensal · SLA por etapa</div>
+          </div>
+          <span class="tcs-arrow">›</span>
+        </div>
+        <div class="tool-card-secondary" onclick="nav('rituais',document.querySelector('[onclick*=rituais]'))">
+          <div class="tcs-icon" style="background:var(--accent-dim);border-color:var(--accent-mid);color:var(--accent)">⊡</div>
+          <div class="tcs-body">
+            <div class="tcs-name">Rituais do comercial</div>
+            <div class="tcs-desc">Daily, weekly e mensal · pauta, KPIs e modelo de reunião</div>
+          </div>
+          <span class="tcs-arrow">›</span>
+        </div>
+      </div>
+
+      <!-- Context tools -->
+      <div class="home-section-label">Contexto</div>
+      <div class="tool-grid-secondary">
+        <div class="tool-card-secondary" onclick="nav('produtos',document.querySelector('[onclick*=produtos]'))">
+          <div class="tcs-icon">◧</div>
+          <div class="tcs-body">
+            <div class="tcs-name">Preço &amp; Produtos</div>
+            <div class="tcs-desc">Portfólio completo · escada de valor · provas sociais</div>
+          </div>
+          <span class="tcs-arrow">›</span>
+        </div>
+        <div class="tool-card-secondary" onclick="nav('historia',document.querySelector('[onclick*=historia]'))">
+          <div class="tcs-icon">◉</div>
+          <div class="tcs-body">
+            <div class="tcs-name">História e mais</div>
+            <div class="tcs-desc">O que é a Horistic · mentores · diferencial DIVAP</div>
+          </div>
+          <span class="tcs-arrow">›</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════ SCRIPTS ════════════════════ -->
+  <div class="page" id="page-scripts">
+    <div class="section">
+      <div class="sec-header">
+        <div class="eyebrow">Scripts de venda</div>
+        <div class="sec-title">Discurso estruturado · do contato ao fechamento</div>
+        <div class="sec-desc">Scripts não são roteiros para decorar — são estruturas para você não improvisar o que importa. Adapte o tom, mantenha a lógica.</div>
+      </div>
+
+      <!-- SCRIPT 01 -->
+      <div class="eyebrow" style="margin-bottom:12px">01 · Primeiro contato · Pós-consultoria gratuita</div>
+      <div class="card">
+        <div class="card-title">
+          Reabertura pós-consultoria
+          <span class="diff diff-easy"><span class="diff-dot"></span>Fácil</span>
+          <span class="lv-badge lv-j">Júnior</span>
+        </div>
+
+        <div class="tip-wrong">
+          <strong>❌ Erro comum do júnior</strong>
+          Ligar sem preparação: "Oi, tudo bem? Lembrei que a gente conversou outro dia…" — abertura vaga, sem objetivo, sem contexto. Mata o engajamento nos primeiros 10 segundos.
+        </div>
+
+        <div class="script-block">
+          <div class="script-role">Closer <span class="lh-j">Júnior</span></div>
+          "Oi [Nome], aqui é o [Closer] da Horistic. Você fez uma consultoria conosco [X dias atrás] — você havia me dito que quer sair do achismo e operar com mais consistência. Queria entender como está sua operação hoje antes de te indicar qualquer caminho. Você tem 10 minutos?"
+        </div>
+
+        <div class="tip-right">
+          <strong>✓ Por que funciona</strong>
+          Referência específica (consultoria anterior) + dor do cliente nas palavras dele + pedido de tempo com prazo curto. O cérebro do cliente conecta contexto antes de decidir se vai ouvir.
+        </div>
+      </div>
+
+      <!-- SCRIPT 02 -->
+      <div class="eyebrow" style="margin-bottom:12px;margin-top:24px">02 · Cross-sell · RIP → APTC</div>
+      <div class="card">
+        <div class="card-title">
+          Assinante do RIP que ainda opera na mão
+          <span class="diff diff-easy"><span class="diff-dot"></span>Fácil</span>
+          <span class="lv-badge lv-j">Júnior</span>
+        </div>
+
+        <div class="pain-block" style="background:#FFF8F3;border:1px solid rgba(255,131,0,.18);border-left:3px solid var(--accent);border-radius:7px;padding:13px 15px;margin-bottom:12px">
+          <div class="blk-label" style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:5px">Dor do cliente</div>
+          <p style="font-size:13px;color:#7A4500;line-height:1.65;margin:0">Recebe o relatório todo dia mas ainda abre o gráfico, decide na mão, perde a entrada ou entra tarde. Sente que o RIP informa mas não resolve o problema de <em>execução</em>.</p>
+        </div>
+
+        <div class="tip-wrong">
+          <strong>❌ Erro comum do júnior</strong>
+          Apresentar o APTC direto: "Temos uma IA que dá os sinais automaticamente, quer conhecer?" — sem diagnosticar, sem contexto. O cliente não entendeu por que precisa disso.
+        </div>
+
+        <div class="script-block">
+          <div class="script-role">Closer <span class="lh-j">Júnior</span> · Diagnóstico primeiro</div>
+          "Você já acompanha o RIP todo dia — o que você faz com essa informação depois que recebe? Pergunto porque a maioria dos assinantes ainda executa na mão, olho no gráfico, e acaba perdendo a entrada ou errando o timing. O APTC nasceu pra resolver exatamente isso: é a mesma estratégia DIVAP, mas monitorando o mercado pra você e notificando na hora certa. Você opera assim hoje?"
+        </div>
+
+        <div class="script-block green">
+          <div class="script-role">Após confirmar interesse</div>
+          "Perfeito. Deixa eu te explicar em 3 pontos: primeiro, como o APTC funciona tecnicamente; segundo, os números de acerto por timeframe; terceiro, o que mais você ganha além dos sinais — cursos de Trade Cripto e o indicador DIVAP no TradingView estão incluídos. Posso começar?"
+        </div>
+
+        <div class="tip-right">
+          <strong>✓ Por que funciona</strong>
+          Pergunta de diagnóstico antes de apresentar. Faz o cliente verbalizar o problema — e quando ele faz isso, a solução entra com muito menos resistência.
+        </div>
+
+        <div class="obj-checklist">
+          <div class="blk-label">Checklist de execução</div>
+          <ul>
+            <li>Confirme que o cliente tem o RIP antes de usar esse script</li>
+            <li>Espere ele responder à pergunta diagnóstica — não continue sem ouvir</li>
+            <li>Apresente em 3 pontos, não mais. Se ele pedir detalhes, aí você aprofunda</li>
+            <li>Termine com uma ação concreta: envio de material, reunião ou link de assinatura</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SCRIPT 03 -->
+      <div class="eyebrow" style="margin-bottom:12px;margin-top:24px">03 · Cross-sell · APTC → Mentoria Horus (combo principal)</div>
+      <div class="card">
+        <div class="card-title">
+          Usuário do APTC sem mentoria
+          <span class="diff diff-med"><span class="diff-dot"></span>Médio</span>
+          <span class="lv-badge lv-j">Júnior</span>
+          <span class="lv-badge lv-p pleno-only">Pleno</span>
+        </div>
+
+        <div class="pain-block" style="background:#FFF8F3;border:1px solid rgba(255,131,0,.18);border-left:3px solid var(--accent);border-radius:7px;padding:13px 15px;margin-bottom:12px">
+          <div class="blk-label" style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:5px">Dor do cliente</div>
+          <p style="font-size:13px;color:#7A4500;line-height:1.65;margin:0">Recebe os sinais, mas não sabe quando confiar, quando não entrar, como montar a gestão de risco em cima. A ferramenta funciona mas a cabeça atrapalha. Resultado: ignora sinal "estranho" e erra por falta de contexto, ou entra em tudo e perde gestão.</p>
+        </div>
+
+        <div class="tip-wrong">
+          <strong>❌ Erro comum do júnior</strong>
+          Falar da mentoria sem ligar à dor: "A mentoria tem 11 estratégias com 85% de acerto." — número solto, sem ancorar no problema que o cliente está vivendo.
+        </div>
+
+        <div class="script-block">
+          <div class="script-role">Closer <span class="lh-j">Júnior</span></div>
+          "Você está com o APTC funcionando — ferramenta rodando, sinais chegando. Deixa eu te perguntar uma coisa: quando chega um sinal, como você decide se entra ou não? Pergunto porque esse é o gargalo que aparece em quase todo trader depois que a ferramenta entra. A Mentoria Horus é exatamente o que resolve isso — 11 estratégias com Victor e Fernando, com mais de 85% de acerto nas mesas deles. Você sentiria que precisa desse nível de aprofundamento?"
+        </div>
+
+        <div class="script-block blue pleno-only">
+          <div class="script-role">Pleno · Variação com comunidade</div>
+          "A maioria dos alunos que estão na Mentoria hoje vieram do APTC — o combo funciona porque um entrega o sinal, o outro entrega a mentalidade e o contexto de quando agir. Quero te mostrar o que é coberto na Mentoria em 5 minutos. Você tem espaço essa semana?"
+        </div>
+      </div>
+
+      <!-- SCRIPT 04 -->
+      <div class="eyebrow" style="margin-bottom:12px;margin-top:24px">04 · Up-sell · Mentoria → Horus Live / Remindset VIP</div>
+      <div class="card">
+        <div class="card-title">
+          Aluno da mentoria pronto para recorrência
+          <span class="diff diff-hard"><span class="diff-dot"></span>Difícil</span>
+          <span class="lv-badge lv-p pleno-only">Pleno</span>
+        </div>
+
+        <div class="pain-block" style="background:#FFF8F3;border:1px solid rgba(255,131,0,.18);border-left:3px solid var(--accent);border-radius:7px;padding:13px 15px;margin-bottom:12px">
+          <div class="blk-label" style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:5px">Dor do cliente</div>
+          <p style="font-size:13px;color:#7A4500;line-height:1.65;margin:0">Tem a base, sabe a teoria, mas opera sozinho. Falta o acompanhamento diário — ver a tomada de decisão acontecendo em tempo real, ter alguém ao vivo pra confirmar ou questionar o raciocínio dele.</p>
+        </div>
+
+        <div class="tip-wrong">
+          <strong>❌ Erro comum do pleno</strong>
+          Oferecer os dois produtos ao mesmo tempo sem diagnosticar o horário/rotina do cliente — cliente não consegue decidir entre Live e VIP e procrastina a decisão.
+        </div>
+
+        <div class="script-block">
+          <div class="script-role">Closer <span class="lh-p">Pleno</span> · Horus Live</div>
+          "Você já tem a base — estratégia DIVAP, gestão de risco, mentalidade. O que diferencia quem acelera de verdade é o acompanhamento diário: operar junto, ver a tomada de decisão na prática, em tempo real. O Horus Live é isso — de segunda a sexta, de manhã, com Fernando e Victor ao vivo. Você costuma ter o horário da manhã disponível?"
+        </div>
+
+        <div class="script-block blue pleno-only">
+          <div class="script-role">Pleno · Variação para quem não tem horário livre · Remindset VIP</div>
+          "Se o horário da manhã não encaixa, o Remindset VIP resolve isso de forma assíncrona: os sinais chegam direto no WhatsApp — entrada, alvo e stop — em tempo real. Em 2024: 87% de acerto e 12x no capital. É a sala ao vivo em formato que não exige que você pare o que está fazendo. Faz mais sentido pro seu dia a dia?"
+        </div>
+
+        <div class="obj-checklist">
+          <div class="blk-label">Checklist de execução</div>
+          <ul>
+            <li>Perguntar sobre rotina ANTES de escolher qual produto apresentar (Live vs VIP)</li>
+            <li>Nunca oferecer os dois ao mesmo tempo — causa paralisia de decisão</li>
+            <li>Se o cliente hesitar, propor uma semana de teste observando o Live antes de decidir</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SCRIPT 05 -->
+      <div class="eyebrow" style="margin-bottom:12px;margin-top:24px">05 · Indicação · Após fechamento ou check-in positivo</div>
+      <div class="card">
+        <div class="card-title">
+          Solicitação de indicação
+          <span class="diff diff-easy"><span class="diff-dot"></span>Fácil</span>
+          <span class="lv-badge lv-j">Júnior</span>
+        </div>
+
+        <div class="tip-wrong">
+          <strong>❌ Erro comum do júnior</strong>
+          Perguntar de forma genérica: "Você conhece alguém que poderia se interessar?" — pergunta ampla demais, o cliente trava porque não sabe quem indicar.
+        </div>
+
+        <div class="script-block green">
+          <div class="script-role">Closer — Pedido específico</div>
+          "Fico feliz que deu certo. Uma coisa que me ajudaria muito — e é raro eu pedir — é se você conhece alguém no seu círculo que tenha um perfil parecido com o seu: alguém que já opera ou quer operar cripto e que ainda está no achismo. Não precisa fazer nada formal, só me passar o contato e eu cuido do resto. Você tem alguém em mente?"
+        </div>
+
+        <div class="tip-right">
+          <strong>✓ Por que funciona</strong>
+          "Raro eu pedir" cria exclusividade. Perfil específico ("parecido com o seu", "já opera ou quer operar") ajuda o cliente a visualizar alguém real — em vez de uma lista vaga.
+        </div>
+      </div>
+
+      </div>
+
+      <!-- SCRIPT TREINO -->
+      <div class="divider"></div>
+      <div class="eyebrow" style="margin-bottom:6px">Treino de scripts · Pratique a decisão</div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.6">Leia a situação e escolha a abordagem. Não há resposta óbvia — é sobre tomar a decisão certa sob pressão.</p>
+
+      <div class="st-card" id="stcard-1">
+        <div class="st-head" onclick="toggleStCard(1)">
+          <div class="st-head-left">
+            <div class="st-meta"><span class="diff diff-easy"><span class="diff-dot"></span>Fácil</span><span class="lv-badge lv-j">Júnior</span></div>
+            <div class="st-title">O cliente ficou em silêncio depois de ouvir o preço da Mentoria. O que você faz?</div>
+          </div>
+          <span class="st-chevron">›</span>
+        </div>
+        <div class="st-body">
+          <div class="st-situation"><div class="st-situation-label">Situação</div><p>Você apresentou a Mentoria Horus. O cliente ouviu tudo, você mencionou o investimento, e ele ficou em silêncio por 4 segundos. Nada foi dito ainda.</p></div>
+          <div class="st-choices" id="stc-1">
+            <button class="st-choice" onclick="stAnswer(1,0)">Quebrar o silêncio: "Mas vale muito por tudo que tem incluído…"</button>
+            <button class="st-choice" onclick="stAnswer(1,1)">Esperar e perguntar: "O que você está pensando?"</button>
+            <button class="st-choice" onclick="stAnswer(1,2)">Oferecer: "Posso verificar se tem alguma condição especial pra você"</button>
+            <button class="st-choice" onclick="stAnswer(1,3)">Apresentar o RIP como alternativa de entrada</button>
+          </div>
+          <div class="st-feedback" id="stf-1"></div>
+          <button class="st-reset" onclick="stReset(1)">Tentar novamente</button>
+        </div>
+      </div>
+
+      <div class="st-card" id="stcard-2">
+        <div class="st-head" onclick="toggleStCard(2)">
+          <div class="st-head-left">
+            <div class="st-meta"><span class="diff diff-med"><span class="diff-dot"></span>Médio</span><span class="lv-badge lv-j">Júnior</span></div>
+            <div class="st-title">Você está em uma call de cross-sell (APTC → Mentoria) e o cliente diz que já usa o APTC faz 2 meses e está satisfeito. O que fazer?</div>
+          </div>
+          <span class="st-chevron">›</span>
+        </div>
+        <div class="st-body">
+          <div class="st-situation"><div class="st-situation-label">Situação</div><p>Cliente comprou o APTC 2 meses atrás, usa regularmente, sem reclamações. Você está tentando apresentar a Mentoria. Ele acabou de dizer que está satisfeito como está.</p></div>
+          <div class="st-choices" id="stc-2">
+            <button class="st-choice" onclick="stAnswer(2,0)">Dizer que o APTC sozinho tem limitações que ele ainda não percebeu</button>
+            <button class="st-choice" onclick="stAnswer(2,1)">Validar e abrir diagnóstico: "Ótimo. O que você ainda acha mais difícil na execução?"</button>
+            <button class="st-choice" onclick="stAnswer(2,2)">Apresentar a Mentoria diretamente: "Perfeito, então você vai amar a Mentoria…"</button>
+            <button class="st-choice" onclick="stAnswer(2,3)">Encerrar a conversa sobre Mentoria e marcar um follow-up futuro</button>
+          </div>
+          <div class="st-feedback" id="stf-2"></div>
+          <button class="st-reset" onclick="stReset(2)">Tentar novamente</button>
+        </div>
+      </div>
+
+      <div class="st-card" id="stcard-3">
+        <div class="st-head" onclick="toggleStCard(3)">
+          <div class="st-head-left">
+            <div class="st-meta"><span class="diff diff-hard"><span class="diff-dot"></span>Difícil</span><span class="lv-badge lv-p pleno-only">Pleno</span></div>
+            <div class="st-title">Você fez o up-sell para Horus Live. O cliente pergunta qual a diferença para o Remindset VIP. O que você faz?</div>
+          </div>
+          <span class="st-chevron">›</span>
+        </div>
+        <div class="st-body">
+          <div class="st-situation"><div class="st-situation-label">Situação</div><p>Você acabou de apresentar o Horus Live. O cliente demonstrou interesse mas pediu comparação com o Remindset VIP. Você sabe que apresentar os dois pode causar paralisia de decisão.</p></div>
+          <div class="st-choices" id="stc-3">
+            <button class="st-choice" onclick="stAnswer(3,0)">Comparar os dois produtos lado a lado com prós e contras de cada um</button>
+            <button class="st-choice" onclick="stAnswer(3,1)">Dizer que o Live é claramente superior e focar nele</button>
+            <button class="st-choice" onclick="stAnswer(3,2)">Perguntar primeiro se o cliente tem o horário da manhã livre — e só então explicar a diferença</button>
+            <button class="st-choice" onclick="stAnswer(3,3)">Enviar um comparativo por WhatsApp para ele decidir com calma</button>
+          </div>
+          <div class="st-feedback" id="stf-3"></div>
+          <button class="st-reset" onclick="stReset(3)">Tentar novamente</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════ FUNIL INTERATIVO ════════════════════ -->
+  <div class="page" id="page-funil">
+    <div class="funnel-wrap">
+      <div class="sec-header">
+        <div class="eyebrow">Funil interativo</div>
+        <div class="sec-title">Onde está o cliente — e o que fazer agora</div>
+        <div class="sec-desc">Clique em qualquer etapa para ver o que acontece nela, o critério de avanço, o SLA e as ações imediatas.</div>
+      </div>
+
+      <div id="funnel-stages">
+        <div class="funnel-stage" onclick="showFunnelDetail(0)">
+          <div class="fs-bar"><div class="fs-shape fs-s1" id="fs-0"><div class="fs-num">Etapa 01</div><div class="fs-name">Base ativa</div><div class="fs-sla">Score ≥ 6 → ativar</div></div></div>
+        </div>
+        <div class="funnel-stage" onclick="showFunnelDetail(1)">
+          <div class="fs-bar"><div class="fs-shape fs-s2" id="fs-1"><div class="fs-num">Etapa 02</div><div class="fs-name">Ativação</div><div class="fs-sla">SLA: 48h</div></div></div>
+        </div>
+        <div class="funnel-stage" onclick="showFunnelDetail(2)">
+          <div class="fs-bar"><div class="fs-shape fs-s3" id="fs-2"><div class="fs-num">Etapa 03</div><div class="fs-name">Diagnóstico</div><div class="fs-sla">SLA: 7 dias</div></div></div>
+        </div>
+        <div class="funnel-stage" onclick="showFunnelDetail(3)">
+          <div class="fs-bar"><div class="fs-shape fs-s4" id="fs-3"><div class="fs-num">Etapa 04</div><div class="fs-name">Apresentação</div><div class="fs-sla">SLA: 3 dias</div></div></div>
+        </div>
+        <div class="funnel-stage" onclick="showFunnelDetail(4)">
+          <div class="fs-bar"><div class="fs-shape fs-s5" id="fs-4"><div class="fs-num">Etapa 05</div><div class="fs-name">Negociação</div><div class="fs-sla">SLA: 5 dias</div></div></div>
+        </div>
+        <div class="funnel-stage" onclick="showFunnelDetail(5)">
+          <div class="fs-bar"><div class="fs-shape fs-s6" id="fs-5" style="clip-path:none;border-radius:0 10px 10px 0"><div class="fs-num">Etapa 06</div><div class="fs-name">Fechamento</div><div class="fs-sla">SLA: 48h</div></div></div>
+        </div>
+      </div>
+
+      <div id="funnel-detail-wrap"></div>
+
+      <div class="divider"></div>
+      <p style="font-size:12px;color:var(--text3);font-family:'Instrument Sans',sans-serif">Clique em qualquer etapa acima para ver as ações detalhadas. Use junto com a seção de Priorização da Base para saber quem está em qual etapa.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════ COMUNICAÇÃO ════════════════════ -->
+  <div class="page" id="page-canal">
+    <div class="canal-wrap">
+      <div class="sec-header">
+        <div class="eyebrow">Comunicação por canal</div>
+        <div class="sec-title">Mensagem certa · canal certo · hora certa</div>
+        <div class="sec-desc">A maior parte da venda na Horistic acontece via WhatsApp e ligação. Aqui estão mensagens prontas, regras de uso e como reativar quem sumiu.</div>
+      </div>
+
+      <div class="canal-tabs">
+        <button class="canal-tab active" onclick="switchCanal('wpp',this)">💬 WhatsApp</button>
+        <button class="canal-tab" onclick="switchCanal('liga',this)">📞 Ligação</button>
+        <button class="canal-tab" onclick="switchCanal('reativ',this)">🔁 Reativação</button>
+        <button class="canal-tab" onclick="switchCanal('regras',this)">📋 Regras</button>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="canal-panel active" id="cp-wpp">
+        <div class="eyebrow" style="margin-bottom:12px">Mensagens prontas · WhatsApp</div>
+
+        <div class="card">
+          <div class="card-title">Boas-vindas · D+1 após entrada no produto</div>
+          <div class="msg-label">Mensagem</div>
+          <div class="msg-thread">
+            <div class="msg-bubble closer">"Oi [Nome]! Aqui é o [Closer] da Horistic 👋 Seja bem-vindo à família! Seu acesso ao [produto] já está ativo. Se tiver qualquer dúvida nessa primeira semana, pode me chamar aqui — sou eu quem vai te acompanhar. Boa jornada!"<div class="msg-meta">Closer · D+1</div></div>
+          </div>
+          <div class="msg-dont"><div class="msg-dont-label">❌ Não fazer</div><p>Mandar áudio de boas-vindas sem texto — o cliente pode não ouvir imediatamente e a mensagem some no feed.</p></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Conteúdo de valor · Semana 2</div>
+          <div class="msg-label">Mensagem</div>
+          <div class="msg-thread">
+            <div class="msg-bubble closer">"Oi [Nome], vi um movimento no mercado essa semana que achei relevante pro seu perfil — [insight de 1 frase sobre cripto/mercado]. Você estava acompanhando isso?"<div class="msg-meta">Closer · Semana 2 · WhatsApp</div></div>
+            <div class="msg-bubble client">"Não vi não, o que foi?"<div class="msg-meta">Cliente</div></div>
+            <div class="msg-bubble closer">"[Explicação curta, 2-3 linhas]. Dependendo de como você está posicionado hoje, pode ser uma oportunidade. A hora que você quiser conversar sobre isso, fica à vontade 🙂"<div class="msg-meta">Closer</div></div>
+          </div>
+          <div class="msg-dont"><div class="msg-dont-label">❌ Não fazer</div><p>Terminar com pedido comercial: "Aproveitando, queria te falar sobre o APTC…" — quebra o tom de valor e parece forçado.</p></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Abertura comercial · Semana 3</div>
+          <div class="msg-thread">
+            <div class="msg-bubble closer">"[Nome], aproveitando que você mencionou que ainda executa na mão — tenho algo que acho que faria diferença pra você. Vale uma conversa rápida de 10 min essa semana? Posso te explicar em detalhes."<div class="msg-meta">Closer · Semana 3</div></div>
+          </div>
+          <div class="tip-right" style="margin-top:8px"><strong>✓ Estrutura</strong> Referência de conversa anterior + proposta de valor implícita + pedido de tempo pequeno. Não apresenta o produto pelo nome ainda.</div>
+        </div>
+      </div>
+
+      <!-- Ligação -->
+      <div class="canal-panel" id="cp-liga">
+        <div class="eyebrow" style="margin-bottom:12px">Estrutura da ligação · Passo a passo</div>
+
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot ac">1</div><div class="tl-content"><div class="tl-label">Abertura · 30s</div><div class="tl-title">Contexto imediato</div><div class="tl-desc">"Oi [Nome], aqui é o [Closer] da Horistic. Pode falar agora ou prefere que eu ligue em outro horário?" — respeitar o tempo dele antes de começar.</div></div></div>
+          <div class="tl-item"><div class="tl-dot ac">2</div><div class="tl-content"><div class="tl-label">Referência · 30s</div><div class="tl-title">Ancoragem na conversa anterior</div><div class="tl-desc">Conectar ao último ponto de contato: "Da última vez você mencionou [X] — queria entender como está isso hoje." Nunca começar do zero.</div></div></div>
+          <div class="tl-item"><div class="tl-dot ac">3</div><div class="tl-content"><div class="tl-label">Diagnóstico · 2–3 min</div><div class="tl-title">Uma pergunta aberta</div><div class="tl-desc">Fazer UMA pergunta e escutar. Não interromper. Anotar as palavras exatas que o cliente usa — são o material do seu discurso.</div></div></div>
+          <div class="tl-item"><div class="tl-dot ac">4</div><div class="tl-content"><div class="tl-label">Proposta ou conteúdo · 2 min</div><div class="tl-title">Apresentação em 3 pontos máximo</div><div class="tl-desc">Se for comercial: produto, por que faz sentido pro perfil dele, próximo passo. Se for relacionamento: insight relevante + pergunta de aprofundamento.</div></div></div>
+          <div class="tl-item"><div class="tl-dot ac">5</div><div class="tl-content"><div class="tl-label">Fechamento · 30s</div><div class="tl-title">Próxima ação concreta</div><div class="tl-desc">Toda ligação termina com ação: data de retorno, envio de material, link, ou compromisso verbal. Nunca encerrar "em aberto".</div></div></div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="eyebrow" style="margin-bottom:12px">Quando ligar vs mensagem</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Situação</th><th>Canal preferencial</th><th>Por quê</th></tr></thead>
+            <tbody>
+              <tr><td>Primeiro contato pós-consultoria</td><td><strong>Ligação</strong></td><td>Estabelece relação pessoal — mais difícil de ignorar que texto</td></tr>
+              <tr><td>Conteúdo de valor semanal</td><td><strong>WhatsApp</strong></td><td>Baixo comprometimento — cliente não precisa parar o que faz</td></tr>
+              <tr><td>Abertura comercial de produto novo</td><td><strong>Ligação</strong></td><td>Tom e timing controlados — reduz mal-entendido</td></tr>
+              <tr><td>Envio de material / proposta</td><td><strong>WhatsApp</strong></td><td>Cliente lê no próprio ritmo — seguir com ligação 24h depois</td></tr>
+              <tr><td>Follow-up de objeção não resolvida</td><td><strong>Ligação</strong></td><td>Objeção por texto é mais fácil de ignorar</td></tr>
+              <tr><td>Check-in de satisfação</td><td><strong>WhatsApp</strong></td><td>Menos invasivo — cliente responde quando quiser</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reativação -->
+      <div class="canal-panel" id="cp-reativ">
+        <div class="eyebrow" style="margin-bottom:12px">Reativação · Lead que sumiu</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.65">Quando o cliente parou de responder, o problema não é o canal — é a ausência de novidade. Use contexto novo para reabrir sem parecer insistente.</p>
+
+        <div class="card">
+          <div class="card-title">Reativação leve · Sem resposta há 2 semanas</div>
+          <div class="msg-thread">
+            <div class="msg-bubble closer">"Oi [Nome]! Vi algo hoje que lembrei de você imediatamente — [evento de mercado ou novidade de produto relevante pro perfil]. Acho que vale você dar uma olhada. Tudo bem por aí?"<div class="msg-meta">Closer · WhatsApp</div></div>
+          </div>
+          <div class="tip-right" style="margin-top:8px"><strong>✓ Por que funciona</strong> Contexto novo, tom leve, sem cobrança. O "lembrei de você" é pessoal sem ser pressão.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Reativação direta · Sem resposta há 3–4 semanas</div>
+          <div class="msg-thread">
+            <div class="msg-bubble closer">"[Nome], tentei te contatar algumas vezes mas entendo que o timing pode não estar sendo o melhor. Só quero deixar a porta aberta: quando fizer sentido pra você, estarei aqui. Tem alguma dúvida ou algo que posso ajudar agora?"<div class="msg-meta">Closer · WhatsApp</div></div>
+          </div>
+          <div class="msg-dont"><div class="msg-dont-label">❌ Não fazer</div><p>"Você ainda tem interesse ou posso tirar do meu follow-up?" — cria pressão desnecessária e raramente funciona da forma esperada.</p></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Reativação por evento · Lançamento ou oferta nova</div>
+          <div class="msg-thread">
+            <div class="msg-bubble closer">"[Nome], tenho uma novidade que ainda não cheguei a te contar — [nome do lançamento] abre vagas no dia [X] e lembrei de você por causa do [motivo específico relacionado ao perfil]. Vale uma conversa de 10 min antes disso?"<div class="msg-meta">Closer · Antes do lançamento</div></div>
+          </div>
+          <div class="tip-right" style="margin-top:8px"><strong>✓ Regra de ouro</strong> Lançamentos são a melhor desculpa legítima para reativar leads frios. Use a data como âncora de urgência real.</div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="eyebrow" style="margin-bottom:12px">Fluxo de reativação</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Semanas sem resposta</th><th>Ação</th><th>Tom</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1–2 sem</strong></td><td>WhatsApp com conteúdo de valor + pergunta leve</td><td>Valor, sem pressão</td></tr>
+              <tr><td><strong>3–4 sem</strong></td><td>WhatsApp direto com abertura de porta</td><td>Empático, sem cobrança</td></tr>
+              <tr><td><strong>5–6 sem</strong></td><td>Ligação curta com contexto novo</td><td>Consultivo</td></tr>
+              <tr><td><strong>7+ sem</strong></td><td>Uma última tentativa com evento/lançamento como gancho. Se sem resposta: score −2, cadência trimestral.</td><td>Objetivo e claro</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Regras -->
+      <div class="canal-panel" id="cp-regras">
+        <div class="eyebrow" style="margin-bottom:12px">Regras de comunicação · Sempre válidas</div>
+        <div class="card">
+          <div class="rule-row"><div class="rule-icon">⏰</div><div class="rule-text"><strong>Horário de contato:</strong> WhatsApp entre 8h–20h, ligações entre 9h–19h. Respeitar fim de semana — salvo se o próprio cliente iniciou contato.</div></div>
+          <div class="rule-row"><div class="rule-icon">🎯</div><div class="rule-text"><strong>Todo contato tem objetivo:</strong> antes de enviar qualquer mensagem ou ligar, definir o objetivo (informar, diagnosticar, apresentar, fechar). Não entrar em contato "só pra dar oi".</div></div>
+          <div class="rule-row"><div class="rule-icon">📝</div><div class="rule-text"><strong>Registrar no CRM no mesmo dia:</strong> canal usado, resposta ou ausência, próximo passo combinado. Memória não é sistema.</div></div>
+          <div class="rule-row"><div class="rule-icon">🔄</div><div class="rule-text"><strong>Sem resposta em 2 tentativas → mudar canal:</strong> se tentou WhatsApp duas vezes e não respondeu, ligar. Se ligou duas vezes e não atendeu, voltar para WhatsApp com contexto novo.</div></div>
+          <div class="rule-row"><div class="rule-icon">✋</div><div class="rule-text"><strong>Máximo de 2 tentativas por canal por semana:</strong> mais que isso é perseguição, não follow-up. Preservar a relação de longo prazo.</div></div>
+          <div class="rule-row"><div class="rule-icon">💬</div><div class="rule-text"><strong>Tom escrito ≠ tom falado:</strong> mensagem de WhatsApp deve ser mais curta, mais direta e com menos adjetivos que uma ligação. Áudio só se o cliente também usar áudio.</div></div>
+          <div class="rule-row"><div class="rule-icon">🚀</div><div class="rule-text"><strong>Lançamento = oportunidade de reativação:</strong> qualquer novo produto ou evento é uma desculpa legítima para retomar contato com leads frios. Planejar a lista antes do lançamento.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="page" id="page-objecoes">
+    <div class="section">
+      <div class="sec-header">
+        <div class="eyebrow">Contornos de objeção</div>
+        <div class="sec-title">Cada objeção é uma pergunta disfarçada</div>
+        <div class="sec-desc">Para cada resistência: a dor real por trás dela, o erro que o vendedor júnior costuma cometer, e a resposta que funciona. Clique para expandir.</div>
+      </div>
+
+      <!-- TIMING -->
+      <div class="eyebrow" style="margin-bottom:12px">Objeções de timing</div>
+
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-head-left">
+            <div class="obj-meta">
+              <span class="diff diff-easy"><span class="diff-dot"></span>Fácil</span>
+              <span class="lv-badge lv-j">Júnior</span>
+            </div>
+            <div class="obj-question-text">"Não é um bom momento pra mim agora."</div>
+          </div>
+          <span class="obj-chevron">›</span>
+        </div>
+        <div class="obj-body">
+          <div class="pain-block">
+            <div class="blk-label">Dor real do cliente</div>
+            <p>O cliente não está necessariamente sem interesse — ele está sem clareza. "Não é o momento" quase sempre significa "não entendi ainda por que preciso disso agora" ou "tenho uma objeção específica que não verbalizo".</p>
+          </div>
+          <div class="wrong-block">
+            <div class="blk-label">❌ Erro comum do júnior</div>
+            <p>Aceitar e desligar: "Tudo bem, quando melhorar me fala!" — perde o lead sem descobrir o que realmente está bloqueando. O cliente não volta sozinho.</p>
+          </div>
+          <div class="right-block">
+            <div class="blk-label">✓ Resposta certa</div>
+            <p>Validar + reverter com pergunta qualificadora: <em>"Entendo. Só pra eu entender melhor: quando você diz que não é o momento, é mais pela questão de liquidez, ou mais pela incerteza do mercado? Pergunto porque dependendo da resposta, talvez exista uma alternativa que não te force a comprometer capital agora."</em></p>
+          </div>
+          <div class="obj-checklist">
+            <div class="blk-label">Checklist de execução</div>
+            <ul>
+              <li>Nunca encerrar sem descobrir <em>qual</em> momento o cliente está esperando</li>
+              <li>Fazer UMA pergunta — não duas. Espere a resposta antes de continuar</li>
+              <li>Se ele responder "liquidez": abrir conversa sobre o RIP (R$49, baixo compromisso)</li>
+              <li>Se responder "incerteza de mercado": reencadrar com o argumento de método vs achismo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-head-left">
+            <div class="obj-meta">
+              <span class="diff diff-easy"><span class="diff-dot"></span>Fácil</span>
+              <span class="lv-badge lv-j">Júnior</span>
+            </div>
+            <div class="obj-question-text">"Deixa eu pensar mais um pouco."</div>
+          </div>
+          <span class="obj-chevron">›</span>
+        </div>
+        <div class="obj-body">
+          <div class="pain-block">
+            <div class="blk-label">Dor real do cliente</div>
+            <p>Faltou informação ou tem uma preocupação não verbalizada. Raramente é sobre "precisar de tempo" — quase sempre é sobre não ter tido a pergunta certa respondida ainda.</p>
+          </div>
+          <div class="wrong-block">
+            <div class="blk-label">❌ Erro comum do júnior</div>
+            <p>Mandar mais material sem perguntar o que falta: "Vou te encaminhar o PDF da mentoria!" — o cliente recebe, não lê, e o follow-up vira perseguição.</p>
+          </div>
+          <div class="right-block">
+            <div class="blk-label">✓ Resposta certa</div>
+            <p><em>"Claro. Pra eu te ajudar a pensar melhor — o que você ainda precisa entender ou esclarecer pra chegar a uma conclusão? Porque dependendo do que é, talvez a gente resolva isso aqui mesmo, agora."</em></p>
+            <p style="margin-top:8px">Se hesitar em responder: <em>"Costuma acontecer que quando alguém precisa pensar, é porque faltou alguma informação ou tem uma preocupação que não apareceu ainda. Qual é a sua?"</em></p>
+          </div>
+          <div class="obj-checklist">
+            <div class="blk-label">Checklist de execução</div>
+            <ul>
+              <li>Não enviar material novo antes de descobrir o que está faltando</li>
+              <li>Ancorar um prazo no follow-up: "Quando você acha que vai ter clareza?"</li>
+              <li>Se ele der prazo, respeitar — e aparecer exatamente na data combinada</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-head-left">
+            <div class="obj-meta">
+              <span class="diff diff-easy"><span class="diff-dot"></span>Fácil</span>
+              <span class="lv-badge lv-j">Júnior</span>
+            </div>
+            <div class="obj-question-text">"Agora não, mas no próximo mês sim."</div>
+          </div>
+          <span class="obj-chevron">›</span>
+        </div>
+        <div class="obj-body">
+          <div class="pain-block">
+            <div class="blk-label">Dor real do cliente</div>
+            <p>Pode ser real (situação financeira pontual) ou pode ser procrastinação com prazo. A diferença é que no segundo caso, o "próximo mês" se transforma em outro próximo mês.</p>
+          </div>
+          <div class="wrong-block">
+            <div class="blk-label">❌ Erro comum do júnior</div>
+            <p>Registrar como "futuro" e esquecer: nenhum lembrete, nenhuma data, nenhum compromisso do cliente. Quando o mês chega, o lead esfriou.</p>
+          </div>
+          <div class="right-block">
+            <div class="blk-label">✓ Resposta certa</div>
+            <p><em>"Perfeito. Pra eu não perder esse timing — posso colocar um lembrete pra nós dois? Fica mais fácil de eu preparar a proposta com antecedência e você já entra no mês seguinte com tudo pronto. Que data no mês que vem seria boa pra você?"</em></p>
+          </div>
+          <div class="obj-checklist">
+            <div class="blk-label">Checklist de execução</div>
+            <ul>
+              <li>Obter UMA data específica antes de desligar — não aceitar "no começo do mês"</li>
+              <li>Confirmar o lembrete por WhatsApp logo após a call com a data</li>
+              <li>No retorno: referenciar a conversa anterior + a data que ele mesmo escolheu</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONFIANÇA -->
+      <div class="divider"></div>
+      <div class="eyebrow" style="margin-bottom:12px">Objeções de confiança e risco</div>
+
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-head-left">
+            <div class="obj-meta">
+              <span class="diff diff-med"><span class="diff-dot"></span>Médio</span>
+              <span class="lv-badge lv-j">Júnior</span>
+              <span class="lv-badge lv-p pleno-only">Pleno</span>
+            </div>
+            <div class="obj-question-text">"Estou com medo do risco. Não quero perder dinheiro."</div>
+          </div>
+          <span class="obj-chevron">›</span>
+        </div>
+        <div class="obj-body">
+          <div class="pain-block">
+            <div class="blk-label">Dor real do cliente</div>
+            <p>Provavelmente teve uma experiência ruim anterior — ou está comparando trading com investimento passivo. O medo não é irracional. É sinal de que a venda precisa passar por educação antes de fechar.</p>
+          </div>
+          <div class="wrong-block">
+            <div class="blk-label">❌ Erro comum do júnior</div>
+            <p>Tentar eliminar o medo com números: "Mas a gente tem 87% de acerto!" — dados sem contexto de risco soam como promessa e aumentam a desconfiança em vez de diminuir.</p>
+          </div>
+          <div class="right-block">
+            <div class="blk-label">✓ Resposta certa</div>
+            <p><em>"Esse medo é saudável — qualquer trader responsável pensa assim. Antes de te mostrar qualquer número: quando você pensa em risco, está pensando em volatilidade ou em perda permanente de capital? São coisas diferentes, e a solução também é diferente."</em></p>
+            <p style="margin-top:8px">Após resposta: <em>"A Horistic existe pra eliminar o achismo que gera esse tipo de perda. A estratégia DIVAP tem histórico declarado de 85–87% de acerto — mas o que mais importa é que Victor e Fernando operam com a própria conta ao vivo. Você não está comprando teoria."</em></p>
+          </div>
+          <div class="obj-checklist">
+            <div class="blk-label">Checklist de execução</div>
+            <ul>
+              <li>Nunca minimizar o medo — validar primeiro, sempre</li>
+              <li>Separar o tipo de risco antes de apresentar qualquer número</li>
+              <li>Usar o RIP como entrada de baixo risco se o cliente ainda não estiver pronto pra produto maior</li>
+              <li><span class="lv-p pleno-only">Pleno: usar depoimentos com @instagram como prova verificável independente</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-head-left">
+            <div class="obj-meta">
+              <span class="diff diff-hard"><span class="diff-dot"></span>Difícil</span>
+              <span class="lv-badge lv-p pleno-only">Pleno</span>
+            </div>
+            <div class="obj-question-text">"Já perdi dinheiro com investimento antes."</div>
+          </div>
+          <span class="obj-chevron">›</span>
+        </div>
+        <div class="obj-body">
+          <div class="pain-block">
+            <div class="blk-label">Dor real do cliente</div>
+            <p>Experiência de perda real que ainda dói. Pode ter sido por falta de método, sinal ruim de terceiros, ou volatilidade. A diferença importa muito — e o closer precisa descobrir antes de tentar contornar.</p>
+          </div>
+          <div class="wrong-block">
+            <div class="blk-label">❌ Erro mais grave (júnior e pleno)</div>
+            <p>Ignorar a história e apresentar produto: "Entendo, mas aqui é diferente…" — o cliente fecha. Não adianta argumentar sem antes escutar e entender o que aconteceu.</p>
+          </div>
+          <div class="right-block">
+            <div class="blk-label">✓ Resposta certa (Pleno)</div>
+            <p><em>"Lamento que isso tenha acontecido. Você pode me contar o que foi? Pergunto porque existe uma diferença grande entre perder por volatilidade do mercado, por falta de método, ou por seguir sinal de alguém que não operava de verdade."</em></p>
+            <p style="margin-top:8px">Após ouvir: <em>"O que diferencia a Horistic é que Victor e Fernando operam ao vivo todo dia no Horus Live — você não está comprando teoria de quem não está na mesa. Mas antes de te mostrar qualquer coisa, quero entender o que aconteceu antes pra garantir que o que eu vou te mostrar não repete o mesmo padrão."</em></p>
+          </div>
+          <div class="obj-checklist">
+            <div class="blk-label">Checklist de execução</div>
+            <ul>
+              <li>Ouvir a história completa antes de qualquer argumento — sem interromper</li>
+              <li>Classificar o tipo de perda: método, sinal externo ou mercado</li>
+              <li>Só apresentar produto depois de diferenciar o que a Horistic faz de diferente no contexto específico da perda dele</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-head-left">
+            <div class="obj-meta">
+              <span class="diff diff-med"><span class="diff-dot"></span>Médio</span>
+              <span class="lv-badge lv-j">Júnior</span>
+            </div>
+            <div class="obj-question-text">"Não conheço bem a Horistic ainda."</div>
+          </div>
+          <span class="obj-chevron">›</span>
+        </div>
+        <div class="obj-body">
+          <div class="pain-block">
+            <div class="blk-label">Dor real do cliente</div>
+            <p>Falta de referência. O cliente não tem base pra confiar — e sem confiança, não há compra. A solução é entregar prova concreta antes de tentar fechar qualquer coisa.</p>
+          </div>
+          <div class="wrong-block">
+            <div class="blk-label">❌ Erro comum do júnior</div>
+            <p>Tentar convencer com discurso da empresa: "A Horistic é líder em trading cripto e tem os melhores mentores…" — autopropaganda sem dados. Aumenta o ceticismo.</p>
+          </div>
+          <div class="right-block">
+            <div class="blk-label">✓ Resposta certa</div>
+            <p><em>"Totalmente justo. Deixa eu te dar alguns pontos concretos: mais de 2.500 pessoas já estão na base, o RIP tem NPS 9.9 — raro em qualquer serviço de assinatura — e mais de R$1 milhão em patrimônio segue o relatório diariamente. Os mentores, Victor Rocha e Fernando Pereira, operam ao vivo todo dia e aparecem com o rosto na marca."</em></p>
+            <p style="margin-top:8px"><em>"O que faria mais sentido como primeiro passo: ver depoimentos de quem já usou, ou começar por algo de baixo risco pra você mesmo avaliar? O RIP começa em R$49 com 30 dias de garantia."</em></p>
+          </div>
+          <div class="obj-checklist">
+            <div class="blk-label">Checklist de execução</div>
+            <ul>
+              <li>Sempre terminar com uma porta de entrada de baixo risco (RIP R$49)</li>
+              <li>Mencionar os depoimentos com @instagram como prova verificável — não é "nós dizemos", é público</li>
+              <li>Não tentar fechar produto premium em clientes que ainda estão na etapa de confiança</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VALOR -->
+      <div class="divider"></div>
+      <div class="eyebrow" style="margin-bottom:12px">Objeções de valor e condições</div>
+
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-head-left">
+            <div class="obj-meta">
+              <span class="diff diff-med"><span class="diff-dot"></span>Médio</span>
+              <span class="lv-badge lv-j">Júnior</span>
+            </div>
+            <div class="obj-question-text">"É muito dinheiro. Não tenho esse valor disponível."</div>
+          </div>
+          <span class="obj-chevron">›</span>
+        </div>
+        <div class="obj-body">
+          <div class="pain-block">
+            <div class="blk-label">Dor real do cliente</div>
+            <p>Pode ser real (restrição financeira genuína) ou percepção de valor (o produto não parece valer o preço ainda). Confundir os dois é o maior erro aqui.</p>
+          </div>
+          <div class="wrong-block">
+            <div class="blk-label">❌ Erro comum do júnior</div>
+            <p>Dar desconto imediatamente: "Posso ver o que consigo pra você…" — desvaloriza o produto, cria precedente ruim e não resolve o problema real se for percepção de valor.</p>
+          </div>
+          <div class="right-block">
+            <div class="blk-label">✓ Resposta certa</div>
+            <p><em>"Entendo. Deixa eu te mostrar um caminho feito pra isso: o RIP começa em R$49 com 7 dias de garantia de satisfação e 30 dias de garantia de resultado. Não é um produto de consolação — tem mais de 500 assinantes e NPS 9.9. É a forma mais inteligente de você entrar, avaliar a qualidade do que a gente entrega, e decidir se quer ir além. Você toparia começar por aí?"</em></p>
+          </div>
+          <div class="obj-checklist">
+            <div class="blk-label">Checklist de execução</div>
+            <ul>
+              <li>Nunca oferecer desconto como primeira resposta</li>
+              <li>Qualificar primeiro: a objeção é orçamento real ou percepção de valor?</li>
+              <li>Se for percepção: reforçar o ROI (quanto o cliente pode ganhar/deixar de perder com o produto)</li>
+              <li>Se for orçamento real: RIP como porta de entrada, não como consolação</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-head-left">
+            <div class="obj-meta">
+              <span class="diff diff-hard"><span class="diff-dot"></span>Difícil</span>
+              <span class="lv-badge lv-p pleno-only">Pleno</span>
+            </div>
+            <div class="obj-question-text">"Já tenho outra escola / curso / assessor cuidando disso."</div>
+          </div>
+          <span class="obj-chevron">›</span>
+        </div>
+        <div class="obj-body">
+          <div class="pain-block">
+            <div class="blk-label">Dor real do cliente</div>
+            <p>O cliente já investiu em outra solução — e admitir que pode não ser a melhor é difícil. Não se trata de convencer que o outro é pior, mas de abrir uma lacuna que o concorrente não preenche.</p>
+          </div>
+          <div class="wrong-block">
+            <div class="blk-label">❌ Erro mais grave (júnior e pleno)</div>
+            <p>Atacar o concorrente: "Essa escola não tem histórico de acerto comprovado…" — o cliente sente que está defendendo sua própria decisão e fecha imediatamente.</p>
+          </div>
+          <div class="right-block">
+            <div class="blk-label">✓ Resposta certa (Pleno)</div>
+            <p><em>"Entendo, e não estou aqui pra substituir ninguém. O que eu gostaria de mostrar é o que diferencia a Horistic: a estratégia DIVAP é proprietária — você não encontra isso em outra escola — e os mentores operam ao vivo todo dia com a própria conta."</em></p>
+            <p style="margin-top:8px"><em>"Você toparia me responder uma coisa: a metodologia que você usa hoje tem nome, histórico de acerto documentado e o professor operando ao vivo com a própria conta? Se sim, ótimo. Se não, talvez valha 10 minutos de comparação."</em></p>
+          </div>
+          <div class="obj-checklist">
+            <div class="blk-label">Checklist de execução</div>
+            <ul>
+              <li>Nunca atacar o concorrente — sempre diferenciar pelo que a Horistic tem, não pelo que o outro não tem</li>
+              <li>A pergunta de diferenciação ("seu professor opera ao vivo?") é o diferencial mais forte — usar sempre</li>
+              <li>Se o cliente confirmar que a outra escola também tem isso: reconhecer e buscar outro ângulo de diferenciação</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="obj-card" onclick="toggleObj(this)">
+        <div class="obj-head">
+          <div class="obj-head-left">
+            <div class="obj-meta">
+              <span class="diff diff-hard"><span class="diff-dot"></span>Difícil</span>
+              <span class="lv-badge lv-p pleno-only">Pleno</span>
+            </div>
+            <div class="obj-question-text">"Estou bem como estou. Não preciso mudar nada."</div>
+          </div>
+          <span class="obj-chevron">›</span>
+        </div>
+        <div class="obj-body">
+          <div class="pain-block">
+            <div class="blk-label">Dor real do cliente</div>
+            <p>Status quo bias — o desconforto da mudança parece maior que o benefício. O cliente não está sentindo dor suficiente para mover. A missão do closer é plantar uma semente de dúvida sobre o futuro sem forçar.</p>
+          </div>
+          <div class="wrong-block">
+            <div class="blk-label">❌ Erro comum do pleno</div>
+            <p>Insistir com mais argumentos: "Mas você poderia estar ganhando muito mais…" — cliente se fecha. Quanto mais você empurra contra o status quo, mais ele defende.</p>
+          </div>
+          <div class="right-block">
+            <div class="blk-label">✓ Resposta certa (Pleno)</div>
+            <p><em>"Ótimo sinal — significa que o que você tem está funcionando. Não vou forçar nada. Só deixo uma pergunta pra você refletir: o que você tem hoje vai continuar entregando o mesmo resultado nos próximos 12–24 meses com o cenário que se desenha? Se a resposta for sim, não tem nada pra discutir. Se houver qualquer dúvida, vale a pena a gente conversar — sem compromisso."</em></p>
+          </div>
+          <div class="obj-checklist">
+            <div class="blk-label">Checklist de execução</div>
+            <ul>
+              <li>Não forçar fechamento nessa objeção — plantar semente e propor retorno em 30 dias</li>
+              <li>A pergunta sobre o futuro é a única alavanca que funciona aqui</li>
+              <li>Registrar no CRM com follow-up agendado em 30 dias</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════ TREINO ════════════════════ -->
+  <div class="page" id="page-treino">
+    <div class="section">
+      <div class="sec-header">
+        <div class="eyebrow">Modo treino</div>
+        <div class="sec-title">Teste seu reflexo antes da call</div>
+        <div class="sec-desc">Quiz interativo de objeções. Para cada situação, escolha a melhor resposta. Errar aqui é de graça — errar na call não é.</div>
+      </div>
+
+      <div id="treino-container"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ PRIORIZAÇÃO ════════════════════ -->
+  <div class="page" id="page-priorizacao">
+    <div class="section">
+      <div class="sec-header">
+        <div class="eyebrow">04 · Priorização da base</div>
+        <div class="sec-title">Scoring de oportunidades</div>
+        <div class="sec-desc">Separa quem merece atenção imediata de quem entra na fila. O critério elimina o instinto e coloca um sistema no lugar.</div>
+      </div>
+
+      <div class="eyebrow" style="margin-bottom:12px">Critérios · Some para obter score total</div>
+
+      <div class="score-item"><div class="score-pts hi">+3</div><div><div class="score-label">Já tem produto premium · Mentoria, Horus Live ou Remindset VIP</div><div class="score-sub">Maior alavanca de expansão — cliente estabelecido com relacionamento</div></div></div>
+      <div class="score-item"><div class="score-pts hi">+3</div><div><div class="score-label">Respondeu ou abriu conversa nos últimos 30 dias</div><div class="score-sub">WhatsApp, consultoria ou solicitação espontânea — sinal ativo de interesse</div></div></div>
+      <div class="score-item"><div class="score-pts md">+2</div><div><div class="score-label">Assina o RIP há mais de 30 dias com engajamento regular</div><div class="score-sub">Produto de entrada sendo usado — sinal de prontidão para escada</div></div></div>
+      <div class="score-item"><div class="score-pts md">+2</div><div><div class="score-label">Tem APTC mas não tem Mentoria · combo principal incompleto</div><div class="score-sub">Oportunidade mais direta de cross-sell na base</div></div></div>
+      <div class="score-item"><div class="score-pts md">+2</div><div><div class="score-label">Mencionou dificuldade de execução ou timing nas calls</div><div class="score-sub">Gatilho natural para APTC, Horus Live ou Remindset VIP</div></div></div>
+      <div class="score-item"><div class="score-pts lo">+1</div><div><div class="score-label">Já indicou alguém — perfil de embaixador</div><div class="score-sub">Sinal de satisfação e confiança acima da média</div></div></div>
+      <div class="score-item"><div class="score-pts lo">+1</div><div><div class="score-label">Participou da Formação Cripto Trader presencial</div><div class="score-sub">Relacionamento presencial — menor fricção para produtos premium</div></div></div>
+      <div class="score-item" style="border-color:rgba(192,57,43,.2)"><div class="score-pts ng">−2</div><div><div class="score-label">Sem resposta em 2 tentativas consecutivas</div><div class="score-sub">Entrar em cadência passiva — não forçar contato comercial</div></div></div>
+
+      <div class="divider"></div>
+
+      <div class="eyebrow" style="margin-bottom:12px">Classificação por score</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Faixa</th><th>Classificação</th><th>Ação imediata</th><th>Frequência</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag g">7–10 pts</span></td><td><strong>Quente</strong></td><td>Contato ativo essa semana. Prioridade máxima.</td><td>Semanal</td></tr>
+            <tr><td><span class="tag o">4–6 pts</span></td><td><strong>Pipeline ativo</strong></td><td>Régua de ativação padrão (seção Cadência)</td><td>Quinzenal</td></tr>
+            <tr><td><span class="tag">1–3 pts</span></td><td><strong>Base fria</strong></td><td>Cadência passiva de valor. Sem abordagem comercial ainda.</td><td>Mensal</td></tr>
+            <tr><td><span class="tag" style="color:#aaa">≤ 0 pts</span></td><td><strong>Inativo</strong></td><td>Tentativa única com contexto diferente. Se sem resposta: aguardar evento.</td><td>Trimestral</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="divider"></div>
+      <div class="eyebrow" style="margin-bottom:12px">Regras de uso</div>
+      <div class="card">
+        <ul class="checklist">
+          <li>Pontuar toda a base ao menos uma vez por mês — o score muda com o comportamento do cliente</li>
+          <li>Não abordar comercialmente quem está na faixa fria (1–3) sem ao menos 1 touchpoint de valor antes</li>
+          <li>Score alto não substitui cadência — oportunidade quente também precisa de abordagem estruturada</li>
+          <li>Registrar o score no CRM com data — permite rastrear evolução e identificar padrões por closer</li>
+          <li>Em caso de dúvida entre dois clientes: priorizar quem tem sinal ativo recente — resposta nos últimos 30 dias é o indicador mais forte</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ CADÊNCIA ════════════════════ -->
+  <div class="page" id="page-cadencia">
+    <div class="section">
+      <div class="sec-header">
+        <div class="eyebrow">05 · Cadência de contato</div>
+        <div class="sec-title">Régua de contato pós-entrada</div>
+        <div class="sec-desc">Sequência estruturada de touchpoints que conduz o cliente da entrada ao próximo passo. Cada etapa tem canal, objetivo e SLA.</div>
+      </div>
+
+      <div class="eyebrow" style="margin-bottom:12px">Ativação · Novo cliente (D+1 ao D+30)</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Dia</th><th>Canal</th><th>Objetivo</th><th>Tom</th><th>Se não responder</th></tr></thead>
+          <tbody>
+            <tr><td><strong>D+1</strong></td><td>WhatsApp</td><td>Boas-vindas + confirmação do produto</td><td>Acolhimento</td><td>Reenviar em D+3</td></tr>
+            <tr><td><strong>D+3</strong></td><td>WhatsApp</td><td>Enviar material de apresentação</td><td>Informativo</td><td>Ligar em D+5</td></tr>
+            <tr><td><strong>D+7</strong></td><td>Ligação</td><td>Primeira conversa · perfil e objetivos</td><td>Diagnóstico</td><td>Tentar 2x, registrar no CRM</td></tr>
+            <tr><td><strong>D+15</strong></td><td>WhatsApp</td><td>Insight ou conteúdo relevante ao perfil</td><td>Valor</td><td>Seguir cadência</td></tr>
+            <tr><td><strong>D+21</strong></td><td>Ligação</td><td>Proposta de reunião de diagnóstico</td><td>Consultivo</td><td>WhatsApp em D+23</td></tr>
+            <tr><td><strong>D+30</strong></td><td>WhatsApp</td><td>Check-in de satisfação com produto atual</td><td>Relacionamento</td><td>Marcar revisão mensal</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="divider"></div>
+      <div class="eyebrow" style="margin-bottom:12px">Manutenção · Base ativa (ciclo mensal)</div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">Semana 1 · Checagem de portfólio</div><p>Revisão rápida da posição atual. Abrir com dado relevante: resultado do produto, movimentação de mercado ou novidade relacionada ao perfil.</p><div class="tags"><span class="tag">WhatsApp ou ligação</span><span class="tag">5–10 min</span></div></div>
+        <div class="card"><div class="card-title">Semana 2 · Conteúdo de valor</div><p>Enviar análise de mercado, insight ou conteúdo relevante ao perfil. Sem pedido comercial. Objetivo: presença e autoridade.</p><div class="tags"><span class="tag">WhatsApp</span><span class="tag">Passivo</span></div></div>
+        <div class="card"><div class="card-title">Semana 3 · Cross/up-sell <span class="tag o">Comercial</span></div><p>Janela de abordagem comercial estruturada. Usar contexto das semanas anteriores para abrir o script de cross ou up-sell.</p><div class="tags"><span class="tag o">Ligação preferencial</span></div></div>
+        <div class="card"><div class="card-title">Semana 4 · Revisão e próximos passos</div><p>Reunião ou call de revisão mensal. Consolidar o mês, apresentar perspectivas e abrir espaço para indicações.</p><div class="tags"><span class="tag">Reunião</span><span class="tag">30 min</span></div></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="eyebrow" style="margin-bottom:12px">Regras de ouro</div>
+      <div class="card">
+        <ul class="checklist">
+          <li>Nunca iniciar abordagem comercial sem ao menos 2 touchpoints de relacionamento anteriores</li>
+          <li>Todo contato deve ter objetivo definido antes de acontecer — não ligar sem saber o que vai perguntar</li>
+          <li>Se o cliente não respondeu em 2 tentativas, mudar o canal antes de tentar novamente</li>
+          <li>Cada interação deve ser registrada no CRM no mesmo dia</li>
+          <li>Tom varia por etapa: acolhimento → diagnóstico → valor → comercial → revisão. Não pular etapas.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ RITUAIS ════════════════════ -->
+  <div class="page" id="page-rituais">
+    <div class="section">
+      <div class="sec-header">
+        <div class="eyebrow">06 · Rituais do comercial</div>
+        <div class="sec-title">Daily, weekly e mensal</div>
+        <div class="sec-desc">A estrutura que garante que o sistema roda mesmo quando a energia cai. Pauta definida, indicadores claros, decisão rápida.</div>
+      </div>
+
+      <div class="card">
+        <div class="ritual-header"><div class="ritual-freq">Daily</div><div class="ritual-title">Alinhamento diário</div><div class="ritual-time">15 min · Toda manhã</div></div>
+        <ul class="checklist">
+          <li><strong>Número do dia anterior:</strong> contatos, conversas abertas, avanços no funil</li>
+          <li><strong>Top 3 do dia:</strong> cada closer aponta os 3 clientes que vai trabalhar e o objetivo de cada contato</li>
+          <li><strong>Bloqueio do dia:</strong> se alguém está travado em uma objeção — 2 min pra resolver em grupo</li>
+          <li><strong>Foco numérico:</strong> relembrar a meta da semana e onde o time está</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="ritual-header"><div class="ritual-freq">Weekly</div><div class="ritual-title">Revisão semanal + 1:1</div><div class="ritual-time">60 min · Toda segunda</div></div>
+        <ul class="checklist">
+          <li><strong>Resultado da semana:</strong> painel de KPIs aberto — conversões, taxa de resposta, pipeline ativo</li>
+          <li><strong>Pipeline review:</strong> revisar clientes em cada etapa e definir ação para quem não avançou</li>
+          <li><strong>1:1 individual (30 min):</strong> revisar calls da semana, onde o discurso pode melhorar, plano individual</li>
+          <li><strong>Role-play:</strong> simular ao menos 1 objeção real que alguém enfrentou. Todo closer participa.</li>
+          <li><strong>Meta da semana:</strong> conversas ativas, propostas enviadas e fechamentos esperados</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="ritual-header"><div class="ritual-freq">Mensal</div><div class="ritual-title">Revisão de gestão</div><div class="ritual-time">90 min · Última sexta</div></div>
+        <ul class="checklist">
+          <li><strong>Resultado vs. meta:</strong> conversão por etapa, por closer e por produto</li>
+          <li><strong>Saúde da base:</strong> revisão geral do score da carteira — quantos evoluíram, quantos regrediram</li>
+          <li><strong>Revisão do playbook:</strong> algum script não está funcionando? Objeção nova surgindo com frequência?</li>
+          <li><strong>Reconhecimento:</strong> destaque individual — não só quem fechou mais, mas quem evoluiu mais</li>
+          <li><strong>Metas do próximo mês:</strong> definidas em conjunto, baseadas nos dados do mês anterior</li>
+          <li><strong>Ata assinada:</strong> decisões, responsáveis e prazos registrados</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div class="eyebrow" style="margin-bottom:12px">KPIs que devem estar na tela em todo ritual</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Indicador</th><th>O que mede</th><th>Frequência</th><th>Alerta se...</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Taxa de resposta</strong></td><td>% de contatos respondidos dentro do SLA</td><td>Daily</td><td>Abaixo de 40%</td></tr>
+            <tr><td><strong>Conversão por etapa</strong></td><td>% de clientes que avançam entre etapas</td><td>Weekly</td><td>Queda em 2 semanas consecutivas</td></tr>
+            <tr><td><strong>Pipeline ativo</strong></td><td>Nº de clientes em etapa 3, 4 ou 5</td><td>Daily</td><td>Abaixo de 10 por closer</td></tr>
+            <tr><td><strong>Ticket médio</strong></td><td>Valor médio dos produtos fechados na semana</td><td>Weekly</td><td>Abaixo da média histórica por 2+ semanas</td></tr>
+            <tr><td><strong>Tempo médio de ciclo</strong></td><td>Dias do 1º contato ao fechamento</td><td>Mensal</td><td>Acima de 30 dias</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ PRODUTOS ════════════════════ -->
+  <div class="page" id="page-produtos">
+    <div class="section">
+      <div class="sec-header">
+        <div class="eyebrow">Preço &amp; Produtos</div>
+        <div class="sec-title">Portfólio completo · Escada de valor</div>
+        <div class="sec-desc">Os 6 produtos da Horistic, sua posição no funil e como se encadeiam. Conheça cada um antes de falar sobre eles.</div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Produto</th><th>Posição</th><th>Formato</th><th>Preço</th><th>Prova social</th></tr></thead>
+          <tbody>
+            <tr><td><strong>01</strong></td><td><strong>RIP</strong> — Relatório de Informações Privilegiadas</td><td><span class="tag g">Entrada · topo</span></td><td>Assinatura diária — e-mail 23h + plataforma</td><td><strong>A partir de R$49</strong></td><td>+500 assinantes · NPS 9.9 · 1mi+ patrimônio</td></tr>
+            <tr><td><strong>02</strong></td><td><strong>APTC</strong> — Assistente Pessoal de Trade Cripto</td><td><span class="tag b">Meio · automação</span></td><td>IA + sinais + cursos + indicador TradingView</td><td>Consultar</td><td>62–100% acerto por timeframe · DIVAP integrado</td></tr>
+            <tr><td><strong>03</strong></td><td><strong>Formação Cripto Trader</strong></td><td><span class="tag o">Meio · presencial</span></td><td>Evento presencial (Faria Lima Plaza, SP)</td><td>Lista de espera</td><td>+50 alunos na última edição</td></tr>
+            <tr><td><strong>04</strong></td><td><strong>Mentoria Horus Remindset</strong></td><td><span class="tag r">Premium · educação</span></td><td>Mentoria aprofundada com Victor e Fernando</td><td>Consultar</td><td>11 estratégias · +85% de acerto declarado</td></tr>
+            <tr><td><strong>05</strong></td><td><strong>Horus Live</strong></td><td><span class="tag r">Premium · recorrência</span></td><td>Sala ao vivo seg–sex manhã · grupo fechado</td><td>Consultar</td><td>Operações em tempo real · turmas limitadas</td></tr>
+            <tr><td><strong>06</strong></td><td><strong>Horus Remindset VIP</strong></td><td><span class="tag r">Premium · sinais</span></td><td>Sinais via WhatsApp — entrada, alvos, stop</td><td>Consultar</td><td>87% acerto 2024 · 12x no capital · +100 traders</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="divider"></div>
+      <div class="eyebrow" style="margin-bottom:12px">Lógica da escada de valor</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot ac">1</div><div class="tl-content"><div class="tl-label">Entrada</div><div class="tl-title">RIP (R$49) + Consultoria gratuita</div><div class="tl-desc">Captura o lead, cria o primeiro relacionamento e estabelece a credibilidade da metodologia DIVAP com baixo compromisso financeiro.</div><div class="tags"><span class="tag o">Porta de entrada</span><span class="tag">Garantia 30 dias</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot ac">2</div><div class="tl-content"><div class="tl-label">Progressão</div><div class="tl-title">APTC — Automação + cursos</div><div class="tl-desc">Para quem quer escalar operacionalmente. Combo mais vendido com a Mentoria — um entrega o sinal, o outro entrega a mentalidade.</div><div class="tags"><span class="tag o">RIP → APTC</span><span class="tag o">APTC + Mentoria (combo)</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot ac">3</div><div class="tl-content"><div class="tl-label">Ticket alto</div><div class="tl-title">Formação presencial + Mentoria Horus</div><div class="tl-desc">Educação profunda e comunidade. A Mentoria é o produto mais completo em método — 11 estratégias, Victor e Fernando ao vivo.</div><div class="tags"><span class="tag r">Premium</span><span class="tag">+85% acerto declarado</span></div></div></div>
+        <div class="tl-item"><div class="tl-dot ac">4</div><div class="tl-content"><div class="tl-label">Recorrência</div><div class="tl-title">Horus Live + Remindset VIP</div><div class="tl-desc">Acompanhamento diário. Live para quem pode operar pela manhã; VIP para quem prefere sinais assíncronos via WhatsApp.</div><div class="tags"><span class="tag r">87% acerto 2024</span><span class="tag">12x no capital</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ HISTÓRIA ════════════════════ -->
+  <div class="page" id="page-historia">
+    <div class="section">
+      <div class="sec-header">
+        <div class="eyebrow">Contexto · História e mais</div>
+        <div class="sec-title">O que você precisa saber sobre a Horistic</div>
+        <div class="sec-desc">Contexto institucional, mentores e diferenciais. O que o closer precisa saber para falar com autoridade sobre a empresa.</div>
+      </div>
+
+      <div class="hist-topic" onclick="toggleHist(this)">
+        <div class="hist-head"><div class="hist-icon">🏫</div><div class="hist-meta"><div class="hist-title">O que é a Horistic</div><div class="hist-sub">Posicionamento, missão e números</div></div><div class="hist-chev">›</div></div>
+        <div class="hist-body">
+          <p>Escola de Investimentos focada em trading de criptomoedas. Proposta: tirar o trader do "achismo" e levá-lo à consistência por meio de estratégia, ferramentas e mentoria. Slogan: <em>"Seu próximo nível no trading começa aqui."</em></p>
+          <p>O núcleo de tudo é a estratégia proprietária <strong>DIVAP</strong> — ela aparece em todos os produtos: RIP, APTC (IA), indicador TradingView e nas aulas ao vivo.</p>
+          <div class="tags"><span class="tag o">+2.500 investidores</span><span class="tag">NPS 9.9</span><span class="tag">1mi+ patrimônio no relatório</span></div>
+        </div>
+      </div>
+
+      <div class="hist-topic" onclick="toggleHist(this)">
+        <div class="hist-head"><div class="hist-icon">👤</div><div class="hist-meta"><div class="hist-title">Mentores e figuras-chave</div><div class="hist-sub">Quem assina os produtos e aparece como rosto da marca</div></div><div class="hist-chev">›</div></div>
+        <div class="hist-body">
+          <p><strong>Victor Rocha</strong> — trader e investidor. Assina o Remindset VIP (sinais), a Mentoria Horus e o Horus Live.</p>
+          <p><strong>Fernando Pereira</strong> — trader há mais de 10 anos. Co-assina o Horus Live e a Mentoria. Conduz as sessões de manhã ao vivo.</p>
+          <p>Os dois operam com a própria conta ao vivo — esse é o diferencial de credibilidade mais forte frente a outras escolas onde os instrutores ensinam mas não operam.</p>
+          <div class="tags"><span class="tag">Victor Rocha</span><span class="tag">Fernando Pereira</span><span class="tag o">Operam ao vivo</span></div>
+        </div>
+      </div>
+
+      <div class="hist-topic" onclick="toggleHist(this)">
+        <div class="hist-head"><div class="hist-icon">⚡</div><div class="hist-meta"><div class="hist-title">Diferencial central · DIVAP</div><div class="hist-sub">O que separa a Horistic de qualquer outra escola de cripto</div></div><div class="hist-chev">›</div></div>
+        <div class="hist-body">
+          <p>DIVAP é proprietário — não existe em nenhuma outra escola. Está embutida em todos os produtos: é a base do RIP, o motor do APTC, o indicador no TradingView e o método ensinado na Mentoria e no Horus Live.</p>
+          <p>Acerto declarado: <strong>85–87%</strong> nas mesas dos mentores; <strong>62–100%</strong> por timeframe no APTC; <strong>87%</strong> em 2024 no VIP, com <strong>12x no capital</strong> no mesmo período.</p>
+          <div class="tags"><span class="tag o">DIVAP proprietário</span><span class="tag">85–87% acerto declarado</span><span class="tag">12x capital em 2024</span><span class="tag">TradingView integrado</span></div>
+        </div>
+      </div>
+
+      <div class="hist-topic" onclick="toggleHist(this)">
+        <div class="hist-head"><div class="hist-icon">📲</div><div class="hist-meta"><div class="hist-title">Como a Horistic captura e opera leads</div><div class="hist-sub">Canais, pontos de entrada e modelo de relacionamento</div></div><div class="hist-chev">›</div></div>
+        <div class="hist-body">
+          <p>Captação pelo site via formulário (Nome, Email, WhatsApp) e botão <strong>"Agendar consultoria gratuita"</strong> — principal porta de entrada para a conversa comercial.</p>
+          <p>Sem telefone ou e-mail público. Todo relacionamento ocorre via WhatsApp e consultoria — o closer é o único ponto de contato humano após a entrada do lead.</p>
+          <div class="tags"><span class="tag o">Consultoria gratuita</span><span class="tag">WhatsApp-first</span><span class="tag">Closer = único contato humano</span></div>
+        </div>
+      </div>
+
+      <div class="hist-topic" onclick="toggleHist(this)">
+        <div class="hist-head"><div class="hist-icon">🛡️</div><div class="hist-meta"><div class="hist-title">Garantias e provas sociais</div><div class="hist-sub">O que pode e o que não pode ser prometido</div></div><div class="hist-chev">›</div></div>
+        <div class="hist-body">
+          <p>O <strong>RIP</strong> tem 7 dias de garantia de satisfação e 30 dias de garantia de resultado — as únicas garantias explícitas. Use isso para leads indecisos.</p>
+          <p>Os demais produtos não exibem preço nem garantia nas páginas públicas — venda assistida, fechamento na conversa. <strong>Nunca prometa garantia de resultado em produtos que não a declaram formalmente.</strong></p>
+          <p>Depoimentos no site têm handles de Instagram — prova verificável e independente. Use nas objeções de confiança.</p>
+          <div class="tags"><span class="tag g">7 dias satisfação (RIP)</span><span class="tag g">30 dias resultado (RIP)</span><span class="tag">NPS 9.9</span><span class="tag r">Demais: venda assistida</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ LANÇAMENTOS ════════════════════ -->
+  <div class="page" id="page-lancamentos">
+    <div class="cal-wrap">
+      <div class="launch-hero">
+        <div class="launch-hero-eyebrow">🚀 Lançamentos futuros</div>
+        <div class="launch-hero-title">O que está por vir — e como você vende</div>
+        <div class="launch-hero-desc">Conheça cada lançamento antes que ele chegue: o produto, as condições, por que o cliente precisa dele e o cronograma. Preparação é diferencial.</div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="cal-header">
+        <div class="cal-nav">
+          <button onclick="calPrev()">‹</button>
+          <div class="cal-month-label" id="cal-month-label"></div>
+          <button onclick="calNext()">›</button>
+        </div>
+        <div style="font-size:12px;color:var(--text3);font-family:'Instrument Sans',sans-serif;display:flex;align-items:center;gap:10px">
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--accent);border-radius:3px;display:inline-block"></span>Lançamento</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--green);border-radius:3px;display:inline-block"></span>Pré-venda</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--blue);border-radius:3px;display:inline-block"></span>Evento</span>
+        </div>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-days-header">
+          <div class="cal-day-name">Dom</div>
+          <div class="cal-day-name">Seg</div>
+          <div class="cal-day-name">Ter</div>
+          <div class="cal-day-name">Qua</div>
+          <div class="cal-day-name">Qui</div>
+          <div class="cal-day-name">Sex</div>
+          <div class="cal-day-name">Sáb</div>
+        </div>
+        <div class="cal-days-body" id="cal-body"></div>
+      </div>
+
+      <!-- Launch list -->
+      <div class="eyebrow" style="margin-bottom:16px">Próximos eventos · Detalhes</div>
+      <div class="launch-list">
+
+        <div class="launch-item hot">
+          <div class="li-date-col"><div class="li-date-day">02</div><div class="li-date-mon">Jul</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Lançamento "Estratégias de Trading" + Lives Leo</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — Lançamento oficial do produto "Estratégias de Trading" com opção de lives do Leo no Youtube. Conduzido por Fernando + Victor.</div>
+            <div class="li-why"><strong>Por que vender:</strong> janela de lançamento é o momento de maior urgência real — use para reativar leads frios e clientes no RIP que ainda não avançaram na escada.</div>
+            <div class="li-meta"><span class="tag o">Lançamento</span><span class="tag">Youtube</span><span class="tag">Fernando + Victor</span></div>
+          </div>
+        </div>
+
+        <div class="launch-item">
+          <div class="li-date-col"><div class="li-date-day">07</div><div class="li-date-mon">Jul</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Orderbump Radar</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — Orderbump do produto Radar via Streamyard. Fernando.</div>
+            <div class="li-why"><strong>Por que vender:</strong> orderbump é oferta de upsell no momento do checkout — clientes que já estão comprando têm taxa de conversão muito maior. Prepare a base que está em negociação para esse dia.</div>
+            <div class="li-meta"><span class="tag o">Orderbump</span><span class="tag">Streamyard</span><span class="tag">Fernando</span></div>
+          </div>
+        </div>
+
+        <div class="launch-item">
+          <div class="li-date-col"><div class="li-date-day">09</div><div class="li-date-mon">Jul</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Pico VIP</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — PICO VIP com Victor, Fernando e Leo no Youtube.</div>
+            <div class="li-why"><strong>Por que vender:</strong> evento VIP ao vivo com os três principais nomes da marca. Argumento forte para clientes que precisam de prova social antes de fechar produto premium.</div>
+            <div class="li-meta"><span class="tag g">VIP</span><span class="tag">Youtube</span><span class="tag">Victor + Fernando + Leo</span></div>
+          </div>
+        </div>
+
+        <div class="launch-item">
+          <div class="li-date-col"><div class="li-date-day">14</div><div class="li-date-mon">Jul</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Orderbump Radar</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — Orderbump do produto Radar. Fernando.</div>
+            <div class="li-meta"><span class="tag o">Orderbump</span><span class="tag">Fernando</span></div>
+          </div>
+        </div>
+
+        <div class="launch-item hot">
+          <div class="li-date-col"><div class="li-date-day">16</div><div class="li-date-mon">Jul</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Orderbump Compra e Venda</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — ORDERBUMP COMPRA E VENDA. Victor.</div>
+            <div class="li-why"><strong>Por que vender:</strong> produto de Compra e Venda com Victor — aborde clientes que já demonstraram interesse em estratégias práticas de operação. Script de cross-sell com contexto de lançamento.</div>
+            <div class="li-meta"><span class="tag o">Orderbump</span><span class="tag r">Compra e Venda</span><span class="tag">Victor</span></div>
+          </div>
+        </div>
+
+        <div class="launch-item">
+          <div class="li-date-col"><div class="li-date-day">21</div><div class="li-date-mon">Jul</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Orderbump Radar</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — Orderbump do produto Radar. Fernando.</div>
+            <div class="li-meta"><span class="tag o">Orderbump</span><span class="tag">Fernando</span></div>
+          </div>
+        </div>
+
+        <div class="launch-item hot">
+          <div class="li-date-col"><div class="li-date-day">23</div><div class="li-date-mon">Jul</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Orderbump Compra e Venda</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — ORDERBUMP COMPRA E VENDA. Victor.</div>
+            <div class="li-why"><strong>Por que vender:</strong> segunda janela do Compra e Venda — para quem não converteu no dia 16. Retome o contato com urgência de última chance.</div>
+            <div class="li-meta"><span class="tag o">Orderbump</span><span class="tag r">Compra e Venda</span><span class="tag">Victor</span></div>
+          </div>
+        </div>
+
+        <div class="launch-item">
+          <div class="li-date-col"><div class="li-date-day">28</div><div class="li-date-mon">Jul</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Orderbump Radar + Live 01 Imersão Trader</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — ORDERBUMP RADAR (Fernando) e LIVE 01 IMERSÃO TRADER (Victor). Dois eventos no mesmo dia.</div>
+            <div class="li-why"><strong>Por que vender:</strong> início da sequência de Imersão Trader — evento de alto impacto que costuma preceder fechamentos de produto premium. Aqueça a base antes desse dia.</div>
+            <div class="li-meta"><span class="tag o">Orderbump + Live</span><span class="tag g">Imersão Trader</span><span class="tag">Fernando + Victor</span></div>
+          </div>
+        </div>
+
+        <div class="launch-item hot">
+          <div class="li-date-col"><div class="li-date-day">30</div><div class="li-date-mon">Jul</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Live de Vendas · Desafio Trader</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — LIVE DE VENDAS DESAFIO TRADER. Victor.</div>
+            <div class="li-why"><strong>Por que vender:</strong> live de vendas é o momento de conversão direta — tenha seus leads quentes preparados e avise-os antes do evento. Taxa de conversão pós-live é significativamente maior que abordagem fria.</div>
+            <div class="li-meta"><span class="tag r">Live de Vendas</span><span class="tag o">Desafio Trader</span><span class="tag">Victor</span></div>
+          </div>
+        </div>
+
+        <div class="launch-item hot">
+          <div class="li-date-col"><div class="li-date-day">03</div><div class="li-date-mon">Ago</div></div>
+          <div class="li-body">
+            <div class="li-top"><div class="li-name">Fechamento · Desafio Trader</div><span class="li-status upcoming">Em breve</span></div>
+            <div class="li-desc">19h — FECHAMENTO DESAFIO TRADER. Victor.</div>
+            <div class="li-why"><strong>Por que vender:</strong> último dia de fechamento — urgência máxima. Contate todos os leads que assistiram à live do dia 30 mas não fecharam. Argumento: última chance, carrinho fecha hoje.</div>
+            <div class="li-meta"><span class="tag r">Fechamento</span><span class="tag o">Desafio Trader</span><span class="tag">Victor</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pitch cards -->
+      <div class="divider"></div>
+      <div class="eyebrow" style="margin-bottom:16px">Como abordar os lançamentos · Por produto</div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Formação presencial · Quem abordar</div>
+          <p>Clientes que ainda não têm produto nenhum ou estão só no RIP. A formação é a porta de entrada presencial — depois dela, a conversão para APTC ou Mentoria é muito mais natural.</p>
+          <div class="tags"><span class="tag o">Leads frios</span><span class="tag">Assinantes do RIP</span></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Horus Live · Quem abordar</div>
+          <p>Quem tem Mentoria ou APTC e tem horário livre pela manhã. Perguntar sobre rotina antes de oferecer. Nunca oferecer junto com o VIP — causa paralisia de decisão.</p>
+          <div class="tags"><span class="tag o">Usuários APTC + Mentoria</span><span class="tag">Horário manhã livre</span></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Remindset VIP · Quem abordar</div>
+          <p>Quem quer acompanhamento mas não tem o horário da manhã. O argumento "12x no capital em 2024" é o mais forte — mas sempre com o disclaimer de retornos passados.</p>
+          <div class="tags"><span class="tag o">Sem horário manhã</span><span class="tag g">87% acerto</span></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Mentoria Q3 · Quem abordar</div>
+          <p>Usuários de APTC com 60+ dias de casa e engajamento alto. É o ticket mais alto — exige relacionamento estabelecido. Não abordar em clientes frios ou sem histórico de resposta.</p>
+          <div class="tags"><span class="tag o">APTC 60+ dias</span><span class="tag r">Alto ticket</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal for calendar events -->
+  <div class="modal-overlay" id="event-modal" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-date" id="modal-date"></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── SEARCH INDEX ──
+const searchIndex = [
+  {page:'scripts',label:'Scripts de venda',section:'Ferramentas',keys:['script','venda','pitch','abordagem','cross','up-sell','aptc','rip','mentoria','indicação','closer','diagnóstico','treino de script']},
+  {page:'objecoes',label:'Contornos de objeção',section:'Ferramentas',keys:['objeção','resistência','medo','risco','preço','momento','pensar','escola','caro','não preciso','outro']},
+  {page:'treino',label:'Modo treino',section:'Ferramentas',keys:['treino','quiz','teste','prática','exercício','simulação']},
+  {page:'funil',label:'Funil interativo',section:'Ferramentas',keys:['funil','etapa','pipeline','ativação','diagnóstico','apresentação','negociação','fechamento','critério','sla']},
+  {page:'canal',label:'Comunicação por canal',section:'Ferramentas',keys:['whatsapp','ligação','mensagem','reativação','canal','silêncio','follow','sumiu','retomar','comunicação']},
+  {page:'priorizacao',label:'Priorização da base',section:'Ferramentas',keys:['priorização','scoring','score','quente','frio','pipeline','carteira','base']},
+  {page:'cadencia',label:'Cadência de contato',section:'Processo',keys:['cadência','régua','d+1','d+30','contato','sla','whatsapp','follow','sequência']},
+  {page:'rituais',label:'Rituais do comercial',section:'Processo',keys:['ritual','daily','weekly','reunião','kpi','indicador','mensal','semanal','diário','one a one','1:1']},
+  {page:'lancamentos',label:'Lançamentos futuros',section:'Ferramentas',keys:['lançamento','formação','horus','vip','live','turma','evento','presencial','julho','agosto','setembro']},
+  {page:'produtos',label:'Preço & Produtos',section:'Contexto',keys:['produto','preço','rip','aptc','mentoria','horus','vip','live','formação','portfólio','valor']},
+  {page:'historia',label:'História e mais',section:'Contexto',keys:['horistic','victor','fernando','divap','mentores','história','garantia','nps','prova','diferencial']},
+];
+
+function searchPlaybook(q) {
+  const box = document.getElementById('search-results');
+  if (!q || q.length < 2) { box.classList.remove('show'); box.innerHTML = ''; return; }
+  const ql = q.toLowerCase();
+  const results = searchIndex.filter(item =>
+    item.label.toLowerCase().includes(ql) || item.keys.some(k => k.includes(ql))
+  );
+  const icons = {scripts:'✦',objecoes:'⊘',treino:'◈',funil:'◑',canal:'💬',priorizacao:'◐',cadencia:'◎',rituais:'⊡',lancamentos:'🚀',produtos:'◧',historia:'◉'};
+  if (!results.length) { box.innerHTML = '<div class="sr-empty">Nenhum resultado para "'+q+'"</div>'; }
+  else { box.innerHTML = results.map(r => `<div class="sr-item" onclick="navFromSearch('${r.page}')"><div class="sr-icon">${icons[r.page]||'·'}</div><div class="sr-meta"><div class="sr-name">${r.label}</div><div class="sr-section">${r.section}</div></div></div>`).join(''); }
+  box.classList.add('show');
+}
+function navFromSearch(pageId) {
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-results').classList.remove('show');
+  nav(pageId, document.querySelector(`.sb-item[onclick*="${pageId}"]`));
+}
+
+// ── PROGRESS TRACKER ──
+const progressSections = [
+  {id:'scripts',label:'Scripts',icon:'✦'},
+  {id:'objecoes',label:'Objeções',icon:'⊘'},
+  {id:'treino',label:'Treino',icon:'◈'},
+  {id:'funil',label:'Funil',icon:'◑'},
+  {id:'canal',label:'Comunicação',icon:'💬'},
+  {id:'priorizacao',label:'Priorização',icon:'◐'},
+  {id:'cadencia',label:'Cadência',icon:'◎'},
+  {id:'rituais',label:'Rituais',icon:'⊡'},
+];
+
+function loadProgress() { try { return JSON.parse(localStorage.getItem('hPlaybookProgress') || '{}'); } catch(e){ return {}; } }
+function saveProgress(p) { try { localStorage.setItem('hPlaybookProgress', JSON.stringify(p)); } catch(e){} }
+
+function renderProgressGrid() {
+  const grid = document.getElementById('pb-grid');
+  if (!grid) return;
+  const prog = loadProgress();
+  const done = progressSections.filter(s => prog[s.id]).length;
+  const pct = Math.round((done / progressSections.length) * 100);
+  document.getElementById('pb-score-num').textContent = pct + '%';
+  grid.innerHTML = progressSections.map(s => {
+    const checked = prog[s.id] ? 1 : 0;
+    return `<div class="pb-item" onclick="toggleProgress('${s.id}')" title="${checked?'Marcar como não lido':'Marcar como revisado'}">
+      <div class="pb-item-icon">${s.icon}</div>
+      <div class="pb-item-label">${s.label}</div>
+      <div class="pb-item-bar"><div class="pb-item-fill" style="width:${checked?100:0}%"></div></div>
+      <div class="pb-item-pct" style="color:${checked?'var(--green)':'var(--text3)'}">${checked?'✓ Revisado':'Pendente'}</div>
+    </div>`;
+  }).join('');
+}
+function toggleProgress(id) {
+  const p = loadProgress();
+  p[id] = !p[id];
+  saveProgress(p);
+  renderProgressGrid();
+}
+function resetProgress() {
+  if (confirm('Resetar todo o progresso?')) { saveProgress({}); renderProgressGrid(); }
+}
+
+// ── FUNNEL DATA ──
+const funnelData = [
+  {num:'01',name:'Base ativa',sla:'—',what:'Cliente com produto Horistic, sem contato recente ou recém-captado via consultoria gratuita.',criterion:'Score ≥ 6 → entra na régua de ativação',block:'Sem cadência estruturada: oportunidade morre por inatividade',actions:['Pontuar no scoring (seção Priorização)','Se score ≥ 6, iniciar cadência D+1 imediatamente','Se score < 6, entrar em cadência passiva de valor']},
+  {num:'02',name:'Ativação',sla:'48h após classificação',what:'Primeiro contato estruturado. Cliente respondeu e demonstrou abertura para conversar.',criterion:'Cliente responde e demonstra abertura',block:'Abertura genérica sem contexto: mata o engajamento em 10 segundos',actions:['Usar script 01 (Pós-consultoria) ou abertura por produto atual','Ter objetivo definido antes de ligar — não improvisar','Registrar no CRM: respondeu, não respondeu, horário melhor']},
+  {num:'03',name:'Diagnóstico',sla:'7 dias após ativação',what:'Reunião ou call de qualificação: entender perfil, objetivos, produto atual e onde está a dor de execução.',criterion:'Necessidade mapeada + produto identificado',block:'Apresentar produto antes de diagnosticar — o cliente não entendeu por que precisa',actions:['Fazer UMA pergunta aberta e escutar completamente','Anotar as palavras exatas do cliente — são o discurso da apresentação','Identificar qual produto da escada faz sentido antes de apresentar']},
+  {num:'04',name:'Apresentação',sla:'3 dias após diagnóstico',what:'Proposta de cross ou up-sell personalizada com base no diagnóstico. Máximo 3 pontos.',criterion:'Cliente solicita proposta formal ou faz pergunta técnica',block:'Apresentar tudo de uma vez — cliente fica sobrecarregado e procrastina',actions:['Apresentar em 3 pontos: produto, por que faz sentido pro perfil, próximo passo','Validar compreensão: "Faz sentido até aqui?"','Terminar com uma ação concreta — nunca deixar em aberto']},
+  {num:'05',name:'Negociação',sla:'5 dias após apresentação',what:'Tratamento de objeções, esclarecimento de dúvidas e ajuste de condições.',criterion:'Comprometimento verbal ou envio de documentos',block:'Dar desconto como primeira resposta — desvaloriza o produto e não resolve objeção real',actions:['Identificar o tipo de objeção antes de responder (Seção Objeções)','Nunca oferecer desconto sem entender o bloqueio real','Se objeção não resolvida em 5 dias: mudar abordagem, não repetir argumento']},
+  {num:'06',name:'Fechamento',sla:'48h após negociação',what:'Formalização: assinatura, acesso ao produto e confirmação do primeiro pagamento.',criterion:'Assinatura + acesso confirmado',block:'Não solicitar indicação imediatamente após o fechamento',actions:['Confirmar acesso ao produto no mesmo dia','Enviar mensagem de boas-vindas (Script de Comunicação)','Solicitar indicação na primeira semana — momento de maior entusiasmo']},
+];
+let activeFunnelStage = -1;
+function showFunnelDetail(idx) {
+  // toggle
+  if (activeFunnelStage === idx) { activeFunnelStage = -1; document.getElementById('funnel-detail-wrap').innerHTML = ''; document.querySelectorAll('[id^=fs-]').forEach(el => el.classList.remove('active')); return; }
+  activeFunnelStage = idx;
+  document.querySelectorAll('[id^=fs-]').forEach((el,i) => { el.classList.toggle('active', i===idx); });
+  const d = funnelData[idx];
+  document.getElementById('funnel-detail-wrap').innerHTML = `
+    <div class="funnel-detail">
+      <div class="fd-header"><div class="fd-num">${d.num}</div><div><div class="fd-title">${d.name}</div><div class="fd-sla">SLA: ${d.sla}</div></div></div>
+      <div class="fd-grid">
+        <div class="fd-block"><div class="fd-block-label">O que acontece</div><div class="fd-block-text">${d.what}</div></div>
+        <div class="fd-block"><div class="fd-block-label">Critério de avanço</div><div class="fd-block-text">${d.criterion}</div></div>
+        <div class="fd-block" style="border-left:3px solid var(--red)"><div class="fd-block-label" style="color:var(--red)">Bloqueio comum</div><div class="fd-block-text">${d.block}</div></div>
+      </div>
+      <div class="fd-actions-title">Ações imediatas</div>
+      <ul class="fd-action-list">${d.actions.map(a=>`<li>${a}</li>`).join('')}</ul>
+      <div class="fd-nav">
+        ${idx>0?`<button class="fd-btn" onclick="showFunnelDetail(${idx-1})">‹ Etapa anterior</button>`:''}
+        ${idx<funnelData.length-1?`<button class="fd-btn primary" onclick="showFunnelDetail(${idx+1})">Próxima etapa ›</button>`:''}
+      </div>
+    </div>`;
+}
+
+// ── CANAL SWITCH ──
+function switchCanal(id, btn) {
+  document.querySelectorAll('.canal-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.canal-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('cp-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── SCRIPT TREINO DATA ──
+const stData = {
+  1: {
+    correct: 1,
+    feedback: [
+      {ok:false, text:'Preencher o silencio com mais argumentos geralmente piora — o cliente estava processando, nao pedindo mais informacao.'},
+      {ok:true,  text:'Correto. Silencio apos preco e o momento de esperar. Quem fala primeiro nesse momento perde posicao. A pergunta abre sem pressionar.'},
+      {ok:false, text:'Oferecer desconto imediatamente antes de entender a objecao real desvaloriza o produto e pode criar expectativa que voce nao vai conseguir manter.'},
+      {ok:false, text:'Apresentar a alternativa antes de entender o bloqueio faz parecer que voce mesmo nao acredita no produto principal.'}
+    ]
+  },
+  2: {
+    correct: 1,
+    feedback: [
+      {ok:false, text:'Contradizer a satisfacao dele de frente gera defensividade. O cliente vai defender a propria decisao em vez de ouvir voce.'},
+      {ok:true,  text:'Perfeito. Validar a satisfacao e abrir uma pergunta de diagnostico mantem a conversa sem defensividade. O cliente vai te dizer onde ainda tem dificuldade.'},
+      {ok:false, text:'Apresentar produto para quem disse que esta satisfeito, sem transicao, e o erro classico do junior. O cliente desliga imediatamente.'},
+      {ok:false, text:'Encerrar a call por falta de abertura obvia nao e errado, mas perde a oportunidade. A pergunta de diagnostico quase sempre abre uma brecha.'}
+    ]
+  },
+  3: {
+    correct: 2,
+    feedback: [
+      {ok:false, text:'Comparar os dois side-by-side sem primeiro entender o perfil do cliente e o caminho mais rapido para paralisia de decisao.'},
+      {ok:false, text:'Dizer que um e melhor sem saber a rotina do cliente e um erro — voce pode estar empurrando o produto errado.'},
+      {ok:true,  text:'Correto. A diferenca entre os dois e basicamente de rotina — Live exige horario de manha, VIP nao. Fazer a pergunta de rotina ANTES de comparar resolve a escolha naturalmente.'},
+      {ok:false, text:'Enviar material sem resolver a duvida adia a decisao e esfria o lead. O cliente precisa de orientacao, nao de mais conteudo para ler sozinho.'}
+    ]
+  }
+};
+
+function toggleStCard(id) {
+  document.getElementById('stcard-'+id).classList.toggle('open');
+}
+
+function stAnswer(qid, optIdx) {
+  const d = stData[qid];
+  const wrap = document.getElementById('stc-'+qid);
+  wrap.querySelectorAll('.st-choice').forEach(b => b.classList.add('disabled'));
+  const btns = wrap.querySelectorAll('.st-choice');
+  btns[d.correct].classList.add('correct');
+  if (optIdx !== d.correct) btns[optIdx].classList.add('wrong');
+  const correct = optIdx === d.correct;
+  const fb = d.feedback[optIdx];
+  const el = document.getElementById('stf-'+qid);
+  el.innerHTML = correct
+    ? '<div class="st-fb-ok"><span class="st-fb-label">Correto</span>'+fb.text+'</div>'
+    : '<div class="st-fb-ng"><span class="st-fb-label">Nao exatamente</span>'+fb.text+'</div>';
+  el.classList.add('show');
+  if (correct) { const p=loadProgress(); p['scripts']=(p['scripts']||0)+1; saveProgress(p); }
+}
+function stReset(id) {
+  document.getElementById('stc-'+id).querySelectorAll('.st-choice').forEach(b => b.classList.remove('correct','wrong','disabled'));
+  const el = document.getElementById('stf-'+id);
+  el.innerHTML = '';
+  el.classList.remove('show');
+}
+
+// ── CALENDAR ──
+const calEvents = [
+  {date:'2025-07-02',label:'Lançamento Estratégias',color:'purple',detail:'02/07 · 19h — LANÇAMENTO "Estratégias de Trading" + Opção de lives do Leo no Youtube. Fernando + Victor.'},
+  {date:'2025-07-07',label:'Orderbump Radar',color:'',detail:'07/07 · 19h — ORDERBUMP RADAR via Streamyard. Fernando.'},
+  {date:'2025-07-09',label:'Pico VIP',color:'green',detail:'09/07 · 19h — PICO VIP com Victor, Fernando e Leo no Youtube.'},
+  {date:'2025-07-14',label:'Orderbump Radar',color:'',detail:'14/07 · 19h — ORDERBUMP RADAR. Fernando.'},
+  {date:'2025-07-16',label:'Orderbump C&V',color:'purple',detail:'16/07 · 19h — ORDERBUMP COMPRA E VENDA. Victor.'},
+  {date:'2025-07-21',label:'Orderbump Radar',color:'',detail:'21/07 · 19h — ORDERBUMP RADAR. Fernando.'},
+  {date:'2025-07-23',label:'Orderbump C&V',color:'purple',detail:'23/07 · 19h — ORDERBUMP COMPRA E VENDA. Victor.'},
+  {date:'2025-07-28',label:'Orderbump Radar',color:'',detail:'28/07 · 19h — ORDERBUMP RADAR. Fernando.'},
+  {date:'2025-07-28',label:'Live 01 Imersão',color:'green',detail:'28/07 · 19h — LIVE 01 IMERSÃO TRADER. Victor.'},
+  {date:'2025-07-30',label:'Live Vendas Desafio',color:'green',detail:'30/07 · 19h — LIVE DE VENDAS DESAFIO TRADER. Victor.'},
+  {date:'2025-08-03',label:'Fechamento Desafio',color:'purple',detail:'03/08 · 19h — FECHAMENTO DESAFIO TRADER. Victor.'},
+];
+let calYear=2025,calMonth=6;
+function calRender(){
+  const mn=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  document.getElementById('cal-month-label').textContent=mn[calMonth]+' '+calYear;
+  const body=document.getElementById('cal-body');
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const daysInPrev=new Date(calYear,calMonth,0).getDate();
+  const today=new Date();
+  let html='',total=Math.ceil((firstDay+daysInMonth)/7)*7;
+  for(let i=0;i<total;i++){
+    let day,month=calMonth,year=calYear,cls='';
+    if(i<firstDay){day=daysInPrev-firstDay+i+1;month=calMonth-1;cls='other-month';}
+    else if(i>=firstDay+daysInMonth){day=i-firstDay-daysInMonth+1;month=calMonth+1;cls='other-month';}
+    else{day=i-firstDay+1;}
+    const isToday=day===today.getDate()&&month===today.getMonth()&&year===today.getFullYear();
+    const ds=`${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const evs=calEvents.filter(e=>e.date===ds);
+    html+=`<div class="cal-day${cls?' '+cls:''}${isToday?' today':''}"><div class="cal-dn">${day}</div>${evs.map(e=>`<div class="cal-event${e.color?' '+e.color:''}" onclick="openEventModal('${e.date}','${e.label}','${e.detail}')">${e.label}</div>`).join('')}</div>`;
+  }
+  body.innerHTML=html;
+}
+function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}calRender();}
+function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}calRender();}
+function openEventModal(date,title,detail){
+  const m=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const d=new Date(date+'T12:00:00');
+  document.getElementById('modal-title').textContent=title;
+  document.getElementById('modal-date').textContent=`${d.getDate()} de ${m[d.getMonth()]} de ${d.getFullYear()}`;
+  document.getElementById('modal-body').innerHTML=`<p>${detail}</p>`;
+  document.getElementById('event-modal').classList.add('show');
+}
+function closeModal(){document.getElementById('event-modal').classList.remove('show');}
+
+// ── TREINO QUIZ ──
+const treinoQuestions=[
+  {q:"O cliente diz: 'Deixa eu pensar mais um pouco.' O que você faz?",opts:["Manda um PDF da mentoria por WhatsApp e aguarda","Pergunta: 'O que você ainda precisa entender ou esclarecer pra chegar a uma conclusão?'","Diz que tudo bem e agenda um follow-up para 2 semanas","Reapresenta os benefícios do produto mais uma vez"],correct:1,feedback_ok:"Exato. Descobrir o que está faltando é sempre o primeiro passo — não mandar mais material sem saber o que está bloqueando.",feedback_ng:"Errado. Mandar material sem diagnosticar o bloqueio ou encerrar sem ancorar o próximo passo são os erros mais comuns. A resposta certa é descobrir o que está faltando antes de qualquer outra ação."},
+  {q:"Você está fazendo o cross-sell RIP → APTC. Qual a primeira coisa a fazer?",opts:["Explicar o que é o APTC e como funciona a tecnologia","Apresentar os números de acerto por timeframe","Perguntar: 'O que você faz com a informação do RIP depois que recebe?'","Enviar o link de assinatura direto"],correct:2,feedback_ok:"Correto. Diagnóstico antes de apresentação — sempre. Quando o cliente verbaliza o problema, a solução entra com muito menos resistência.",feedback_ng:"Incorreto. Apresentar produto antes de diagnosticar é o erro mais comum. A pergunta de diagnóstico é o que abre a conversa real."},
+  {q:"O cliente diz que perdeu dinheiro com investimento antes. O que NÃO fazer?",opts:["Pedir pra ele contar o que aconteceu antes de qualquer argumento","Ouvir a história completa sem interromper","Dizer 'Aqui é diferente, a gente tem 87% de acerto' e apresentar o produto","Classificar o tipo de perda antes de mostrar qualquer solução"],correct:2,feedback_ok:"Correto. Pular direto para o argumento sem ouvir a história é o erro mais grave nessa objeção.",feedback_ng:"Atenção. Apresentar o produto imediatamente com números, sem antes ouvir, é o erro mais grave. Dados soltos aumentam a desconfiança."},
+  {q:"Você vai fazer up-sell da Mentoria para Horus Live ou Remindset VIP. O que fazer primeiro?",opts:["Apresentar os dois produtos e deixar o cliente escolher","Perguntar se o cliente tem o horário da manhã disponível antes de escolher qual apresentar","Começar sempre pelo Horus Live por ter mais prestígio","Enviar os materiais dos dois produtos para o cliente comparar"],correct:1,feedback_ok:"Perfeito. Diagnóstico de rotina antes de escolher o produto — oferecer os dois ao mesmo tempo causa paralisia de decisão.",feedback_ng:"Errado. Oferecer os dois produtos simultaneamente causa paralisia. Perguntar sobre rotina antes de escolher qual apresentar é o caminho certo."},
+  {q:"O cliente diz que 'já tem outra escola'. Qual a melhor resposta?",opts:["'Que escola é essa? Eles não têm o histórico de acerto que a gente tem.'","'Entendo. A Horistic não substitui ninguém. Seu professor atual opera ao vivo com a própria conta todo dia?'","'Tudo bem, mas você sabia que nossa estratégia DIVAP é exclusiva?'","'Que tal você experimentar o RIP por um mês e comparar?'"],correct:1,feedback_ok:"Excelente. Nunca atacar o concorrente — diferenciar pelo que a Horistic tem. A pergunta sobre o professor operar ao vivo é o diferencial mais forte.",feedback_ng:"Errado. Atacar o concorrente faz o cliente defender a própria decisão. Diferencie sem denegrir."},
+  {q:"O cliente diz que não é o momento. Você descobre que o bloqueio é 'incerteza do mercado'. O que fazer?",opts:["Reencadrar: quem opera sem método é prejudicado pela incerteza — quem tem DIVAP opera com regra, não emoção","Concordar e agendar follow-up para quando o mercado estabilizar","Apresentar o RIP como forma de entrar sem comprometer capital","Enviar análise de mercado por WhatsApp pra mostrar que o momento é bom"],correct:0,feedback_ok:"Certo. Incerteza de mercado é a oportunidade perfeita para reencadrar: o método protege exatamente nesse cenário.",feedback_ng:"Atenção. Aguardar o mercado estabilizar é esperar eternamente. A resposta certa é reencadrar a incerteza como argumento pro método."},
+];
+let treinoState={current:0,score:0,answered:false};
+function buildTreino(){const c=document.getElementById('treino-container');if(!c)return;c.innerHTML=renderTreinoCard();}
+function renderTreinoCard(){
+  const q=treinoQuestions[treinoState.current],total=treinoQuestions.length,pct=Math.round((treinoState.current/total)*100);
+  return `<div class="treino-wrapper"><div class="treino-card"><div class="treino-score-bar"><div class="treino-score-fill" style="width:${pct}%"></div></div><div class="treino-question-area"><div class="treino-q-label">Pergunta ${treinoState.current+1} de ${total} · ${treinoState.score} ponto${treinoState.score!==1?'s':''}</div><div class="treino-q">${q.q}</div><div class="treino-options">${q.opts.map((o,i)=>`<button class="treino-opt" onclick="treinoAnswer(${i})" id="opt-${i}">${o}</button>`).join('')}</div><div class="treino-feedback" id="treino-fb"><div class="treino-fb-label" id="treino-fb-label"></div><div class="treino-fb-text" id="treino-fb-text"></div></div></div><div class="treino-nav"><div class="treino-progress">Placar: <strong>${treinoState.score}</strong> / ${total}</div><button class="treino-btn" id="treino-next-btn" onclick="treinoNext()">Próxima →</button></div></div></div>`;
+}
+function treinoAnswer(idx){
+  if(treinoState.answered)return;treinoState.answered=true;
+  const q=treinoQuestions[treinoState.current],ok=idx===q.correct;
+  if(ok){treinoState.score++;const p=loadProgress();p['treino']=(p['treino']||0)+1;saveProgress(p);}
+  document.querySelectorAll('.treino-opt').forEach((b,i)=>{b.classList.add('disabled');if(i===q.correct)b.classList.add('correct');else if(i===idx&&!ok)b.classList.add('wrong');});
+  const fb=document.getElementById('treino-fb');fb.classList.add('show');
+  document.getElementById('treino-fb-label').className='treino-fb-label '+(ok?'ok':'ng');
+  document.getElementById('treino-fb-label').textContent=ok?'✓ Correto!':'✗ Não exatamente';
+  document.getElementById('treino-fb-text').textContent=ok?q.feedback_ok:q.feedback_ng;
+  const btn=document.getElementById('treino-next-btn');btn.style.display='block';btn.textContent=treinoState.current+1<treinoQuestions.length?'Próxima →':'Ver resultado';
+}
+function treinoNext(){
+  treinoState.current++;treinoState.answered=false;
+  if(treinoState.current>=treinoQuestions.length){showTreinoResult();return;}
+  document.getElementById('treino-container').innerHTML=renderTreinoCard();
+}
+function showTreinoResult(){
+  const s=treinoState.score,t=treinoQuestions.length,pct=Math.round((s/t)*100);
+  let msg,color;
+  if(pct>=80){msg="Excelente! Você está pronto pra call.";color="var(--green)";}
+  else if(pct>=50){msg="Bom progresso — revise as objeções que errou antes da próxima call.";color="var(--accent)";}
+  else{msg="Revise a seção de Contornos de Objeção e tente novamente.";color="var(--red)";}
+  document.getElementById('treino-container').innerHTML=`<div class="treino-wrapper"><div class="treino-card"><div class="treino-score-bar"><div class="treino-score-fill" style="width:100%"></div></div><div class="treino-question-area" style="text-align:center;padding:32px 20px"><div style="font-size:48px;margin-bottom:16px">${pct>=80?'🏆':pct>=50?'📈':'📚'}</div><div style="font-size:28px;font-weight:700;color:${color};margin-bottom:8px">${s} / ${t}</div><div style="font-size:14px;color:var(--text2);margin-bottom:24px">${msg}</div><button class="treino-btn" style="display:inline-block" onclick="treinoRestart()">Recomeçar treino</button></div></div></div>`;
+}
+function treinoRestart(){treinoState={current:0,score:0,answered:false};document.getElementById('treino-container').innerHTML=renderTreinoCard();}
+
+// ── NAVIGATION ──
+let currentLevel='junior';
+function nav(pageId,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+pageId).classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active');
+  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais'};
+  document.getElementById('crumb-label').textContent=labels[pageId]||'';
+  if(pageId==='treino')buildTreino();
+  if(pageId==='lancamentos')calRender();
+  if(pageId==='home')renderProgressGrid();
+  window.scrollTo(0,0);
+}
+function toggleLevel(){
+  const mc=document.getElementById('main-content'),btn=document.getElementById('level-toggle');
+  if(currentLevel==='junior'){currentLevel='pleno';mc.classList.replace('level-junior','level-pleno');btn.className='tb-level pleno';btn.textContent='👤 Pleno';}
+  else{currentLevel='junior';mc.classList.replace('level-pleno','level-junior');btn.className='tb-level junior';btn.textContent='👤 Júnior';}
+}
+// init
+document.getElementById('main-content').classList.add('level-junior');
+renderProgressGrid();
+function toggleObj(card){card.classList.toggle('open');}
+function toggleHist(t){t.classList.toggle('open');}
+document.addEventListener('click',e=>{
+  const wrap=document.querySelector('.tb-search');
+  if(wrap&&!wrap.contains(e.target))document.getElementById('search-results').classList.remove('show');
+});
+</script>
+</body>
+</html>
