@@ -43,7 +43,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 .sb-logo .brand{font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
 .sb-logo .brand b{color:var(--accent)}
 .sb-logo .sub{font-size:11px;color:var(--text3);margin-top:2px}
-.sb-nav{flex:1;padding:12px 0;overflow-y:auto}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto;overflow-x:hidden}
 .sb-group{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:10px 20px 5px;font-family:'Instrument Sans',sans-serif}
 .sb-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;border-left:2px solid transparent;transition:all .15s;color:var(--text2);font-size:13px;text-decoration:none}
 .sb-item:hover{background:var(--bg3);color:var(--text)}
@@ -518,6 +518,10 @@ td strong{color:var(--text);font-weight:500}
     <div class="sb-group" style="margin-top:6px">Contexto</div>
     <a class="sb-item" onclick="nav('produtos',this)"><span class="ic">◧</span>Preço &amp; Produtos</a>
     <a class="sb-item" onclick="nav('historia',this)"><span class="ic">◉</span>História e mais</a>
+    <a class="sb-item" href="https://gabrielheringer94-eng.github.io/playbook-horistic/pesquisa_clima_horistic.html" target="_blank" style="border-left:2px solid transparent">
+      <span class="ic">🌡️</span>Clima &amp; Engajamento
+      <span style="font-size:9px;font-family:'Instrument Sans',sans-serif;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid);padding:1px 6px;border-radius:10px;margin-left:auto">↗</span>
+    </a>
   </nav>
   <div class="sb-foot">Gabriel Heringer · Sales Consulting</div>
 </aside>
