@@ -382,6 +382,26 @@ td strong{color:var(--text);font-weight:500}
 .hist-body p{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:9px}
 .hist-body p:last-child{margin-bottom:0}
 
+/* ─── PRODUCT CARDS ─── */
+.prod-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;transition:all .18s;cursor:pointer}
+.prod-card:hover{border-color:var(--border2);box-shadow:0 4px 20px rgba(0,0,0,.07);transform:translateY(-1px)}
+.prod-card.open{border-color:var(--accent-mid);box-shadow:0 4px 20px rgba(255,131,0,.1)}
+.prod-card-featured{border-color:var(--accent-mid);background:linear-gradient(to right,#FFFBF7,#fff)}
+.prod-head{display:flex;align-items:center;gap:12px;padding:16px 20px;min-height:58px}
+.prod-badge{font-size:10px;font-family:'Instrument Sans',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:20px;border:1px solid transparent;white-space:nowrap;flex-shrink:0}
+.prod-name{flex:1;font-size:14px;font-weight:600;color:var(--text);line-height:1.3}
+.prod-price{font-size:13px;font-weight:700;color:var(--text2);white-space:nowrap;font-family:'Instrument Sans',sans-serif}
+.prod-chev{font-size:18px;color:var(--text3);transition:transform .2s;flex-shrink:0;margin-left:8px}
+.prod-card.open .prod-chev{transform:rotate(90deg);color:var(--accent)}
+.prod-body{display:none;border-top:1px solid var(--border);padding:18px 20px}
+.prod-card.open .prod-body{display:block}
+.prod-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.prod-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+.prod-block-price{background:var(--accent-dim);border-color:var(--accent-mid)}
+.prod-block-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:5px}
+.prod-block-text{font-size:12px;color:var(--text2);line-height:1.55}
+.prod-bonus-row{display:flex;align-items:baseline;gap:10px;padding:10px 14px;border-radius:8px;border:1px solid transparent;flex-wrap:wrap}
+
 /* ─── SCROLLBAR ─── */
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -1638,330 +1658,226 @@ td strong{color:var(--text);font-weight:500}
 
   <!-- ════════════════════ PRODUTOS ════════════════════ -->
   <div class="page" id="page-produtos">
-    <div class="section">
+    <div class="section" style="max-width:960px">
       <div class="sec-header">
         <div class="eyebrow">Preço &amp; Produtos</div>
         <div class="sec-title">Portfólio completo · Preços e condições</div>
-        <div class="sec-desc">Todos os produtos organizados por categoria. Conheça cada um antes de falar sobre eles — para quem é, o que entrega, preço padrão, preço mínimo e bônus possíveis.</div>
+        <div class="sec-desc">Todos os produtos organizados por categoria. Clique em cada produto para ver detalhes, preços e bônus possíveis.</div>
       </div>
 
-      <!-- EDUCAÇÃO -->
-      <div class="eyebrow" style="margin-bottom:14px">📚 Educação</div>
+      <!-- ── EDUCAÇÃO ── -->
+      <div style="background:linear-gradient(135deg,#141413 0%,#2a2a28 100%);border-radius:14px;padding:20px 24px;margin-bottom:14px;display:flex;align-items:center;gap:14px">
+        <div style="width:42px;height:42px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📚</div>
+        <div><div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:2px">Educação</div><div style="font-size:12px;color:rgba(255,255,255,.5);font-family:'Instrument Sans',sans-serif">6 produtos · Do básico ao alto ticket</div></div>
+        <div style="margin-left:auto"><span style="font-size:10px;font-family:'Instrument Sans',sans-serif;background:rgba(255,131,0,.2);color:var(--accent);border:1px solid rgba(255,131,0,.35);padding:3px 10px;border-radius:20px">R$ 297 → R$ 33.000</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px">
 
-      <!-- Trading do Zero -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag b">Educação</span>
-              <span class="tag">R$ 297</span>
+        <div class="prod-card" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#E8F4FF;color:#1C62C8;border-color:#BFDBFE">Iniciantes</div><div class="prod-name">Trading do Zero</div><div class="prod-price">R$ 297</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Para quem é</div><div class="prod-block-text">Iniciantes no Trading ou quem precisa de base antes de evoluir</div></div>
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">Curso de Nivelamento c/ Leonardo + Curso Start Trader c/ Victor Rocha (gravados)</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço</div><div style="font-size:22px;font-weight:700;color:var(--accent)">R$ 297</div><div style="font-size:11px;color:var(--text3)">Preço mínimo: R$ 297</div></div>
             </div>
-            <div class="obj-question-text">Trading do Zero</div>
+            <div class="prod-bonus-row" style="background:#F0FFF4;border-color:#BBF7D0"><span style="color:var(--green);font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600">BÔNUS</span><span style="font-size:12px;color:var(--text2)">Sem bônus adicionais neste produto</span></div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Para quem é</div><div class="fd-block-text">Iniciantes no Trading ou que precisam de uma base antes de evoluir</div></div>
-            <div class="fd-block"><div class="fd-block-label">Preço padrão</div><div class="fd-block-text" style="font-size:16px;font-weight:700;color:var(--accent)">R$ 297</div></div>
-          </div>
-          <div class="fd-block" style="margin-bottom:10px"><div class="fd-block-label">Entregas</div><div class="fd-block-text">Cursos Gravados — Curso de Nivelamento (desde o que é um candle até pivô, c/ Leonardo) + Curso Start Trader (c/ Victor Rocha)</div></div>
-          <div class="tags"><span class="tag">Sem bônus adicionais</span></div>
-        </div>
-      </div>
 
-      <!-- Reforço Particular -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag b">Educação</span>
-              <span class="tag">50 USDT</span>
+        <div class="prod-card" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#F0F9FF;color:#0369A1;border-color:#BAE6FD">Nível mínimo</div><div class="prod-name">Reforço Particular</div><div class="prod-price">50 USDT</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Para quem é</div><div class="prod-block-text">Quem já tem nível mínimo. Não é aula — é REFORÇO/REVISÃO. Limitado a 1 aula por aluno.</div></div>
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">1 sessão de revisão particular — máximo 1 por aluno</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço</div><div style="font-size:22px;font-weight:700;color:var(--accent)">50 USDT</div></div>
             </div>
-            <div class="obj-question-text">Reforço Particular</div>
+            <div class="prod-bonus-row" style="background:#FFF1F2;border-color:#FECDD3"><span style="color:var(--red);font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600">ATENÇÃO</span><span style="font-size:12px;color:var(--text2)">Limitado a 1 aula por aluno — não vender mais de uma</span></div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Para quem é</div><div class="fd-block-text">Qualquer pessoa que já tenha nível mínimo. Não é aula — é REFORÇO/REVISÃO. Limitado a 1 aula por aluno.</div></div>
-            <div class="fd-block"><div class="fd-block-label">Preço padrão · mínimo</div><div class="fd-block-text" style="font-size:16px;font-weight:700;color:var(--accent)">50 USDT</div></div>
-          </div>
-          <div class="tags"><span class="tag r">Limitado a 1 aula por aluno</span></div>
-        </div>
-      </div>
 
-      <!-- Estratégias de Trading -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag b">Educação</span>
-              <span class="tag o">R$ 3.997</span>
+        <div class="prod-card prod-card-featured" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#FFF7ED;color:#C2410C;border-color:#FED7AA">Avançado</div><div class="prod-name">Estratégias de Trading ⭐</div><div class="prod-price" style="color:var(--accent)">R$ 3.997</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Para quem é</div><div class="prod-block-text">Quem precisa aprender estratégia avançada de trading e já sabe o básico</div></div>
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">10 estratégias de trading autorais da Horistic gravadas</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço padrão · mínimo</div><div style="font-size:22px;font-weight:700;color:var(--accent)">R$ 3.997</div><div style="font-size:11px;color:var(--text3)">Mínimo: R$ 3.749</div></div>
             </div>
-            <div class="obj-question-text">Estratégias de Trading</div>
+            <div class="prod-bonus-row" style="background:#F0FFF4;border-color:#BBF7D0"><span style="color:var(--green);font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600">BÔNUS POSSÍVEIS</span><span style="font-size:12px;color:var(--text2)">1 mês de Horus Live + 3 meses de VIP <strong>ou</strong> 3 meses de APTC + APTF</span></div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Para quem é</div><div class="fd-block-text">Pessoas que precisam aprender estratégia avançada de trading e que já saibam o básico</div></div>
-            <div class="fd-block"><div class="fd-block-label">Preço padrão · mínimo</div><div class="fd-block-text"><span style="font-size:16px;font-weight:700;color:var(--accent)">R$ 3.997</span><br><span style="font-size:12px;color:var(--text3)">Mínimo: R$ 3.749</span></div></div>
-          </div>
-          <div class="fd-block" style="margin-bottom:10px"><div class="fd-block-label">Entregas</div><div class="fd-block-text">10 Estratégias de trading autorais da Horistic gravadas</div></div>
-          <div class="fd-block" style="margin-bottom:10px;border-left:3px solid var(--green)"><div class="fd-block-label" style="color:var(--green)">Bônus possíveis</div><div class="fd-block-text">1 mês de Horus Live + 3 meses de VIP <strong>ou</strong> 3 meses de APTC + APTF</div></div>
-        </div>
-      </div>
 
-      <!-- Mentoria de Trading -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag b">Educação</span>
-              <span class="tag o">R$ 7.997</span>
+        <div class="prod-card prod-card-featured" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#FFF7ED;color:#C2410C;border-color:#FED7AA">Avançado + Particular</div><div class="prod-name">Mentoria de Trading ⭐</div><div class="prod-price" style="color:var(--accent)">R$ 7.997</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Para quem é</div><div class="prod-block-text">Quem precisa de estratégia avançada + aulas de Gerenciamento Particulares</div></div>
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">Curso Estratégias de Trading + 4 Aulas Particulares de Gerenciamento c/ Leonardo</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço padrão · mínimo</div><div style="font-size:22px;font-weight:700;color:var(--accent)">R$ 7.997</div><div style="font-size:11px;color:var(--text3)">Mínimo: R$ 7.597</div></div>
             </div>
-            <div class="obj-question-text">Mentoria de Trading</div>
+            <div class="prod-bonus-row" style="background:#F0FFF4;border-color:#BBF7D0"><span style="color:var(--green);font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600">BÔNUS POSSÍVEIS</span><span style="font-size:12px;color:var(--text2)">1 mês Live + 1 mês VIP + 1 mês APTC+APTF — <strong>ou</strong> 6 meses VIP — <strong>ou</strong> 6 meses APTC+APTF — <strong>ou</strong> 1 aula adicional c/ Leonardo — <strong>ou</strong> 1 SOS Trader (1h c/ Victor + Fernando + Leonardo)</span></div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Para quem é</div><div class="fd-block-text">Quem precisa aprender estratégia avançada de trading + aulas de Gerenciamento Particulares</div></div>
-            <div class="fd-block"><div class="fd-block-label">Preço padrão · mínimo</div><div class="fd-block-text"><span style="font-size:16px;font-weight:700;color:var(--accent)">R$ 7.997</span><br><span style="font-size:12px;color:var(--text3)">Mínimo: R$ 7.597</span></div></div>
-          </div>
-          <div class="fd-block" style="margin-bottom:10px"><div class="fd-block-label">Entregas</div><div class="fd-block-text">Curso Estratégias de Trading + 4 Aulas Particulares de Gerenciamento com o Leonardo</div></div>
-          <div class="fd-block" style="margin-bottom:10px;border-left:3px solid var(--green)"><div class="fd-block-label" style="color:var(--green)">Bônus possíveis</div><div class="fd-block-text">
-            1 mês de Horus Live + 1 mês de VIP + 1 mês de APTC+APTF<br>
-            <strong>ou</strong> 6 meses de VIP <strong>ou</strong> 6 meses de APTC+APTF <strong>ou</strong> 1 aula adicional com Leonardo <strong>ou</strong> 1 SOS Trader (aula particular de 1h com Victor + Fernando + Leonardo)
-          </div></div>
-        </div>
-      </div>
 
-      <!-- Mentoria Particular -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag b">Educação</span>
-              <span class="tag r">R$ 27.497</span>
+        <div class="prod-card" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#FDF4FF;color:#7C3AED;border-color:#E9D5FF">Alto Ticket</div><div class="prod-name">Mentoria Particular</div><div class="prod-price" style="color:var(--purple)">R$ 27.497</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Para quem é</div><div class="prod-block-text">Quem quer aprender as estratégias mas precisa de acompanhamento mais próximo e personalizado</div></div>
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">10 aulas particulares c/ Victor + Leonardo + Fernando. Estratégias de trading + Gestão de Risco</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço padrão · mínimo</div><div style="font-size:22px;font-weight:700;color:var(--purple)">R$ 27.497</div><div style="font-size:11px;color:var(--text3)">Mínimo: R$ 25.000</div></div>
             </div>
-            <div class="obj-question-text">Mentoria Particular</div>
+            <div class="prod-bonus-row" style="background:#F0FFF4;border-color:#BBF7D0"><span style="color:var(--green);font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600">BÔNUS POSSÍVEIS</span><span style="font-size:12px;color:var(--text2)">1 ano Live + 1 ano VIP + 1 ano APTC+APTF + 1 aula bônus <strong>ou</strong> 1 SOS Trader</span></div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Para quem é</div><div class="fd-block-text">Para quem quer aprender as estratégias de trading mas precisa / gostaria de um acompanhamento mais próximo</div></div>
-            <div class="fd-block"><div class="fd-block-label">Preço padrão · mínimo</div><div class="fd-block-text"><span style="font-size:16px;font-weight:700;color:var(--red)">R$ 27.497</span><br><span style="font-size:12px;color:var(--text3)">Mínimo: R$ 25.000</span></div></div>
-          </div>
-          <div class="fd-block" style="margin-bottom:10px"><div class="fd-block-label">Entregas</div><div class="fd-block-text">10 aulas particulares com Victor + Leonardo + Fernando. Aprende estratégias de trading + Aula de Gestão de Risco</div></div>
-          <div class="fd-block" style="margin-bottom:10px;border-left:3px solid var(--green)"><div class="fd-block-label" style="color:var(--green)">Bônus possíveis</div><div class="fd-block-text">1 ano de Horus Live + 1 ano de VIP + 1 ano de APTC+APTF + 1 aula bônus <strong>ou</strong> 1 SOS Trader</div></div>
-        </div>
-      </div>
 
-      <!-- O Próximo Nível -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag b">Educação</span>
-              <span class="tag r">R$ 33.000</span>
+        <div class="prod-card" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#FDF4FF;color:#7C3AED;border-color:#E9D5FF">Pós-Mentoria</div><div class="prod-name">O Próximo Nível (Pós Mentoria)</div><div class="prod-price" style="color:var(--purple)">R$ 33.000</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Para quem é</div><div class="prod-block-text">Exclusivo para quem já fez "Estratégias de Trading", Mentoria Particular ou "Mentoria Remindset"</div></div>
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">10 aulas particulares de Acompanhamento + Gerenciamento de capital avançado</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço padrão · mínimo</div><div style="font-size:22px;font-weight:700;color:var(--purple)">R$ 33.000</div><div style="font-size:11px;color:var(--text3)">Mínimo: R$ 30.000</div></div>
             </div>
-            <div class="obj-question-text">O Próximo Nível (Pós Mentoria)</div>
+            <div class="prod-bonus-row" style="background:#F0FFF4;border-color:#BBF7D0"><span style="color:var(--green);font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600">BÔNUS POSSÍVEIS</span><span style="font-size:12px;color:var(--text2)">1 ano Live + 1 ano VIP + 1 ano APTC+APTF</span></div>
+            <div style="margin-top:8px;padding:8px 12px;background:var(--red-dim);border:1px solid var(--red-mid);border-radius:7px;font-size:12px;color:var(--red)">⚠ Pré-requisito obrigatório — não vender sem histórico do produto anterior</div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Para quem é</div><div class="fd-block-text">Exclusivo para quem já fez "Estratégias de Trading", Mentoria Particular ou "Mentoria Remindset" no passado</div></div>
-            <div class="fd-block"><div class="fd-block-label">Preço padrão · mínimo</div><div class="fd-block-text"><span style="font-size:16px;font-weight:700;color:var(--red)">R$ 33.000</span><br><span style="font-size:12px;color:var(--text3)">Mínimo: R$ 30.000</span></div></div>
-          </div>
-          <div class="fd-block" style="margin-bottom:10px"><div class="fd-block-label">Entregas</div><div class="fd-block-text">10 aulas particulares de Acompanhamento + Conteúdo extra de gerenciamento de capital avançado</div></div>
-          <div class="fd-block" style="margin-bottom:10px;border-left:3px solid var(--green)"><div class="fd-block-label" style="color:var(--green)">Bônus possíveis</div><div class="fd-block-text">1 ano de Horus Live + 1 ano de VIP + 1 ano de APTC+APTF</div></div>
-          <div class="tags"><span class="tag r">Pré-requisito: produto anterior obrigatório</span></div>
-        </div>
+
       </div>
 
-      <div class="divider"></div>
+      <!-- ── EXECUÇÃO ── -->
+      <div style="background:linear-gradient(135deg,#FF6B00 0%,#FF8300 100%);border-radius:14px;padding:20px 24px;margin-bottom:14px;display:flex;align-items:center;gap:14px">
+        <div style="width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⚡</div>
+        <div><div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:2px">Execução</div><div style="font-size:12px;color:rgba(255,255,255,.7);font-family:'Instrument Sans',sans-serif">6 produtos · Ferramentas de acompanhamento diário</div></div>
+        <div style="margin-left:auto"><span style="font-size:10px;font-family:'Instrument Sans',sans-serif;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);padding:3px 10px;border-radius:20px">R$ 97 → R$ 2.997</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px">
 
-      <!-- EXECUÇÃO -->
-      <div class="eyebrow" style="margin-bottom:14px">⚡ Execução</div>
-
-      <!-- Radar -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag o">Execução</span>
-              <span class="tag">R$ 97</span>
+        <div class="prod-card" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#FFF7ED;color:#C2410C;border-color:#FED7AA">TradingView</div><div class="prod-name">Radar de Trade / Compra &amp; Venda</div><div class="prod-price">R$ 97</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Para quem é</div><div class="prod-block-text">Traders que usam TradingView e querem o indicador DIVAP integrado nos gráficos</div></div>
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">Indicador de DIVAP no TradingView + Curso de DIVAP</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço</div><div style="font-size:22px;font-weight:700;color:var(--accent)">R$ 97</div></div>
             </div>
-            <div class="obj-question-text">Radar de Trade / Radar de Compra &amp; Venda</div>
-          </div>
-          <span class="obj-chevron">›</span>
-        </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Preço padrão · mínimo</div><div class="fd-block-text"><span style="font-size:16px;font-weight:700;color:var(--accent)">R$ 97</span></div></div>
-            <div class="fd-block"><div class="fd-block-label">Entregas</div><div class="fd-block-text">Indicador de DIVAP no TradingView + Curso de DIVAP</div></div>
           </div>
         </div>
-      </div>
 
-      <!-- RIP -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag o">Execução</span>
-              <span class="tag">R$ 497</span>
+        <div class="prod-card" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#FFF7ED;color:#C2410C;border-color:#FED7AA">Relatório</div><div class="prod-name">Relatório de Informações Privilegiadas (RIP)</div><div class="prod-price">R$ 497</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Para quem é</div><div class="prod-block-text">Traders que querem análise diária estruturada de criptomoedas</div></div>
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">Relatório diário de Criptomoedas</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço</div><div style="font-size:22px;font-weight:700;color:var(--accent)">R$ 497</div></div>
             </div>
-            <div class="obj-question-text">Relatório de Informações Privilegiadas (RIP)</div>
-          </div>
-          <span class="obj-chevron">›</span>
-        </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Preço padrão · mínimo</div><div class="fd-block-text"><span style="font-size:16px;font-weight:700;color:var(--accent)">R$ 497</span></div></div>
-            <div class="fd-block"><div class="fd-block-label">Entregas</div><div class="fd-block-text">Relatório diário de Criptomoedas</div></div>
           </div>
         </div>
-      </div>
 
-      <!-- APTC -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag o">Execução</span>
-              <span class="tag">Anual R$ 1.997 · Trim. R$ 797</span>
+        <div class="prod-card prod-card-featured" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#FFF7ED;color:#C2410C;border-color:#FED7AA">Cripto · IA</div><div class="prod-name">Assistente Pessoal de Trade Cripto (APTC) ⭐</div><div class="prod-price" style="color:var(--accent)">Anual R$ 1.997</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">APTC + Starter Trader + Curso DIVAP</div></div>
+              <div class="prod-block"><div class="prod-block-label">Preço padrão</div><div class="prod-block-text"><strong>Anual:</strong> R$ 1.997<br><strong>Trimestral:</strong> R$ 797</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço mínimo</div><div class="prod-block-text"><strong>Anual:</strong> R$ 1.857<br><strong>Trimestral:</strong> R$ 697</div></div>
             </div>
-            <div class="obj-question-text">Assistente Pessoal de Trade Cripto (APTC)</div>
+            <div class="prod-bonus-row" style="background:#F0FFF4;border-color:#BBF7D0"><span style="color:var(--green);font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600">BÔNUS POSSÍVEIS</span><span style="font-size:12px;color:var(--text2)">1 mês de APTF <strong>ou</strong> 15 dias de Horus Live</span></div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Preço padrão</div><div class="fd-block-text"><strong>Anual:</strong> R$ 1.997<br><strong>Trimestral:</strong> R$ 797</div></div>
-            <div class="fd-block"><div class="fd-block-label">Preço mínimo</div><div class="fd-block-text"><strong>Anual:</strong> R$ 1.857<br><strong>Trimestral:</strong> R$ 697</div></div>
-          </div>
-          <div class="fd-block" style="margin-bottom:10px"><div class="fd-block-label">Entregas</div><div class="fd-block-text">APTC + Starter Trader + Curso DIVAP</div></div>
-          <div class="fd-block" style="margin-bottom:10px;border-left:3px solid var(--green)"><div class="fd-block-label" style="color:var(--green)">Bônus possíveis</div><div class="fd-block-text">1 mês de APTF <strong>ou</strong> 15 dias de Horus Live</div></div>
-        </div>
-      </div>
 
-      <!-- APTF -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag o">Execução</span>
-              <span class="tag">Anual R$ 1.497 · Trim. R$ 697</span>
+        <div class="prod-card" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE">Forex · IA</div><div class="prod-name">Assistente Pessoal de Trade Forex (APTF)</div><div class="prod-price">Anual R$ 1.497</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">APTF + Starter Trader + Curso DIVAP</div></div>
+              <div class="prod-block"><div class="prod-block-label">Preço padrão</div><div class="prod-block-text"><strong>Anual:</strong> R$ 1.497<br><strong>Trimestral:</strong> R$ 697</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço mínimo</div><div class="prod-block-text"><strong>Anual:</strong> R$ 1.397<br><strong>Trimestral:</strong> R$ 597</div></div>
             </div>
-            <div class="obj-question-text">Assistente Pessoal de Trade Forex (APTF)</div>
+            <div class="prod-bonus-row" style="background:#F0FFF4;border-color:#BBF7D0"><span style="color:var(--green);font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600">BÔNUS POSSÍVEIS</span><span style="font-size:12px;color:var(--text2)">1 mês de APTC <strong>ou</strong> 15 dias de Horus Live</span></div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Preço padrão</div><div class="fd-block-text"><strong>Anual:</strong> R$ 1.497<br><strong>Trimestral:</strong> R$ 697</div></div>
-            <div class="fd-block"><div class="fd-block-label">Preço mínimo</div><div class="fd-block-text"><strong>Anual:</strong> R$ 1.397<br><strong>Trimestral:</strong> R$ 597</div></div>
-          </div>
-          <div class="fd-block" style="margin-bottom:10px"><div class="fd-block-label">Entregas</div><div class="fd-block-text">APTF + Starter Trader + Curso DIVAP</div></div>
-          <div class="fd-block" style="margin-bottom:10px;border-left:3px solid var(--green)"><div class="fd-block-label" style="color:var(--green)">Bônus possíveis</div><div class="fd-block-text">1 mês de APTC <strong>ou</strong> 15 dias de Horus Live</div></div>
-        </div>
-      </div>
 
-      <!-- Remindset VIP -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag o">Execução</span>
-              <span class="tag">Anual R$ 2.997 · Trim. R$ 1.297</span>
+        <div class="prod-card prod-card-featured" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#FFF7ED;color:#C2410C;border-color:#FED7AA">Sinais · WhatsApp</div><div class="prod-name">Remindset VIP ⭐</div><div class="prod-price" style="color:var(--accent)">Anual R$ 2.997</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">Remindset VIP + Starter Trader + Scalp do Vitão + Curso DIVAP</div></div>
+              <div class="prod-block"><div class="prod-block-label">Preço padrão</div><div class="prod-block-text"><strong>Anual:</strong> R$ 2.997<br><strong>Trimestral:</strong> R$ 1.297</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Preço mínimo</div><div class="prod-block-text"><strong>Anual:</strong> R$ 2.787<br><strong>Trimestral:</strong> R$ 1.297</div></div>
             </div>
-            <div class="obj-question-text">Remindset VIP</div>
+            <div class="prod-bonus-row" style="background:#F0FFF4;border-color:#BBF7D0"><span style="color:var(--green);font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600">BÔNUS POSSÍVEIS</span><span style="font-size:12px;color:var(--text2)">1 mês de APTF <strong>ou</strong> 1 mês de APTC <strong>ou</strong> 15 dias de Horus Live</span></div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Preço padrão</div><div class="fd-block-text"><strong>Anual:</strong> R$ 2.997<br><strong>Trimestral:</strong> R$ 1.297</div></div>
-            <div class="fd-block"><div class="fd-block-label">Preço mínimo</div><div class="fd-block-text"><strong>Anual:</strong> R$ 2.787<br><strong>Trimestral:</strong> R$ 1.297</div></div>
-          </div>
-          <div class="fd-block" style="margin-bottom:10px"><div class="fd-block-label">Entregas</div><div class="fd-block-text">Remindset VIP + Starter Trader + Scalp do Vitão + Curso DIVAP</div></div>
-          <div class="fd-block" style="margin-bottom:10px;border-left:3px solid var(--green)"><div class="fd-block-label" style="color:var(--green)">Bônus possíveis</div><div class="fd-block-text">1 mês de APTF <strong>ou</strong> 1 mês de APTC <strong>ou</strong> 15 dias de Horus Live</div></div>
-        </div>
-      </div>
 
-      <!-- Horus Live -->
-      <div class="obj-card" onclick="toggleObj(this)">
-        <div class="obj-head">
-          <div class="obj-head-left">
-            <div class="obj-meta">
-              <span class="tag o">Execução</span>
-              <span class="tag">Semestral R$ 2.997 · Mensal R$ 499</span>
+        <div class="prod-card prod-card-featured" onclick="this.classList.toggle('open')">
+          <div class="prod-head"><div class="prod-badge" style="background:#FFF7ED;color:#C2410C;border-color:#FED7AA">Sala ao Vivo</div><div class="prod-name">Horus Live ⭐</div><div class="prod-price" style="color:var(--accent)">Semestral R$ 2.997</div><div class="prod-chev">›</div></div>
+          <div class="prod-body">
+            <div class="prod-grid3">
+              <div class="prod-block"><div class="prod-block-label">Entregas</div><div class="prod-block-text">Starter Trader + Scalp do Vitão + Curso DIVAP</div></div>
+              <div class="prod-block"><div class="prod-block-label">Preço padrão</div><div class="prod-block-text"><strong>Semestral:</strong> R$ 2.997<br><strong>Mensal:</strong> R$ 499</div></div>
+              <div class="prod-block prod-block-price"><div class="prod-block-label">Bônus possíveis</div><div class="prod-block-text">1 mês de APTC + 1 mês de APTF</div></div>
             </div>
-            <div class="obj-question-text">Horus Live</div>
           </div>
-          <span class="obj-chevron">›</span>
         </div>
-        <div class="obj-answer">
-          <div class="grid2" style="margin-bottom:12px">
-            <div class="fd-block"><div class="fd-block-label">Preço padrão</div><div class="fd-block-text"><strong>Semestral:</strong> R$ 2.997<br><strong>Mensal:</strong> R$ 499</div></div>
-            <div class="fd-block"><div class="fd-block-label">Entregas</div><div class="fd-block-text">Starter Trader + Scalp do Vitão + Curso DIVAP</div></div>
-          </div>
-          <div class="fd-block" style="margin-bottom:10px;border-left:3px solid var(--green)"><div class="fd-block-label" style="color:var(--green)">Bônus possíveis</div><div class="fd-block-text">1 mês de APTC + 1 mês de APTF</div></div>
-        </div>
+
       </div>
 
-      <div class="divider"></div>
-
-      <!-- COMBOS -->
-      <div class="eyebrow" style="margin-bottom:14px">🔗 Combos disponíveis</div>
-      <div class="card">
-        <div class="card-title">Combos de Execução</div>
-        <div class="tags" style="margin-top:0">
-          <span class="tag o">APTC + APTF</span>
-          <span class="tag o">APTC + Live</span>
-          <span class="tag o">APTC + VIP</span>
-          <span class="tag o">VIP + APTF</span>
-          <span class="tag o">VIP + Live</span>
-          <span class="tag o">Live + APTC + APTF + VIP</span>
-        </div>
+      <!-- ── COMBOS ── -->
+      <div style="background:linear-gradient(135deg,#1A7F4B 0%,#15803D 100%);border-radius:14px;padding:20px 24px;margin-bottom:14px;display:flex;align-items:center;gap:14px">
+        <div style="width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🔗</div>
+        <div><div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:2px">Combos disponíveis</div><div style="font-size:12px;color:rgba(255,255,255,.7);font-family:'Instrument Sans',sans-serif">22 combinações · Maior ticket = maior bônus</div></div>
       </div>
-      <div class="card">
-        <div class="card-title">Combos com Estratégias de Trading</div>
-        <div class="tags" style="margin-top:0">
-          <span class="tag b">Estratégias + APTC</span>
-          <span class="tag b">Estratégias + APTF</span>
-          <span class="tag b">Estratégias + APTC + APTF</span>
-          <span class="tag b">Estratégias + VIP</span>
-          <span class="tag b">Estratégias + Live</span>
-          <span class="tag b">Estratégias + VIP + Live</span>
-          <span class="tag b">Estratégias + APTC + APTF + VIP + Live</span>
-          <span class="tag b">Estratégias + APTC + Live</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:60px">
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px">
+          <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);font-family:'Instrument Sans',sans-serif;margin-bottom:10px;font-weight:600;border-bottom:2px solid var(--blue-dim);padding-bottom:8px">Execução</div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--blue)">→</span>APTC + APTF</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--blue)">→</span>APTC + Live</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--blue)">→</span>APTC + VIP</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--blue)">→</span>VIP + APTF</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--blue)">→</span>VIP + Live</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:7px"><span style="color:var(--blue)">→</span>Live + APTC + APTF + VIP</div>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Combos com Mentoria de Trading</div>
-        <div class="tags" style="margin-top:0">
-          <span class="tag r">Mentoria + APTC</span>
-          <span class="tag r">Mentoria + APTF</span>
-          <span class="tag r">Mentoria + APTC + APTF</span>
-          <span class="tag r">Mentoria + VIP</span>
-          <span class="tag r">Mentoria + Live</span>
-          <span class="tag r">Mentoria + VIP + Live</span>
-          <span class="tag r">Mentoria + APTC + APTF + VIP + Live</span>
-          <span class="tag r">Mentoria + APTC + Live</span>
-          <span class="tag r">Mentoria Particular + Pós Mentoria Particular</span>
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px">
+          <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:10px;font-weight:600;border-bottom:2px solid var(--accent-dim);padding-bottom:8px">Estratégias + Execução</div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--accent)">→</span>Estratégias + APTC</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--accent)">→</span>Estratégias + APTF</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--accent)">→</span>Estratégias + APTC + APTF</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--accent)">→</span>Estratégias + VIP</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--accent)">→</span>Estratégias + Live</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--accent)">→</span>Estratégias + VIP + Live</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--accent)">→</span>Estratégias + APTC + APTF + VIP + Live</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:7px"><span style="color:var(--accent)">→</span>Estratégias + APTC + Live</div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px;grid-column:1/-1">
+          <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);font-family:'Instrument Sans',sans-serif;margin-bottom:10px;font-weight:600;border-bottom:2px solid var(--purple-dim);padding-bottom:8px">Mentoria + Execução</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--purple)">→</span>Mentoria + APTC</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--purple)">→</span>Mentoria + APTF</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--purple)">→</span>Mentoria + APTC + APTF</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--purple)">→</span>Mentoria + VIP</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--purple)">→</span>Mentoria + Live</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--purple)">→</span>Mentoria + VIP + Live</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--purple)">→</span>Mentoria + APTC + APTF + VIP + Live</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:7px"><span style="color:var(--purple)">→</span>Mentoria + APTC + Live</div>
+            <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:7px;grid-column:1/-1"><span style="color:var(--purple)">→</span>Mentoria Particular + Pós Mentoria Particular</div>
+          </div>
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- ════════════════════ HISTÓRIA ════════════════════ -->
+
+    <!-- ════════════════════ HISTÓRIA ════════════════════ -->
   <div class="page" id="page-historia">
     <div class="section">
       <div class="sec-header">
