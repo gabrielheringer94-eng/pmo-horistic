@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Role Play Comercial · Horistic</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --bg:         #FFFFFF;
+  --bg2:        #F7F7F7;
+  --bg3:        #EFEFEF;
+  --border:     #E6E6E6;
+  --border2:    #D4D4D4;
+  --text:       #141413;
+  --text2:      #828E9D;
+  --text3:      #AEAEAE;
+  --accent:     #FF8300;
+  --accent-dim: rgba(255,131,0,0.08);
+  --accent-mid: rgba(255,131,0,0.22);
+  --green:      #1A7F4B;
+  --green-dim:  rgba(26,127,75,0.08);
+  --red:        #C0392B;
+  --red-dim:    rgba(192,57,43,0.08);
+  --red-mid:    rgba(192,57,43,0.18);
+  --blue:       #1C62C8;
+  --blue-dim:   rgba(28,98,200,0.08);
+  --purple:     #7C3AED;
+  --purple-dim: rgba(124,58,237,0.08);
+  --purple-mid: rgba(124,58,237,0.18);
+
+  /* Pack colors */
+  --c1: #1C62C8; --c1d: rgba(28,98,200,0.08); --c1m: rgba(28,98,200,0.2);
+  --c2: #D97706; --c2d: rgba(217,119,6,0.08);  --c2m: rgba(217,119,6,0.2);
+  --c3: #7C3AED; --c3d: rgba(124,58,237,0.08); --c3m: rgba(124,58,237,0.2);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.6}
+
+/* ── TOP HEADER ── */
+.site-header{background:var(--text);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.site-header .logo{font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.site-header .logo span{color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:10px}
+.hbadge{font-size:10px;font-family:'Instrument Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:20px}
+.hbadge-o{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid)}
+.hbadge-w{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15)}
+.timer-display{font-size:13px;font-weight:700;font-family:'Instrument Sans',sans-serif;color:var(--accent);background:rgba(255,131,0,.12);border:1px solid var(--accent-mid);padding:4px 14px;border-radius:20px;cursor:pointer;transition:all .15s}
+.timer-display:hover{background:var(--accent);color:#fff}
+.timer-display.running{color:#fff;background:var(--accent)}
+.timer-display.urgent{background:var(--red-dim);color:var(--red);border-color:var(--red-mid)}
+
+/* ── HERO ── */
+.hero{background:var(--text);padding:56px 40px 52px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(255,131,0,.15) 0%,transparent 70%);border-radius:50%}
+.hero-eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.hero-eyebrow::after{content:'';height:1px;width:36px;background:var(--accent-mid);display:inline-block}
+.hero h1{font-size:42px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:14px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{font-size:15px;color:rgba(255,255,255,.6);max-width:560px;line-height:1.75;margin-bottom:32px}
+.how-row{display:flex;gap:10px;flex-wrap:wrap}
+.how-chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:10px 16px;font-size:12px;color:rgba(255,255,255,.7);font-family:'Instrument Sans',sans-serif;display:flex;align-items:center;gap:7px}
+.how-chip b{color:#fff;font-weight:600}
+
+/* ── PACK SELECTOR ── */
+.pack-nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;display:flex;gap:0;overflow-x:auto}
+.pack-tab{padding:16px 24px;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;font-family:'Space Grotesk',sans-serif;display:flex;align-items:center;gap:8px}
+.pack-tab:hover{color:var(--text)}
+.pack-tab.active-c1{color:var(--c1);border-bottom-color:var(--c1)}
+.pack-tab.active-c2{color:var(--c2);border-bottom-color:var(--c2)}
+.pack-tab.active-c3{color:var(--c3);border-bottom-color:var(--c3)}
+.pack-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ── MAIN LAYOUT ── */
+.main{max-width:1100px;margin:0 auto;padding:36px 40px 80px;display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start}
+.left-col{display:flex;flex-direction:column;gap:16px}
+.right-col{display:flex;flex-direction:column;gap:16px;position:sticky;top:72px}
+
+/* ── PACK PAGE ── */
+.pack-page{display:none}
+.pack-page.active{display:contents}
+
+/* ── SECTION CARDS ── */
+.sec{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden}
+.sec-header{padding:18px 22px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid var(--border)}
+.sec-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sec-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;margin-bottom:2px}
+.sec-title{font-size:14px;font-weight:700;color:var(--text)}
+.sec-chev{margin-left:auto;font-size:18px;color:var(--text3);transition:transform .2s}
+.sec.open .sec-chev{transform:rotate(90deg)}
+.sec-body{display:none;padding:20px 22px}
+.sec.open .sec-body{display:block}
+.sec.always-open .sec-chev{display:none}
+.sec.always-open .sec-body{display:block}
+
+/* ── PROFILE HERO ── */
+.profile-banner{border-radius:10px;padding:20px 22px;margin-bottom:16px;position:relative;overflow:hidden}
+.profile-avatar{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:12px;border:2px solid rgba(255,255,255,.2)}
+.profile-name{font-size:22px;font-weight:700;color:#fff;margin-bottom:2px}
+.profile-sub{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:14px}
+.profile-chips{display:flex;gap:6px;flex-wrap:wrap}
+.profile-chip{font-size:10px;font-family:'Instrument Sans',sans-serif;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.2)}
+
+/* ── BANT TABLE ── */
+.bant-grid{display:grid;grid-template-columns:90px 1fr;gap:1px;background:var(--border);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.bant-label{background:var(--bg2);padding:11px 14px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;color:var(--text3);display:flex;align-items:flex-start}
+.bant-val{background:#fff;padding:11px 14px;font-size:13px;color:var(--text2);line-height:1.5}
+.bant-val strong{color:var(--text)}
+.bant-label.b{color:var(--green);background:var(--green-dim)}
+.bant-label.a{color:var(--blue);background:var(--blue-dim)}
+.bant-label.n{color:var(--accent);background:var(--accent-dim)}
+.bant-label.t{color:var(--purple);background:var(--purple-dim)}
+
+/* ── SPIN QUESTIONS ── */
+.spin-section{margin-bottom:16px}
+.spin-title{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.spin-badge{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;font-weight:600;padding:3px 10px;border-radius:20px}
+.spin-subtitle{font-size:12px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-left:auto}
+.spin-q{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 14px;margin-bottom:6px;font-size:13px;color:var(--text2);line-height:1.5;position:relative;padding-left:32px}
+.spin-q::before{position:absolute;left:12px;top:11px;font-size:10px;font-weight:700;font-family:'Instrument Sans',sans-serif}
+.spin-q.S::before{content:'S';color:var(--green)}
+.spin-q.P::before{content:'P';color:var(--accent)}
+.spin-q.I::before{content:'I';color:var(--blue)}
+.spin-q.N::before{content:'N';color:var(--purple)}
+.spin-tip{font-size:11px;color:var(--text3);font-style:italic;padding-left:32px}
+
+/* ── SCENARIO BLOCK ── */
+.scenario-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.scenario-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;color:var(--text3);margin-bottom:6px}
+.scenario-text{font-size:13px;color:var(--text2);line-height:1.65}
+
+.trap-block{background:var(--red-dim);border:1px solid var(--red-mid);border-left:3px solid var(--red);border-radius:7px;padding:12px 14px;margin-bottom:8px}
+.trap-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;color:var(--red);font-weight:600;margin-bottom:4px}
+.trap-text{font-size:12px;color:#7A1A1A;line-height:1.6}
+
+.signal-block{background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-left:3px solid var(--green);border-radius:7px;padding:12px 14px;margin-bottom:8px}
+.signal-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;color:var(--green);font-weight:600;margin-bottom:4px}
+.signal-text{font-size:12px;color:#0F4D2A;line-height:1.6}
+
+/* ── EVALUATION FORM ── */
+.eval-header{background:var(--text);border-radius:10px;padding:16px 18px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.eval-header-icon{font-size:20px}
+.eval-header-title{font-size:14px;font-weight:700;color:#fff}
+.eval-header-sub{font-size:11px;color:rgba(255,255,255,.5);font-family:'Instrument Sans',sans-serif}
+
+.eval-category{margin-bottom:18px}
+.eval-cat-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;color:var(--text3);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.eval-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.eval-item-text{flex:1;font-size:12px;color:var(--text2);line-height:1.4;padding-top:2px}
+.star-row{display:flex;gap:3px;flex-shrink:0}
+.star{width:22px;height:22px;border-radius:5px;border:1px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .12s;color:var(--text3)}
+.star:hover,.star.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.eval-comment{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;font-size:12px;font-family:'Space Grotesk',sans-serif;color:var(--text);resize:vertical;min-height:70px;outline:none;margin-top:4px;transition:border-color .15s}
+.eval-comment:focus{border-color:var(--accent)}
+.eval-comment::placeholder{color:var(--text3)}
+
+.eval-submit{width:100%;background:var(--accent);color:#fff;border:none;border-radius:9px;padding:12px;font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .15s;margin-top:8px}
+.eval-submit:hover{opacity:.85}
+
+.eval-result{background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-radius:9px;padding:14px 16px;display:none;text-align:center}
+.eval-result.show{display:block}
+.eval-result-score{font-size:28px;font-weight:700;color:var(--green);margin-bottom:4px}
+.eval-result-label{font-size:12px;color:var(--green);font-family:'Instrument Sans',sans-serif}
+.eval-result-msg{font-size:13px;color:var(--text2);margin-top:8px;line-height:1.5}
+
+/* ── TIMER MODAL ── */
+.timer-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.timer-modal.show{display:flex}
+.timer-box{background:#fff;border-radius:20px;padding:36px;text-align:center;min-width:320px;box-shadow:0 24px 80px rgba(0,0,0,.2)}
+.timer-big{font-size:64px;font-weight:700;color:var(--text);letter-spacing:-2px;font-family:'Instrument Sans',sans-serif;margin-bottom:8px;transition:color .3s}
+.timer-big.urgent{color:var(--red)}
+.timer-label{font-size:12px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:24px}
+.timer-controls{display:flex;gap:10px;justify-content:center}
+.tbtn{padding:10px 20px;border-radius:9px;font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;border:1px solid var(--border2);background:#fff;color:var(--text2);transition:all .15s}
+.tbtn:hover{border-color:var(--accent);color:var(--accent)}
+.tbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tbtn.primary:hover{opacity:.85}
+.tbtn.danger{background:var(--red-dim);color:var(--red);border-color:var(--red-mid)}
+.timer-duration-row{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.tdur{padding:6px 14px;border-radius:7px;font-size:12px;font-family:'Instrument Sans',sans-serif;cursor:pointer;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);transition:all .12s}
+.tdur.active{background:var(--accent-dim);color:var(--accent);border-color:var(--accent-mid)}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:16px 0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:760px){
+  .main{grid-template-columns:1fr;padding:20px 16px 60px}
+  .right-col{position:static}
+  .hero{padding:36px 20px 32px}
+  .hero h1{font-size:28px}
+  .pack-nav{padding:0 16px}
+  .pack-tab{padding:12px 16px;font-size:12px}
+}
+
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">Horistic <span>·</span> Role Play Comercial</div>
+  <div class="header-right">
+    <div class="hbadge hbadge-o">3 Packs</div>
+    <div class="hbadge hbadge-w">BANT + SPIN</div>
+    <div class="timer-display" id="timer-btn" onclick="openTimer()">⏱ Cronômetro</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Dinâmica de time</div>
+  <h1>Pratique antes<br>de <em>entrar na call.</em></h1>
+  <p>3 perfis reais de clientes, com contexto, perguntas BANT e SPIN calibradas para a Horistic, armadilhas comuns e formulário de avaliação para quem assiste.</p>
+  <div class="how-row">
+    <div class="how-chip"><b>1</b> Escolha um pack</div>
+    <div class="how-chip"><b>2</b> Defina papéis: closer · cliente · avaliadores</div>
+    <div class="how-chip"><b>3</b> Use o cronômetro — 15 a 20 min</div>
+    <div class="how-chip"><b>4</b> Avaliadores pontuam ao vivo</div>
+    <div class="how-chip"><b>5</b> Debriefing coletivo no final</div>
+  </div>
+</div>
+
+<!-- PACK TABS -->
+<nav class="pack-nav">
+  <div class="pack-tab active-c1" onclick="switchPack(1,this)" id="tab1">
+    <div class="pack-dot" style="background:var(--c1)"></div>
+    Pack 01 · O Curioso Técnico
+  </div>
+  <div class="pack-tab" onclick="switchPack(2,this)" id="tab2">
+    <div class="pack-dot" style="background:var(--c2)"></div>
+    Pack 02 · O Cético Experiente
+  </div>
+  <div class="pack-tab" onclick="switchPack(3,this)" id="tab3">
+    <div class="pack-dot" style="background:var(--c3)"></div>
+    Pack 03 · O Impaciente de Alto Ticket
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PACK 01 -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="left-col" id="pack1">
+
+    <!-- PERFIL -->
+    <div class="sec always-open">
+      <div class="sec-header" style="cursor:default">
+        <div class="sec-icon" style="background:var(--c1d);color:var(--c1)">👤</div>
+        <div><div class="sec-label" style="color:var(--c1)">Pack 01 · Perfil do cliente</div><div class="sec-title">O Curioso Técnico</div></div>
+      </div>
+      <div class="sec-body">
+        <div class="profile-banner" style="background:linear-gradient(135deg,#1C62C8 0%,#1E40AF 100%)">
+          <div class="profile-avatar" style="background:rgba(255,255,255,.15)">👨‍💻</div>
+          <div class="profile-name">Rafael, 31 anos</div>
+          <div class="profile-sub">Analista de TI · Opera cripto nas horas vagas há 8 meses · Nunca teve método formal</div>
+          <div class="profile-chips">
+            <span class="profile-chip">Perfil técnico</span>
+            <span class="profile-chip">Muitas perguntas</span>
+            <span class="profile-chip">Desconfiado de promessas</span>
+            <span class="profile-chip">Renda estável</span>
+          </div>
+        </div>
+
+        <div class="scenario-block">
+          <div class="scenario-label">Contexto da call</div>
+          <div class="scenario-text">Rafael fez a consultoria gratuita há 3 dias. Ele usa Binance, opera BTC e ETH por intuição, e já perdeu R$ 2.400 em 2 operações mal calculadas. Ficou animado durante a consultoria mas mandou uma mensagem depois dizendo "vou pensar melhor". O closer está retomando o contato agora.</div>
+        </div>
+
+        <div class="scenario-block">
+          <div class="scenario-label">Como Rafael vai se comportar (briefing do ator)</div>
+          <div class="scenario-text">
+            Rafael é curioso mas meticuloso — vai fazer perguntas técnicas antes de tomar qualquer decisão. Perguntas esperadas: "Como o DIVAP funciona exatamente?", "Você tem backtest disso?", "Funciona no Profit ou só no TradingView?". <br><br>
+            Ele tem o dinheiro mas vai fingir que "precisa ver a conta" se o closer pressionar demais. Ele abre para comprar se o closer demonstrar conhecimento técnico e não tentar fechar rápido demais. Se o closer fizer a pergunta certa sobre o que ele perdeu, ele vai falar sobre as 2 operações e é a abertura para a solução.
+          </div>
+        </div>
+
+        <div class="trap-block">
+          <div class="trap-label">⚠ Armadilha principal</div>
+          <div class="trap-text">Entrar no modo de explicação técnica sem diagnosticar. Rafael vai puxar o closer para uma conversa técnica infinita sobre o produto — e o closer vai seguir, perdendo o controle da call sem nunca qualificar o Budget real nem o Timing.</div>
+        </div>
+
+        <div class="signal-block">
+          <div class="signal-label">✓ Sinal de avanço</div>
+          <div class="signal-text">Quando Rafael perguntar "E se eu não tiver result nos primeiros 30 dias?" — é o sinal que ele está considerando seriamente. Esse é o momento de usar a garantia do RIP e propor um primeiro passo.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BANT -->
+    <div class="sec open">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--green-dim);color:var(--green)">🎯</div>
+        <div><div class="sec-label" style="color:var(--green)">Framework</div><div class="sec-title">BANT — O que o closer precisa descobrir</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+        <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6">O BANT deve ser descoberto nas perguntas de diagnóstico — nunca perguntar diretamente. O closer que conseguir mapear os 4 critérios sem parecer um questionário já executou bem.</p>
+        <div class="bant-grid">
+          <div class="bant-label b">Budget</div>
+          <div class="bant-val">Rafael ganha ~R$ 6.000/mês. Tem R$ 3.000 "sobrando" que está alocado em cripto. <strong>Não vai falar isso espontaneamente</strong> — o closer precisa entender o perfil financeiro pelas perguntas de situação do SPIN.</div>
+          <div class="bant-label a">Authority</div>
+          <div class="bant-val">Decide sozinho. Não tem sócio nem cônjuge que precise consultar. <strong>Facilitador</strong>: sem aprovação de terceiros.</div>
+          <div class="bant-label n">Need</div>
+          <div class="bant-val">Precisa de método — opera no achismo, já perdeu R$ 2.400. A dor real é <strong>a falta de controle sobre as entradas e saídas</strong>. Ele sente mas não sabe nomear isso.</div>
+          <div class="bant-label t">Timeline</div>
+          <div class="bant-val">Não tem urgência declarada, mas o mercado está em alta e ele está <strong>frustrado de ficar de fora das operações</strong>. A urgência é emocional, não racional.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPIN -->
+    <div class="sec open">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--accent-dim);color:var(--accent)">💬</div>
+        <div><div class="sec-label" style="color:var(--accent)">Framework</div><div class="sec-title">SPIN — Roteiro de perguntas</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)">S · Situação</span>
+            <span class="spin-subtitle">Mapear contexto sem parecer interrogatório</span>
+          </div>
+          <div class="spin-q S">"Você me contou que opera há 8 meses — o que você usa hoje pra decidir o momento de entrar numa operação?"</div>
+          <div class="spin-q S">"Você opera mais swing trade ou day trade? E usa alguma plataforma específica pra gráfico?"</div>
+          <div class="spin-tip">Ouvir ativamente — essas respostas vão alimentar as perguntas de Problema.</div>
+        </div>
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid)">P · Problema</span>
+            <span class="spin-subtitle">Fazer o cliente nomear a dor</span>
+          </div>
+          <div class="spin-q P">"Quando você entrou nessas operações que não deram certo — o que foi que faltou? Foi timing, escolha do ativo, ou gestão depois que entrou?"</div>
+          <div class="spin-q P">"Você já teve a sensação de que saiu de uma operação cedo demais e o mercado foi pra onde você esperava depois?"</div>
+          <div class="spin-tip">Deixar o silêncio trabalhar — Rafael vai querer explicar. Não interromper.</div>
+        </div>
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-mid)">I · Implicação</span>
+            <span class="spin-subtitle">Ampliar a consequência da dor</span>
+          </div>
+          <div class="spin-q I">"Esses R$ 2.400 que você perdeu — quanto tempo de operação você teria precisado pra recuperar isso com o método que você usa hoje?"</div>
+          <div class="spin-q I">"Se você continuar operando sem um critério de entrada definido pelos próximos 12 meses, como você imagina que vai estar no final do ano em relação ao resultado?"</div>
+          <div class="spin-tip">Não forçar — se ele ficar defensivo, voltar para Problema antes de Implicação.</div>
+        </div>
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid)">N · Necessidade de solução</span>
+            <span class="spin-subtitle">Abrir espaço para a solução sem impor</span>
+          </div>
+          <div class="spin-q N">"Se você tivesse uma ferramenta que te avisasse o momento de entrada com base numa estratégia já testada, você acha que isso mudaria seus últimos resultados?"</div>
+          <div class="spin-q N">"O que seria diferente pra você se você tivesse operado as últimas 3 semanas com um critério claro de stop e alvo em vez de decidir na hora?"</div>
+          <div class="spin-tip">Agora o closer pode apresentar o APTC ou o Radar — fazendo a ponte com as respostas do Rafael.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PRODUTO RECOMENDADO -->
+    <div class="sec open">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--accent-dim);color:var(--accent)">📦</div>
+        <div><div class="sec-label" style="color:var(--accent)">Recomendação</div><div class="sec-title">Produtos ideais para esse perfil</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="background:var(--accent-dim);border:1.5px solid var(--accent-mid);border-radius:9px;padding:13px 15px">
+            <div style="font-size:11px;font-family:'Instrument Sans',sans-serif;color:var(--accent);font-weight:600;margin-bottom:4px">ENTRADA IDEAL</div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Radar de Trade · R$ 97</div>
+            <div style="font-size:12px;color:var(--text2)">Menor barreira de entrada. Rafael consegue testar o DIVAP no TradingView sem comprometer muito. Depois de 30 dias de uso, a abertura para o APTC ou Estratégias é natural.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:13px 15px">
+            <div style="font-size:11px;font-family:'Instrument Sans',sans-serif;color:var(--text3);font-weight:600;margin-bottom:4px">SE ESTIVER ABERTO</div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">APTC Anual · R$ 1.997</div>
+            <div style="font-size:12px;color:var(--text2)">Se o diagnóstico revelou que ele opera no mínimo 3x por semana e quer automatizar os sinais. Nunca oferecer antes de confirmar o volume de operações.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pack1 left col -->
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PACK 02 -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="left-col" id="pack2" style="display:none">
+
+    <div class="sec always-open">
+      <div class="sec-header" style="cursor:default">
+        <div class="sec-icon" style="background:var(--c2d);color:var(--c2)">👤</div>
+        <div><div class="sec-label" style="color:var(--c2)">Pack 02 · Perfil do cliente</div><div class="sec-title">O Cético Experiente</div></div>
+      </div>
+      <div class="sec-body">
+        <div class="profile-banner" style="background:linear-gradient(135deg,#D97706 0%,#B45309 100%)">
+          <div class="profile-avatar" style="background:rgba(255,255,255,.15)">👩‍💼</div>
+          <div class="profile-name">Márcia, 44 anos</div>
+          <div class="profile-sub">Empresária · Já perdeu R$ 18.000 com outro "curso de trading" há 2 anos · Muito desconfiada</div>
+          <div class="profile-chips">
+            <span class="profile-chip">Experiência anterior ruim</span>
+            <span class="profile-chip">Alto ticket disponível</span>
+            <span class="profile-chip">Decisora</span>
+            <span class="profile-chip">Pouca paciência</span>
+          </div>
+        </div>
+
+        <div class="scenario-block">
+          <div class="scenario-label">Contexto da call</div>
+          <div class="scenario-text">Márcia foi indicada por um cliente atual da Horistic (que está no APTC + Mentoria). Ela nunca agendou consultoria — foi o closer quem recebeu o contato dela via WhatsApp dizendo "meu amigo falou de vocês". Ela veio com ceticismo, mas veio.</div>
+        </div>
+
+        <div class="scenario-block">
+          <div class="scenario-label">Como Márcia vai se comportar (briefing do ator)</div>
+          <div class="scenario-text">
+            Márcia vai testar o closer desde o primeiro minuto. Vai perguntar: "Mas isso é igual ao que eu fiz antes? Porque aquele curso prometeu a mesma coisa e não entregou nada." Ela vai interromper, vai comparar com o concorrente, vai dizer "não tenho tempo pra isso".<br><br>
+            Se o closer tentar vender antes de ouvir toda a história dela, ela fecha. Se o closer fizer as perguntas certas e demonstrar que entendeu o que deu errado antes, ela começa a abrir. O sinal de abertura é quando ela diz "mas o meu amigo disse que vocês são diferentes de fato."
+          </div>
+        </div>
+
+        <div class="trap-block">
+          <div class="trap-label">⚠ Armadilha principal</div>
+          <div class="trap-text">Atacar o concorrente ou minimizar a experiência anterior dela. Se o closer dizer qualquer coisa que soe como "aquele curso era ruim, nós somos melhores" — Márcia fecha na hora. A abordagem certa é validar a experiência anterior e diferenciar sem comparar.</div>
+        </div>
+
+        <div class="trap-block">
+          <div class="trap-label">⚠ Segunda armadilha</div>
+          <div class="trap-text">Apresentar produto antes de descobrir o que deu errado na experiência anterior. Sem ouvir a história dela, qualquer solução vai parecer igual ao que ela já viu.</div>
+        </div>
+
+        <div class="signal-block">
+          <div class="signal-label">✓ Sinal de avanço</div>
+          <div class="signal-text">Quando Márcia perguntar "E os mentores — eles operam de verdade, né? Porque o outro só dava aula." Esse é o ponto de entrada para apresentar Victor e Fernando operando ao vivo no Horus Live.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec open">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--green-dim);color:var(--green)">🎯</div>
+        <div><div class="sec-label" style="color:var(--green)">Framework</div><div class="sec-title">BANT — O que o closer precisa descobrir</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+        <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6">Com Márcia, o BANT tem que ser construído com muito mais cuidado — ela vai perceber se estiver sendo qualificada abertamente. Usar as perguntas de Situação do SPIN para mapear tudo de forma indireta.</p>
+        <div class="bant-grid">
+          <div class="bant-label b">Budget</div>
+          <div class="bant-val">Empresária com faturamento de ~R$ 40k/mês. <strong>Tem dinheiro, mas não vai revelar facilmente</strong>. A última perda de R$ 18k deixou trauma — o budget emocional é mais restrito que o financeiro.</div>
+          <div class="bant-label a">Authority</div>
+          <div class="bant-val">Decisora total. O marido não se envolve com investimentos dela. <strong>Se fechar, fecha na hora</strong> — mas só fecha se confiar.</div>
+          <div class="bant-label n">Need</div>
+          <div class="bant-val">A necessidade é real: ela quer diversificar os investimentos do negócio. Mas a <strong>necessidade emocional</strong> é maior: ela quer provar pra si mesma que pode ganhar no mercado financeiro sem ser enganada.</div>
+          <div class="bant-label t">Timeline</div>
+          <div class="bant-val">Tem urgência emocional — seu sócio está ganhando bem com cripto e ela não. <strong>Mas vai fingir que não tem pressa</strong>. A urgência real é de status, não financeira.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec open">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--accent-dim);color:var(--accent)">💬</div>
+        <div><div class="sec-label" style="color:var(--accent)">Framework</div><div class="sec-title">SPIN — Roteiro de perguntas</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)">S · Situação</span>
+            <span class="spin-subtitle">Ouvir a história anterior antes de qualquer coisa</span>
+          </div>
+          <div class="spin-q S">"Você mencionou que já teve uma experiência com trading antes — me conta um pouco sobre isso? O que você estava buscando na época?"</div>
+          <div class="spin-q S">"E hoje, como está sua relação com investimentos? Você ainda opera ou parou depois da experiência anterior?"</div>
+          <div class="spin-tip">Não interromper. Ela precisa ser ouvida completamente antes de qualquer posicionamento da Horistic.</div>
+        </div>
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid)">P · Problema</span>
+            <span class="spin-subtitle">Mapear o que de fato deu errado — sem julgar</span>
+          </div>
+          <div class="spin-q P">"Você consegue identificar o que exatamente falhou naquele curso? Foi o método em si, foi falta de suporte, ou você não teve tempo de aplicar?"</div>
+          <div class="spin-q P">"Quando você olha pra hoje e pensa em cripto, o que te impede de tentar de novo — é desconfiança, falta de tempo, ou algo mais específico?"</div>
+          <div class="spin-tip">Não comparar com a Horistic ainda. Só mapear o problema. A solução vem depois.</div>
+        </div>
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-mid)">I · Implicação</span>
+            <span class="spin-subtitle">Trazer o custo de não agir — com delicadeza</span>
+          </div>
+          <div class="spin-q I">"Você mencionou que seu sócio está ganhando bem — você sente que está perdendo uma janela enquanto não tem um método funcionando?"</div>
+          <div class="spin-q I">"Se daqui a 12 meses você ainda estiver na mesma posição com cripto — sem operar ou operando sem método — como você vai se sentir em relação a isso?"</div>
+          <div class="spin-tip">Se ela resistir à implicação, não forçar. Voltar para Problema e escutar mais.</div>
+        </div>
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid)">N · Necessidade de solução</span>
+            <span class="spin-subtitle">Abrir a diferenciação pelo que ela disse</span>
+          </div>
+          <div class="spin-q N">"Com base no que você me contou — o que faltou antes foi acompanhamento ou método? Pergunto porque o que oferecemos é diferente dependendo da resposta."</div>
+          <div class="spin-q N">"Se você pudesse ver o trader operando ao vivo, com a própria conta, antes de decidir — isso mudaria sua percepção sobre confiar no método?"</div>
+          <div class="spin-tip">Agora é o momento de falar do Horus Live com Victor e Fernando operando ao vivo — não antes.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sec open">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--accent-dim);color:var(--accent)">📦</div>
+        <div><div class="sec-label" style="color:var(--accent)">Recomendação</div><div class="sec-title">Produtos ideais para esse perfil</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="background:var(--accent-dim);border:1.5px solid var(--accent-mid);border-radius:9px;padding:13px 15px">
+            <div style="font-size:11px;font-family:'Instrument Sans',sans-serif;color:var(--accent);font-weight:600;margin-bottom:4px">CAMINHO RECOMENDADO</div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Estratégias de Trading · R$ 3.997</div>
+            <div style="font-size:12px;color:var(--text2)">Perfil e necessidade batem com esse produto. Se o diagnóstico mostrou que o problema anterior foi falta de método, esse é o argumento central. Usar o bônus de 1 mês de Live para ela ver Victor e Fernando operando ao vivo antes de decidir o próximo passo.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:13px 15px">
+            <div style="font-size:11px;font-family:'Instrument Sans',sans-serif;color:var(--text3);font-weight:600;margin-bottom:4px">SE RESISTIR AO TICKET</div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Remindset VIP Trimestral · R$ 1.297</div>
+            <div style="font-size:12px;color:var(--text2)">Menor compromisso financeiro. 3 meses para avaliar se o método funciona na prática. Argumento: "Você não está comprando um curso — você está comprando 3 meses de resultado para avaliar."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pack2 left col -->
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PACK 03 -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="left-col" id="pack3" style="display:none">
+
+    <div class="sec always-open">
+      <div class="sec-header" style="cursor:default">
+        <div class="sec-icon" style="background:var(--c3d);color:var(--c3)">👤</div>
+        <div><div class="sec-label" style="color:var(--c3)">Pack 03 · Perfil do cliente</div><div class="sec-title">O Impaciente de Alto Ticket</div></div>
+      </div>
+      <div class="sec-body">
+        <div class="profile-banner" style="background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%)">
+          <div class="profile-avatar" style="background:rgba(255,255,255,.15)">🧑‍💼</div>
+          <div class="profile-name">Rogério, 38 anos</div>
+          <div class="profile-sub">Diretor comercial · Já investe em renda variável · Quer resultado rápido e personalizado</div>
+          <div class="profile-chips">
+            <span class="profile-chip">Alto poder aquisitivo</span>
+            <span class="profile-chip">Pouco tempo disponível</span>
+            <span class="profile-chip">Já conhece o mercado</span>
+            <span class="profile-chip">Ego elevado</span>
+          </div>
+        </div>
+
+        <div class="scenario-block">
+          <div class="scenario-label">Contexto da call</div>
+          <div class="scenario-text">Rogério já tem RIP há 2 meses e APTC Trimestral há 1 mês. Não reclama dos produtos, mas não usa muito o APTC porque "não tenho tempo de ficar olhando sinal". Mandou mensagem para o closer dizendo "quero evoluir aqui, o que vocês têm de diferente pra quem já tá no nível mais básico?"</div>
+        </div>
+
+        <div class="scenario-block">
+          <div class="scenario-label">Como Rogério vai se comportar (briefing do ator)</div>
+          <div class="scenario-text">
+            Rogério é direto e impaciente — não quer papo longo. Vai interromper o closer se a conversa demorar pra ir ao ponto. Vai dizer "eu sei como funciona trading, me fala o que é diferente". Não gosta de ser tratado como iniciante.<br><br>
+            Se o closer apresentar produto sem diagnosticar o que ele precisa, ele vai ouvir o preço, dizer "vou pensar" e nunca mais responder. Se o closer fizer A PERGUNTA CERTA sobre o que ele quer alcançar nos próximos 6 meses, Rogério abre completamente e vai até propor um valor mais alto ele mesmo.
+          </div>
+        </div>
+
+        <div class="trap-block">
+          <div class="trap-label">⚠ Armadilha principal</div>
+          <div class="trap-text">Tratar Rogério como iniciante. Qualquer explicação básica sobre o que é DIVAP, como funciona cripto, ou por que trading é importante — vai irritar e fechar a conversa. O closer deve assumir que ele já sabe e focar em "o que você quer alcançar" e não em "o que é o produto".</div>
+        </div>
+
+        <div class="trap-block">
+          <div class="trap-label">⚠ Segunda armadilha</div>
+          <div class="trap-text">Apresentar Horus Live e Remindset VIP ao mesmo tempo. Com Rogério, que tem pouco tempo, oferecer duas opções causa paralisia. O closer deve qualificar a rotina dele antes de escolher QUAL apresentar.</div>
+        </div>
+
+        <div class="signal-block">
+          <div class="signal-label">✓ Sinal de avanço</div>
+          <div class="signal-text">Quando Rogério disser "quanto custa ter acesso direto ao Victor e Fernando?" — é a abertura perfeita para a Mentoria Particular ou O Próximo Nível. Esse é o momento de não hesitar no ticket.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec open">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--green-dim);color:var(--green)">🎯</div>
+        <div><div class="sec-label" style="color:var(--green)">Framework</div><div class="sec-title">BANT — O que o closer precisa descobrir</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+        <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6">Com Rogério, o Budget e o Authority já estão resolvidos — ele tem dinheiro e decide sozinho. O foco do closer deve ser entender o Need real (o que ele quer chegar) e criar urgência de Timeline.</p>
+        <div class="bant-grid">
+          <div class="bant-label b">Budget</div>
+          <div class="bant-val">Diretor com renda de ~R$ 25k/mês. <strong>Não tem objeção de preço</strong> — se acreditar no valor, fecha qualquer ticket. O erro é ofertar algo pequeno para um comprador de alto ticket.</div>
+          <div class="bant-label a">Authority</div>
+          <div class="bant-val">Decisor absoluto. Não consulta ninguém. <strong>Quer resolver na mesma call</strong> se confiar no closer.</div>
+          <div class="bant-label n">Need</div>
+          <div class="bant-val">Precisa de <strong>acompanhamento personalizado</strong> — não quer aprender, quer resultados. O problema é que opera sozinho sem suporte quando o mercado oscila. A dor real é a solidão na decisão.</div>
+          <div class="bant-label t">Timeline</div>
+          <div class="bant-val">Tem janela: renovação do APTC é em 2 meses. <strong>Se o closer não avançar agora</strong>, Rogério pode não renovar e sair da base. A urgência está no lado do closer — não do Rogério.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec open">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--accent-dim);color:var(--accent)">💬</div>
+        <div><div class="sec-label" style="color:var(--accent)">Framework</div><div class="sec-title">SPIN — Roteiro de perguntas</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)">S · Situação</span>
+            <span class="spin-subtitle">Ir direto ao ponto — sem contexto básico</span>
+          </div>
+          <div class="spin-q S">"Você está com o APTC há um mês — como você está usando hoje na prática? Está conseguindo acompanhar os sinais ou o tempo é o problema?"</div>
+          <div class="spin-q S">"Além do APTC, você opera em outra plataforma ou segue alguma referência do mercado?"</div>
+          <div class="spin-tip">Ser conciso. Rogério responde curto — o closer deve escutar cada palavra.</div>
+        </div>
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid)">P · Problema</span>
+            <span class="spin-subtitle">Identificar o gargalo — timing ou método</span>
+          </div>
+          <div class="spin-q P">"Quando você diz que não tem tempo de acompanhar os sinais — o que acontece? Você vê depois que perdeu a entrada?"</div>
+          <div class="spin-q P">"Tem alguma situação que te deixou insatisfeito com os resultados nos últimos 30 dias — mesmo com o APTC funcionando?"</div>
+          <div class="spin-tip">Não oferecer solução ainda. Se Rogério der uma resposta curta, explorar mais: "Me conta melhor."</div>
+        </div>
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-mid)">I · Implicação</span>
+            <span class="spin-subtitle">Trazer o custo do status quo — sem drama</span>
+          </div>
+          <div class="spin-q I">"Pensando nos últimos 2 meses — quanto você estima que deixou de ganhar por não conseguir acompanhar os sinais no momento certo?"</div>
+          <div class="spin-q I">"Se esse ritmo continuar — você usando mas sem conseguir extrair tudo — você vai renovar o APTC ou vai buscar algo que se adapte melhor ao seu tempo?"</div>
+          <div class="spin-tip">Essa segunda pergunta cria urgência no closer e no Rogério ao mesmo tempo. Usá-la só se ele tiver falado sobre dificuldade de tempo.</div>
+        </div>
+
+        <div class="spin-section">
+          <div class="spin-title">
+            <span class="spin-badge" style="background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid)">N · Necessidade de solução</span>
+            <span class="spin-subtitle">Posicionar a solução de alto ticket</span>
+          </div>
+          <div class="spin-q N">"Pensando no que você me disse — o que você precisaria pra estar satisfeito com seus resultados em cripto daqui a 6 meses? Seria mais autonomia, mais resultado, ou mais suporte?"</div>
+          <div class="spin-q N">"Se você tivesse acesso direto ao Victor ou ao Fernando pra discutir suas operações quando precisar — isso resolveria o problema de operar sozinho nas decisões difíceis?"</div>
+          <div class="spin-tip">Agora é o momento de apresentar a Mentoria Particular ou O Próximo Nível — dependendo se ele já fez algum produto anterior de educação.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sec open">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--accent-dim);color:var(--accent)">📦</div>
+        <div><div class="sec-label" style="color:var(--accent)">Recomendação</div><div class="sec-title">Produtos ideais para esse perfil</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="background:var(--purple-dim);border:1.5px solid var(--purple-mid);border-radius:9px;padding:13px 15px">
+            <div style="font-size:11px;font-family:'Instrument Sans',sans-serif;color:var(--purple);font-weight:600;margin-bottom:4px">ALTO TICKET · IDEAL</div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Mentoria Particular · R$ 27.497</div>
+            <div style="font-size:12px;color:var(--text2)">Rogério quer acesso direto — 10 aulas com Victor + Fernando + Leonardo é exatamente o que ele vai querer quando a pergunta de N revelar a necessidade de suporte personalizado.</div>
+          </div>
+          <div style="background:var(--accent-dim);border:1.5px solid var(--accent-mid);border-radius:9px;padding:13px 15px">
+            <div style="font-size:11px;font-family:'Instrument Sans',sans-serif;color:var(--accent);font-weight:600;margin-bottom:4px">SE RESISTIR AO TICKET ALTO</div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Estratégias de Trading + Remindset VIP · R$ 6.994</div>
+            <div style="font-size:12px;color:var(--text2)">Combo que resolve o problema de tempo (VIP = sinais assíncronos) com profundidade de método. Rogério não precisa acompanhar ao vivo — recebe o sinal e executa quando puder.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pack3 left col -->
+
+  <!-- ══════════ RIGHT COL · AVALIAÇÃO ══════════ -->
+  <div class="right-col" id="eval-col">
+
+    <!-- PACK LABEL -->
+    <div id="eval-pack-label" style="background:var(--c1d);border:1px solid var(--c1m);border-radius:9px;padding:10px 14px;display:flex;align-items:center;gap:8px">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--c1);flex-shrink:0" id="eval-dot"></div>
+      <div style="font-size:12px;font-weight:600;color:var(--text)" id="eval-pack-name">Pack 01 · O Curioso Técnico</div>
+    </div>
+
+    <!-- EVALUATION CARD -->
+    <div class="sec always-open" id="eval-card">
+      <div class="sec-body" style="padding:18px">
+
+        <div class="eval-header">
+          <div class="eval-header-icon">📋</div>
+          <div>
+            <div class="eval-header-title">Avaliação dos observadores</div>
+            <div class="eval-header-sub">Pontue ao vivo enquanto assiste</div>
+          </div>
+        </div>
+
+        <!-- BANT -->
+        <div class="eval-category">
+          <div class="eval-cat-label">BANT · Qualificação</div>
+          <div class="eval-item">
+            <div class="eval-item-text">Descobriu o <strong>Budget</strong> sem perguntar diretamente</div>
+            <div class="star-row" id="s-b1">
+              <div class="star" onclick="rate('b1',1)">1</div>
+              <div class="star" onclick="rate('b1',2)">2</div>
+              <div class="star" onclick="rate('b1',3)">3</div>
+              <div class="star" onclick="rate('b1',4)">4</div>
+              <div class="star" onclick="rate('b1',5)">5</div>
+            </div>
+          </div>
+          <div class="eval-item">
+            <div class="eval-item-text">Confirmou a <strong>Autoridade</strong> de decisão</div>
+            <div class="star-row" id="s-b2">
+              <div class="star" onclick="rate('b2',1)">1</div>
+              <div class="star" onclick="rate('b2',2)">2</div>
+              <div class="star" onclick="rate('b2',3)">3</div>
+              <div class="star" onclick="rate('b2',4)">4</div>
+              <div class="star" onclick="rate('b2',5)">5</div>
+            </div>
+          </div>
+          <div class="eval-item">
+            <div class="eval-item-text">Fez o cliente verbalizar a <strong>Necessidade</strong></div>
+            <div class="star-row" id="s-b3">
+              <div class="star" onclick="rate('b3',1)">1</div>
+              <div class="star" onclick="rate('b3',2)">2</div>
+              <div class="star" onclick="rate('b3',3)">3</div>
+              <div class="star" onclick="rate('b3',4)">4</div>
+              <div class="star" onclick="rate('b3',5)">5</div>
+            </div>
+          </div>
+          <div class="eval-item">
+            <div class="eval-item-text">Identificou o <strong>Timing</strong> real de decisão</div>
+            <div class="star-row" id="s-b4">
+              <div class="star" onclick="rate('b4',1)">1</div>
+              <div class="star" onclick="rate('b4',2)">2</div>
+              <div class="star" onclick="rate('b4',3)">3</div>
+              <div class="star" onclick="rate('b4',4)">4</div>
+              <div class="star" onclick="rate('b4',5)">5</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SPIN -->
+        <div class="eval-category">
+          <div class="eval-cat-label">SPIN · Qualidade das perguntas</div>
+          <div class="eval-item">
+            <div class="eval-item-text">Perguntas de <strong>Situação</strong> foram naturais, sem parecer questionário</div>
+            <div class="star-row" id="s-s1">
+              <div class="star" onclick="rate('s1',1)">1</div>
+              <div class="star" onclick="rate('s1',2)">2</div>
+              <div class="star" onclick="rate('s1',3)">3</div>
+              <div class="star" onclick="rate('s1',4)">4</div>
+              <div class="star" onclick="rate('s1',5)">5</div>
+            </div>
+          </div>
+          <div class="eval-item">
+            <div class="eval-item-text">Perguntas de <strong>Problema</strong> fizeram o cliente nomear a dor</div>
+            <div class="star-row" id="s-s2">
+              <div class="star" onclick="rate('s2',1)">1</div>
+              <div class="star" onclick="rate('s2',2)">2</div>
+              <div class="star" onclick="rate('s2',3)">3</div>
+              <div class="star" onclick="rate('s2',4)">4</div>
+              <div class="star" onclick="rate('s2',5)">5</div>
+            </div>
+          </div>
+          <div class="eval-item">
+            <div class="eval-item-text">Perguntas de <strong>Implicação</strong> ampliaram a consequência da dor</div>
+            <div class="star-row" id="s-s3">
+              <div class="star" onclick="rate('s3',1)">1</div>
+              <div class="star" onclick="rate('s3',2)">2</div>
+              <div class="star" onclick="rate('s3',3)">3</div>
+              <div class="star" onclick="rate('s3',4)">4</div>
+              <div class="star" onclick="rate('s3',5)">5</div>
+            </div>
+          </div>
+          <div class="eval-item">
+            <div class="eval-item-text">Perguntas de <strong>Necessidade</strong> abriram o caminho para a solução</div>
+            <div class="star-row" id="s-s4">
+              <div class="star" onclick="rate('s4',1)">1</div>
+              <div class="star" onclick="rate('s4',2)">2</div>
+              <div class="star" onclick="rate('s4',3)">3</div>
+              <div class="star" onclick="rate('s4',4)">4</div>
+              <div class="star" onclick="rate('s4',5)">5</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXECUÇÃO GERAL -->
+        <div class="eval-category">
+          <div class="eval-cat-label">Execução geral</div>
+          <div class="eval-item">
+            <div class="eval-item-text">Apresentou o produto <strong>após</strong> diagnosticar — não antes</div>
+            <div class="star-row" id="s-e1">
+              <div class="star" onclick="rate('e1',1)">1</div>
+              <div class="star" onclick="rate('e1',2)">2</div>
+              <div class="star" onclick="rate('e1',3)">3</div>
+              <div class="star" onclick="rate('e1',4)">4</div>
+              <div class="star" onclick="rate('e1',5)">5</div>
+            </div>
+          </div>
+          <div class="eval-item">
+            <div class="eval-item-text">Soube lidar com a objeção / armadilha principal do perfil</div>
+            <div class="star-row" id="s-e2">
+              <div class="star" onclick="rate('e2',1)">1</div>
+              <div class="star" onclick="rate('e2',2)">2</div>
+              <div class="star" onclick="rate('e2',3)">3</div>
+              <div class="star" onclick="rate('e2',4)">4</div>
+              <div class="star" onclick="rate('e2',5)">5</div>
+            </div>
+          </div>
+          <div class="eval-item">
+            <div class="eval-item-text">Terminou com <strong>próximo passo concreto</strong> definido</div>
+            <div class="star-row" id="s-e3">
+              <div class="star" onclick="rate('e3',1)">1</div>
+              <div class="star" onclick="rate('e3',2)">2</div>
+              <div class="star" onclick="rate('e3',3)">3</div>
+              <div class="star" onclick="rate('e3',4)">4</div>
+              <div class="star" onclick="rate('e3',5)">5</div>
+            </div>
+          </div>
+          <div class="eval-item">
+            <div class="eval-item-text">Tom adequado para o perfil — nem técnico demais, nem simples demais</div>
+            <div class="star-row" id="s-e4">
+              <div class="star" onclick="rate('e4',1)">1</div>
+              <div class="star" onclick="rate('e4',2)">2</div>
+              <div class="star" onclick="rate('e4',3)">3</div>
+              <div class="star" onclick="rate('e4',4)">4</div>
+              <div class="star" onclick="rate('e4',5)">5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="eval-category">
+          <div class="eval-cat-label">Comentário livre</div>
+          <textarea class="eval-comment" id="eval-comment" placeholder="O que o closer fez bem? O que poderia ter feito diferente?"></textarea>
+        </div>
+
+        <button class="eval-submit" onclick="submitEval()">Calcular pontuação →</button>
+
+        <div class="eval-result" id="eval-result">
+          <div class="eval-result-score" id="eval-score-num"></div>
+          <div class="eval-result-label">pontos de 60</div>
+          <div class="eval-result-msg" id="eval-result-msg"></div>
+          <button style="margin-top:12px;background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:8px 16px;font-size:12px;font-family:'Space Grotesk',sans-serif;cursor:pointer;color:var(--text2)" onclick="resetEval()">Nova avaliação</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DEBRIEF GUIDE -->
+    <div class="sec open" id="debrief-sec">
+      <div class="sec-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="sec-icon" style="background:var(--accent-dim);color:var(--accent)">🎙</div>
+        <div><div class="sec-label" style="color:var(--accent)">Pós role play</div><div class="sec-title">Perguntas de debriefing</div></div>
+        <span class="sec-chev">›</span>
+      </div>
+      <div class="sec-body">
+        <p style="font-size:12px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:12px">Usar essas perguntas no debriefing coletivo logo após o role play</p>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--text2);line-height:1.5"><span style="color:var(--accent);font-weight:600">→ Closer:</span> Em que momento você sentiu que perdeu o controle da conversa?</div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--text2);line-height:1.5"><span style="color:var(--accent);font-weight:600">→ Closer:</span> Você conseguiu mapear os 4 critérios do BANT? O que ficou sem resposta?</div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--text2);line-height:1.5"><span style="color:var(--accent);font-weight:600">→ Cliente:</span> Em que momento você sentiu que poderia comprar? O que faltou?</div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--text2);line-height:1.5"><span style="color:var(--accent);font-weight:600">→ Time:</span> Qual foi a pergunta que mais abriu o cliente? E qual fechou mais cedo?</div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--text2);line-height:1.5"><span style="color:var(--accent);font-weight:600">→ Time:</span> O produto sugerido fazia sentido para o perfil do cliente?</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end right col -->
+
+</div><!-- end main -->
+
+<!-- TIMER MODAL -->
+<div class="timer-modal" id="timer-modal" onclick="if(event.target===this)closeTimer()">
+  <div class="timer-box">
+    <div style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:16px;font-family:'Instrument Sans',sans-serif">Cronômetro do Role Play</div>
+    <div class="timer-big" id="timer-display">15:00</div>
+    <div class="timer-label" id="timer-label">Selecione a duração e inicie</div>
+    <div class="timer-duration-row">
+      <div class="tdur active" onclick="setDuration(10,this)">10 min</div>
+      <div class="tdur" onclick="setDuration(15,this)">15 min</div>
+      <div class="tdur" onclick="setDuration(20,this)">20 min</div>
+    </div>
+    <div class="timer-controls">
+      <button class="tbtn primary" id="start-btn" onclick="startTimer()">▶ Iniciar</button>
+      <button class="tbtn" id="pause-btn" onclick="pauseTimer()" style="display:none">⏸ Pausar</button>
+      <button class="tbtn danger" onclick="resetTimer()">↺ Resetar</button>
+      <button class="tbtn" onclick="closeTimer()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── PACK SWITCH ──
+const packNames = {
+  1: 'Pack 01 · O Curioso Técnico',
+  2: 'Pack 02 · O Cético Experiente',
+  3: 'Pack 03 · O Impaciente de Alto Ticket'
+};
+const packColors = {
+  1: {c:'var(--c1)',d:'var(--c1d)',m:'var(--c1m)'},
+  2: {c:'var(--c2)',d:'var(--c2d)',m:'var(--c2m)'},
+  3: {c:'var(--c3)',d:'var(--c3d)',m:'var(--c3m)'}
+};
+
+let activePack = 1;
+
+function switchPack(n, el) {
+  // Hide all packs
+  [1,2,3].forEach(i => {
+    document.getElementById('pack'+i).style.display = 'none';
+    document.getElementById('tab'+i).className = 'pack-tab';
+  });
+  // Show selected
+  document.getElementById('pack'+n).style.display = 'flex';
+  el.classList.add('active-c'+n);
+  activePack = n;
+
+  // Update eval label
+  document.getElementById('eval-pack-name').textContent = packNames[n];
+  const dot = document.getElementById('eval-dot');
+  const banner = document.getElementById('eval-pack-label');
+  dot.style.background = `var(--c${n})`;
+  banner.style.background = `var(--c${n}d)`;
+  banner.style.borderColor = `var(--c${n}m)`;
+
+  // Reset eval
+  resetEval();
+  window.scrollTo(0,0);
+}
+
+// ── STAR RATING ──
+const ratings = {};
+function rate(key, val) {
+  ratings[key] = val;
+  const row = document.getElementById('s-'+key);
+  row.querySelectorAll('.star').forEach((s,i) => {
+    s.classList.toggle('active', i < val);
+  });
+}
+
+function submitEval() {
+  const keys = ['b1','b2','b3','b4','s1','s2','s3','s4','e1','e2','e3','e4'];
+  const total = keys.reduce((sum, k) => sum + (ratings[k] || 0), 0);
+  const max = keys.length * 5;
+  const pct = Math.round((total/max)*100);
+
+  let msg = '';
+  if (pct >= 85) msg = 'Excelente execução. O closer dominou BANT e SPIN e foi consultivo do início ao fim.';
+  else if (pct >= 70) msg = 'Boa performance com pontos de melhoria. Revisar os critérios com nota mais baixa no debriefing.';
+  else if (pct >= 50) msg = 'Execução parcial. BANT ou SPIN ficaram incompletos. Refazer o pack com foco nos gaps.';
+  else msg = 'Necessário retomar os fundamentos antes de repetir o role play. Revisar perguntas de diagnóstico.';
+
+  const comment = document.getElementById('eval-comment').value;
+  if (comment) msg += '\n\n"' + comment + '"';
+
+  document.getElementById('eval-score-num').textContent = total + ' / ' + max;
+  document.getElementById('eval-result-msg').textContent = msg;
+  document.getElementById('eval-result').classList.add('show');
+  document.getElementById('eval-result').style.background = pct >= 70 ? 'var(--green-dim)' : pct >= 50 ? 'var(--accent-dim)' : 'var(--red-dim)';
+  document.getElementById('eval-result-msg').style.color = pct >= 70 ? '#0F4D2A' : pct >= 50 ? '#7A4500' : '#7A1A1A';
+  document.getElementById('eval-score-num').style.color = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--accent)' : 'var(--red)';
+}
+
+function resetEval() {
+  const keys = ['b1','b2','b3','b4','s1','s2','s3','s4','e1','e2','e3','e4'];
+  keys.forEach(k => {
+    ratings[k] = 0;
+    const row = document.getElementById('s-'+k);
+    if (row) row.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+  });
+  const comment = document.getElementById('eval-comment');
+  if (comment) comment.value = '';
+  const result = document.getElementById('eval-result');
+  if (result) result.classList.remove('show');
+}
+
+// ── TIMER ──
+let timerSeconds = 600;
+let timerInterval = null;
+let timerRunning = false;
+let selectedDuration = 10;
+
+function openTimer() { document.getElementById('timer-modal').classList.add('show'); }
+function closeTimer() { document.getElementById('timer-modal').classList.remove('show'); }
+
+function setDuration(min, el) {
+  selectedDuration = min;
+  timerSeconds = min * 60;
+  document.querySelectorAll('.tdur').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+  updateTimerDisplay();
+  if (!timerRunning) {
+    document.getElementById('timer-label').textContent = 'Selecione a duração e inicie';
+  }
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60).toString().padStart(2,'0');
+  const s = (timerSeconds % 60).toString().padStart(2,'0');
+  const display = document.getElementById('timer-display');
+  const btn = document.getElementById('timer-btn');
+  display.textContent = m + ':' + s;
+  const urgent = timerSeconds <= 60;
+  display.classList.toggle('urgent', urgent);
+  if (timerRunning) {
+    btn.textContent = '⏱ ' + m + ':' + s;
+    btn.classList.toggle('urgent', urgent);
+    btn.classList.add('running');
+  }
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  document.getElementById('start-btn').style.display = 'none';
+  document.getElementById('pause-btn').style.display = 'block';
+  document.getElementById('timer-label').textContent = 'Role play em andamento…';
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimerDisplay();
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      document.getElementById('timer-display').textContent = 'FIM!';
+      document.getElementById('timer-label').textContent = 'Tempo encerrado — iniciar debriefing';
+      document.getElementById('timer-btn').textContent = '⏱ FIM!';
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('start-btn').style.display = 'block';
+  document.getElementById('pause-btn').style.display = 'none';
+  document.getElementById('timer-btn').classList.remove('running','urgent');
+  document.getElementById('timer-btn').textContent = '⏱ Pausado';
+  document.getElementById('timer-label').textContent = 'Pausado';
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSeconds = selectedDuration * 60;
+  document.getElementById('start-btn').style.display = 'block';
+  document.getElementById('pause-btn').style.display = 'none';
+  document.getElementById('timer-btn').classList.remove('running','urgent');
+  document.getElementById('timer-btn').textContent = '⏱ Cronômetro';
+  document.getElementById('timer-display').classList.remove('urgent');
+  document.getElementById('timer-label').textContent = 'Selecione a duração e inicie';
+  updateTimerDisplay();
+}
+
+// init
+updateTimerDisplay();
+</script>
+</body>
+</html>
