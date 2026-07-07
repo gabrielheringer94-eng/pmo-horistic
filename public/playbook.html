@@ -340,6 +340,94 @@ td strong{color:var(--text);font-weight:500}
 .tip-right{background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-radius:7px;padding:10px 13px;margin-bottom:8px;font-size:12px;color:#0F4D2A;line-height:1.6}
 .tip-right strong{color:var(--green);font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px;font-family:'Instrument Sans',sans-serif}
 
+/* ─── SIMULATOR ─── */
+.sim-tabs{display:flex;gap:6px;margin-bottom:20px}
+.sim-tab{padding:8px 18px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif;color:var(--text2);cursor:pointer;transition:all .15s}
+.sim-tab:hover{border-color:var(--accent);color:var(--accent)}
+.sim-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.sim-panel{display:none}.sim-panel.active{display:block}
+
+/* persona picker */
+.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.persona-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;text-align:center}
+.persona-card:hover{border-color:var(--accent-mid);transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,131,0,.1)}
+.persona-card.selected{border-color:var(--accent);background:var(--accent-dim)}
+.persona-avatar{font-size:28px;margin-bottom:8px}
+.persona-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.persona-role{font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif}
+.persona-diff{font-size:10px;font-family:'Instrument Sans',sans-serif;padding:2px 8px;border-radius:20px;margin-top:6px;display:inline-block}
+
+/* chat window */
+.sim-window{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:520px}
+.sim-topbar{background:var(--text);padding:12px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.sim-persona-avatar{width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sim-persona-name{font-size:13px;font-weight:600;color:#fff}
+.sim-persona-status{font-size:11px;color:rgba(255,255,255,.5);font-family:'Instrument Sans',sans-serif}
+.sim-controls{margin-left:auto;display:flex;gap:8px}
+.sim-ctrl-btn{font-size:11px;font-family:'Instrument Sans',sans-serif;padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);cursor:pointer;transition:all .15s}
+.sim-ctrl-btn:hover{background:rgba(255,255,255,.15);color:#fff}
+.sim-ctrl-btn.end{background:rgba(192,57,43,.3);border-color:rgba(192,57,43,.4);color:#FFAAAA}
+.sim-ctrl-btn.end:hover{background:rgba(192,57,43,.5)}
+
+.sim-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--bg2)}
+.sim-msg{display:flex;gap:8px;align-items:flex-end;animation:msgIn .2s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sim-msg.persona{flex-direction:row}
+.sim-msg.user{flex-direction:row-reverse}
+.sim-msg-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.sim-bubble{max-width:72%;padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.55}
+.sim-msg.persona .sim-bubble{background:#fff;color:var(--text);border:1px solid var(--border);border-radius:12px 12px 12px 3px}
+.sim-msg.user .sim-bubble{background:var(--accent);color:#fff;border-radius:12px 12px 3px 12px}
+.sim-msg-time{font-size:10px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-top:3px;text-align:right}
+.sim-typing{display:flex;gap:4px;align-items:center;padding:10px 13px;background:#fff;border:1px solid var(--border);border-radius:12px 12px 12px 3px;width:fit-content}
+.sim-typing span{width:7px;height:7px;border-radius:50%;background:var(--text3);animation:bounce .8s infinite}
+.sim-typing span:nth-child(2){animation-delay:.15s}
+.sim-typing span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+
+.sim-input-bar{padding:10px 12px;border-top:1px solid var(--border);display:flex;gap:8px;background:#fff;flex-shrink:0}
+.sim-input{flex:1;background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:9px 13px;font-size:13px;font-family:'Space Grotesk',sans-serif;color:var(--text);outline:none;resize:none;height:40px;transition:border-color .15s;line-height:1.4}
+.sim-input:focus{border-color:var(--accent);background:#fff}
+.sim-send{width:40px;height:40px;border-radius:10px;background:var(--accent);border:none;color:#fff;font-size:17px;cursor:pointer;flex-shrink:0;transition:opacity .15s;display:flex;align-items:center;justify-content:center}
+.sim-send:hover{opacity:.85}
+.sim-send:disabled{opacity:.4;cursor:not-allowed}
+
+/* report */
+.sim-report{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-top:0}
+.sim-report-header{background:var(--text);padding:20px 22px;display:flex;align-items:center;justify-content:space-between}
+.sim-report-title{font-size:16px;font-weight:700;color:#fff}
+.sim-report-score{font-size:32px;font-weight:700;font-family:'Instrument Sans',sans-serif}
+.sim-report-body{padding:22px}
+.report-section{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.report-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.report-sec-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:10px}
+.report-bant-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.report-bant-key{font-size:11px;font-weight:600;font-family:'Instrument Sans',sans-serif;width:70px;flex-shrink:0}
+.report-bant-bar{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.report-bant-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.report-bant-val{font-size:12px;font-weight:700;font-family:'Instrument Sans',sans-serif;width:36px;text-align:right;flex-shrink:0}
+.report-tag-row{display:flex;flex-wrap:wrap;gap:6px}
+.report-tag{font-size:11px;font-family:'Instrument Sans',sans-serif;padding:4px 10px;border-radius:6px}
+.report-tag.good{background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)}
+.report-tag.bad{background:var(--red-dim);color:var(--red);border:1px solid var(--red-mid)}
+.report-moment{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:7px;padding:10px 13px;margin-bottom:7px;font-size:12px;color:var(--text2);line-height:1.55}
+.report-moment strong{color:var(--text);display:block;margin-bottom:2px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-family:'Instrument Sans',sans-serif;color:var(--accent)}
+.report-next{background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:8px;padding:10px 13px;font-size:12px;color:var(--text2);margin-bottom:6px;display:flex;gap:8px}
+.report-next::before{content:'→';color:var(--accent);flex-shrink:0}
+.report-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.report-btn{font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif;padding:8px 16px;border-radius:8px;cursor:pointer;border:1px solid var(--border2);background:#fff;color:var(--text2);transition:all .15s}
+.report-btn:hover{border-color:var(--accent);color:var(--accent)}
+.report-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.report-btn.primary:hover{opacity:.85}
+
+.sim-start-screen{text-align:center;padding:32px 20px}
+.sim-start-icon{font-size:48px;margin-bottom:16px}
+.sim-start-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+.sim-start-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:24px;max-width:440px;margin-left:auto;margin-right:auto}
+.sim-start-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .15s}
+.sim-start-btn:hover{opacity:.85}
+
 /* ─── TREINO MODE ─── */
 .treino-wrapper{margin-bottom:14px}
 .treino-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
@@ -1508,11 +1596,94 @@ td strong{color:var(--text);font-weight:500}
     <div class="section">
       <div class="sec-header">
         <div class="eyebrow">Modo treino</div>
-        <div class="sec-title">Teste seu reflexo antes da call</div>
-        <div class="sec-desc">Quiz interativo de objeções. Para cada situação, escolha a melhor resposta. Errar aqui é de graça — errar na call não é.</div>
+        <div class="sec-title">Pratique antes de entrar na call</div>
+        <div class="sec-desc">Dois modos: quiz de objeções para reflexo rápido, ou simulador de IA para treinar a call completa com uma persona de cliente real.</div>
       </div>
 
-      <div id="treino-container"></div>
+      <!-- TABS -->
+      <div class="sim-tabs">
+        <button class="sim-tab active" id="tab-quiz" onclick="switchTreinoTab('quiz')">⚡ Quiz de objeções</button>
+        <button class="sim-tab" id="tab-sim" onclick="switchTreinoTab('sim')">🤖 Simulador com IA</button>
+      </div>
+
+      <!-- QUIZ PANEL -->
+      <div class="sim-panel active" id="panel-quiz">
+        <div id="treino-container"></div>
+      </div>
+
+      <!-- SIMULATOR PANEL -->
+      <div class="sim-panel" id="panel-sim">
+
+        <!-- STEP 1: PERSONA PICKER -->
+        <div id="sim-picker" style="display:block">
+          <div class="eyebrow" style="margin-bottom:14px">Escolha o perfil do cliente</div>
+          <div class="persona-grid">
+            <div class="persona-card" id="pc-0" onclick="selectPersona(0)">
+              <div class="persona-avatar">👨‍💻</div>
+              <div class="persona-name">Rafael</div>
+              <div class="persona-role">Analista de TI · 31 anos</div>
+              <div class="persona-diff diff-easy" style="background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)">Fácil</div>
+            </div>
+            <div class="persona-card" id="pc-1" onclick="selectPersona(1)">
+              <div class="persona-avatar">👩‍💼</div>
+              <div class="persona-name">Márcia</div>
+              <div class="persona-role">Empresária · 44 anos</div>
+              <div class="persona-diff diff-med" style="background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid)">Médio</div>
+            </div>
+            <div class="persona-card" id="pc-2" onclick="selectPersona(2)">
+              <div class="persona-avatar">🧑‍💼</div>
+              <div class="persona-name">Rogério</div>
+              <div class="persona-role">Diretor Comercial · 38 anos</div>
+              <div class="persona-diff diff-hard" style="background:var(--red-dim);color:var(--red);border:1px solid var(--red-mid)">Difícil</div>
+            </div>
+          </div>
+
+          <div id="sim-persona-brief" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:16px">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:6px">Contexto que você receberá na call</div>
+            <div id="sim-brief-text" style="font-size:13px;color:var(--text2);line-height:1.65"></div>
+          </div>
+
+          <button class="sim-start-btn" id="sim-start-btn" onclick="startSimulation()" style="display:none">Iniciar simulação →</button>
+        </div>
+
+        <!-- STEP 2: CHAT -->
+        <div id="sim-chat" style="display:none">
+          <div class="sim-window">
+            <div class="sim-topbar">
+              <div class="sim-persona-avatar" id="chat-avatar">👨‍💻</div>
+              <div>
+                <div class="sim-persona-name" id="chat-name">Rafael</div>
+                <div class="sim-persona-status" id="chat-status">Online · Role play ativo</div>
+              </div>
+              <div class="sim-controls">
+                <div class="sim-ctrl-btn" onclick="simHint()">💡 Dica</div>
+                <div class="sim-ctrl-btn end" onclick="endSimulation()">Encerrar e avaliar</div>
+              </div>
+            </div>
+            <div class="sim-messages" id="sim-messages"></div>
+            <div class="sim-input-bar">
+              <textarea class="sim-input" id="sim-input" placeholder="Digite sua mensagem como closer..." rows="1"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"
+                oninput="this.style.height='40px';this.style.height=Math.min(this.scrollHeight,100)+'px'"></textarea>
+              <button class="sim-send" id="sim-send-btn" onclick="sendMessage()">↑</button>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <div style="font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif" id="sim-msg-count">0 mensagens trocadas</div>
+            <div style="font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif">Enter para enviar · Shift+Enter nova linha</div>
+          </div>
+        </div>
+
+        <!-- STEP 3: REPORT -->
+        <div id="sim-report-wrap" style="display:none">
+          <div class="sim-report" id="sim-report"></div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="report-btn primary" onclick="simRestart()">Nova simulação</button>
+            <button class="report-btn" onclick="switchTreinoTab('quiz')">Ir para o quiz</button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -2418,6 +2589,357 @@ document.getElementById('main-content').classList.add('level-junior');
 renderProgressGrid();
 function toggleObj(card){card.classList.toggle('open');}
 function toggleHist(t){t.classList.toggle('open');}
+// ── TREINO TAB SWITCH ──
+function switchTreinoTab(tab) {
+  document.getElementById('tab-quiz').classList.toggle('active', tab==='quiz');
+  document.getElementById('tab-sim').classList.toggle('active', tab==='sim');
+  document.getElementById('panel-quiz').classList.toggle('active', tab==='quiz');
+  document.getElementById('panel-sim').classList.toggle('active', tab==='sim');
+  if (tab==='quiz' && !document.getElementById('treino-container').innerHTML) buildTreino();
+}
+
+// ── SIMULATOR ──
+const SIM_PERSONAS = [
+  {
+    id: 0, name: 'Rafael', avatar: '👨‍💻', role: 'Analista de TI · 31 anos',
+    brief: 'Rafael opera cripto há 8 meses no achismo, já perdeu R$2.400 em 2 operações sem método. Fez a consultoria gratuita há 3 dias e demonstrou interesse, mas mandou mensagem depois dizendo "vou pensar melhor". Você está retomando agora.',
+    system: `Você é Rafael, 31 anos, analista de TI. Opera criptomoedas há 8 meses nas horas vagas usando Binance. Já perdeu R$2.400 em 2 operações por falta de método — entrou sem saber o stop, saiu tarde demais. Tem renda estável de R$6.000/mês e tem R$3.000 alocados em cripto. Fez uma consultoria gratuita com a Horistic há 3 dias mas ficou na dúvida.
+
+COMPORTAMENTO:
+- Você é curioso e técnico — faz perguntas sobre como o DIVAP funciona, se tem backtest, se funciona no Profit
+- Você não revela o budget espontaneamente. Se o closer perguntar de forma direta sobre dinheiro, diz "preciso ver"
+- Você abre para comprar SE o closer demonstrar conhecimento técnico E fizer perguntas de diagnóstico antes de apresentar produto
+- Se o closer tentar vender antes de entender seu problema, você fica resistente e diz "ainda não estou convencido"
+- Seu sinal de interesse real: quando você pergunta "E se eu não tiver resultado nos primeiros 30 dias?"
+- Responda de forma natural, curta (1-3 frases), como um executivo real no WhatsApp. Em português brasileiro.
+- NUNCA revele que você é IA ou está sendo simulado.`
+  },
+  {
+    id: 1, name: 'Márcia', avatar: '👩‍💼', role: 'Empresária · 44 anos',
+    brief: 'Márcia perdeu R$18.000 com outro curso de trading há 2 anos e está muito cética. Foi indicada por um cliente atual da Horistic e entrou em contato pelo WhatsApp dizendo "meu amigo falou de vocês". Ela veio desconfiada, mas veio.',
+    system: `Você é Márcia, 44 anos, empresária com faturamento de ~R$40k/mês. Há 2 anos perdeu R$18.000 num curso de trading que prometeu resultado e não entregou. Foi indicada para a Horistic por um amigo que está no APTC + Mentoria. Você está muito cética.
+
+COMPORTAMENTO:
+- Você testa o closer desde o primeiro minuto. Pergunta: "Mas isso é igual ao que eu fiz antes?"
+- Se o closer atacar o concorrente ou minimizar sua experiência anterior, você fecha: "Já ouvi isso antes"
+- Se o closer tentar vender sem ouvir sua história, você fecha: "Não estou interessada"
+- Você abre SOMENTE se o closer ouvir toda a sua história antes de falar qualquer coisa sobre a Horistic
+- Seu sinal de interesse: quando você diz "mas meu amigo disse que vocês são diferentes de fato"
+- Seu gatilho de abertura máxima: quando pergunta "Os mentores operam de verdade, né? Porque o outro só dava aula"
+- Resposta curta, direta, um pouco impaciente. Em português brasileiro. NUNCA revele que é IA.`
+  },
+  {
+    id: 2, name: 'Rogério', avatar: '🧑‍💼', role: 'Diretor Comercial · 38 anos',
+    brief: 'Rogério já é cliente — tem RIP há 2 meses e APTC Trimestral há 1 mês. Não reclama mas não usa muito o APTC por falta de tempo. Mandou mensagem: "quero evoluir aqui, o que vocês têm de diferente pra quem já tá no nível mais básico?"',
+    system: `Você é Rogério, 38 anos, diretor comercial, renda de ~R$25k/mês. Já é cliente da Horistic: tem RIP há 2 meses e APTC Trimestral há 1 mês. Não usa muito o APTC porque não tem tempo de acompanhar os sinais. Quer evoluir mas é impaciente e tem ego elevado.
+
+COMPORTAMENTO:
+- Você é direto e vai ao ponto. Não quer explicação básica sobre o que é cripto ou DIVAP
+- Se o closer tratar você como iniciante ou explicar coisa básica, você diz: "Isso eu já sei, me fala o que é diferente"
+- Se o closer apresentar Live E VIP ao mesmo tempo, você fica confuso e diz "preciso pensar" — encerra
+- Você abre se o closer fizer A pergunta certa sobre o que você quer alcançar nos próximos 6 meses
+- Seu sinal de abertura total: "Quanto custa ter acesso direto ao Victor e Fernando?"
+- Nenhuma objeção de preço — se confiar, fecha na hora
+- Respostas muito curtas, ton executivo, pouca paciência para rodeios. Em português. NUNCA revele que é IA.`
+  }
+];
+
+let simState = {
+  personaIdx: null,
+  messages: [],  // {role, content, time}
+  active: false,
+  turnCount: 0
+};
+
+function selectPersona(idx) {
+  simState.personaIdx = idx;
+  document.querySelectorAll('.persona-card').forEach((c,i) => c.classList.toggle('selected', i===idx));
+  const p = SIM_PERSONAS[idx];
+  document.getElementById('sim-brief-text').textContent = p.brief;
+  document.getElementById('sim-persona-brief').style.display = 'block';
+  document.getElementById('sim-start-btn').style.display = 'inline-block';
+}
+
+async function startSimulation() {
+  const p = SIM_PERSONAS[simState.personaIdx];
+  simState.messages = [];
+  simState.active = true;
+  simState.turnCount = 0;
+
+  document.getElementById('sim-picker').style.display = 'none';
+  document.getElementById('sim-chat').style.display = 'block';
+  document.getElementById('chat-avatar').textContent = p.avatar;
+  document.getElementById('chat-name').textContent = p.name;
+  document.getElementById('chat-status').textContent = p.role + ' · Role play ativo';
+  document.getElementById('sim-messages').innerHTML = '';
+  updateMsgCount();
+
+  // Opening message from persona
+  showTyping();
+  const opening = await callPersonaAI('Olá! Pode falar?', true);
+  hideTyping();
+  appendMessage('persona', opening);
+}
+
+function appendMessage(role, content) {
+  const p = SIM_PERSONAS[simState.personaIdx];
+  const now = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  simState.messages.push({role: role==='persona'?'assistant':'user', content});
+  simState.turnCount++;
+  updateMsgCount();
+
+  const wrap = document.getElementById('sim-messages');
+  const div = document.createElement('div');
+  div.className = 'sim-msg ' + role;
+  div.innerHTML = `
+    <div class="sim-msg-avatar" style="background:${role==='persona'?'var(--accent)':'var(--blue-dim)'};color:${role==='persona'?'#fff':'var(--blue)'}">
+      ${role==='persona' ? p.avatar : '🎤'}
+    </div>
+    <div>
+      <div class="sim-bubble">${content.replace(/\n/g,'<br>')}</div>
+      <div class="sim-msg-time">${now}</div>
+    </div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function showTyping() {
+  const wrap = document.getElementById('sim-messages');
+  const t = document.createElement('div');
+  t.className = 'sim-msg persona';
+  t.id = 'sim-typing-indicator';
+  t.innerHTML = `<div class="sim-msg-avatar" style="background:var(--accent);color:#fff">${SIM_PERSONAS[simState.personaIdx].avatar}</div>
+    <div class="sim-typing"><span></span><span></span><span></span></div>`;
+  wrap.appendChild(t);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('sim-typing-indicator');
+  if (t) t.remove();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('sim-input');
+  const text = input.value.trim();
+  if (!text || !simState.active) return;
+  input.value = '';
+  input.style.height = '40px';
+  document.getElementById('sim-send-btn').disabled = true;
+
+  appendMessage('user', text);
+  showTyping();
+
+  const reply = await callPersonaAI(text, false);
+  hideTyping();
+  appendMessage('persona', reply);
+  document.getElementById('sim-send-btn').disabled = false;
+  input.focus();
+}
+
+async function callPersonaAI(userMsg, isOpening) {
+  const p = SIM_PERSONAS[simState.personaIdx];
+  const msgs = isOpening
+    ? [{role:'user', content:'[INÍCIO DA SIMULAÇÃO] O closer acabou de te contatar. Abra a conversa de forma natural como seu personagem, em 1-2 frases curtas.'}]
+    : [...simState.messages.slice(0,-1), {role:'user', content: userMsg}];
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 300,
+        system: p.system,
+        messages: msgs
+      })
+    });
+    const data = await res.json();
+    return data.content?.[0]?.text || 'Hmm, pode repetir?';
+  } catch(e) {
+    return 'Desculpa, tive um problema de conexão. Pode tentar de novo?';
+  }
+}
+
+function updateMsgCount() {
+  const userMsgs = simState.messages.filter(m=>m.role==='user').length;
+  document.getElementById('sim-msg-count').textContent = userMsgs + ' mensagem' + (userMsgs!==1?'s':'') + ' enviada' + (userMsgs!==1?'s':'');
+}
+
+async function simHint() {
+  if (!simState.active || simState.messages.length < 2) return;
+  const p = SIM_PERSONAS[simState.personaIdx];
+  const last3 = simState.messages.slice(-6).map(m=>`${m.role==='user'?'Closer':'Cliente'}: ${m.content}`).join('\n');
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:150,
+        messages:[{role:'user',content:`Você é um coach de vendas da Horistic. Analise essa conversa e dê UMA dica curta (2-3 linhas) em português para o closer melhorar agora. Seja direto e específico.\n\nPersona: ${p.name} (${p.role})\nÚltimas mensagens:\n${last3}`}]
+      })
+    });
+    const data = await res.json();
+    const hint = data.content?.[0]?.text || '';
+    showToast('💡 ' + hint);
+  } catch(e) {
+    showToast('💡 Faça uma pergunta de diagnóstico antes de apresentar qualquer produto.');
+  }
+}
+
+function showToast(msg) {
+  let t = document.getElementById('sim-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'sim-toast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;z-index:999;max-width:480px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:opacity .3s';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>{t.style.opacity='0';},5000);
+}
+
+async function endSimulation() {
+  if (!simState.active) return;
+  simState.active = false;
+  document.getElementById('sim-chat').style.display = 'none';
+  document.getElementById('sim-report-wrap').style.display = 'block';
+  document.getElementById('sim-report').innerHTML = `<div style="padding:24px;text-align:center"><div style="font-size:28px;margin-bottom:10px">⏳</div><div style="font-size:14px;color:var(--text2)">Analisando sua simulação com IA...</div></div>`;
+
+  const p = SIM_PERSONAS[simState.personaIdx];
+  const transcript = simState.messages.map((m,i)=>`[${i+1}] ${m.role==='user'?'Closer':'Cliente ('+p.name+')'}: ${m.content}`).join('\n');
+  const userMsgs = simState.messages.filter(m=>m.role==='user').length;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        messages:[{role:'user',content:`Você é um avaliador de vendas da Horistic. Analise esta simulação de call comercial e retorne APENAS um JSON válido, sem markdown, sem explicação.
+
+Persona do cliente: ${p.name} — ${p.role}
+Framework: BANT + SPIN
+
+Transcript:
+${transcript}
+
+Retorne este JSON exato:
+{
+  "score": <número 0-100>,
+  "score_color": "<green|orange|red>",
+  "resumo": "<resumo da call em 2 frases>",
+  "talk_ratio": <% de mensagens do closer, número>,
+  "bant": {
+    "budget": <0-100>,
+    "authority": <0-100>,
+    "need": <0-100>,
+    "timeline": <0-100>
+  },
+  "spin": {
+    "situacao": <0-100>,
+    "problema": <0-100>,
+    "implicacao": <0-100>,
+    "necessidade": <0-100>
+  },
+  "pontos_fortes": ["<frase curta>","<frase curta>"],
+  "pontos_melhoria": ["<frase curta>","<frase curta>"],
+  "momentos_chave": [{"trecho":"<fala do closer, citação curta>","motivo":"<por que foi relevante>"}],
+  "proximos_passos": ["<ação específica>","<ação específica>"]
+}`}]
+      })
+    });
+    const data = await res.json();
+    let raw = data.content?.[0]?.text || '{}';
+    raw = raw.replace(/```json|```/g,'').trim();
+    const report = JSON.parse(raw);
+    renderReport(report, p, userMsgs);
+  } catch(e) {
+    document.getElementById('sim-report').innerHTML = `<div style="padding:24px;text-align:center;color:var(--red)">Erro ao gerar relatório. Tente novamente.</div>`;
+  }
+}
+
+function renderReport(r, p, msgs) {
+  const scoreColor = r.score>=70?'var(--green)':r.score>=50?'var(--accent)':'var(--red)';
+  const bantColor = v => v>=70?'var(--green)':v>=50?'var(--accent)':'var(--red)';
+
+  document.getElementById('sim-report').innerHTML = `
+    <div class="sim-report-header">
+      <div>
+        <div style="font-size:11px;color:rgba(255,255,255,.5);font-family:'Instrument Sans',sans-serif;margin-bottom:4px">${p.name} · ${p.role}</div>
+        <div class="sim-report-title">Relatório de desempenho</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:4px;font-family:'Instrument Sans',sans-serif">${msgs} mensagem${msgs!==1?'s':''} enviada${msgs!==1?'s':''} · Talk ratio: ${r.talk_ratio||'—'}% closer</div>
+      </div>
+      <div class="sim-report-score" style="color:${scoreColor}">${r.score}<span style="font-size:16px;opacity:.6">/100</span></div>
+    </div>
+    <div class="sim-report-body">
+
+      <div class="report-section">
+        <div class="report-sec-label">Resumo da call</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.65">${r.resumo||'—'}</div>
+      </div>
+
+      <div class="report-section">
+        <div class="report-sec-label">BANT · Qualificação</div>
+        ${['budget','authority','need','timeline'].map(k=>`
+          <div class="report-bant-row">
+            <div class="report-bant-key" style="color:${bantColor(r.bant?.[k]||0)}">${k.toUpperCase()}</div>
+            <div class="report-bant-bar"><div class="report-bant-fill" style="width:${r.bant?.[k]||0}%;background:${bantColor(r.bant?.[k]||0)}"></div></div>
+            <div class="report-bant-val" style="color:${bantColor(r.bant?.[k]||0)}">${r.bant?.[k]||0}</div>
+          </div>`).join('')}
+      </div>
+
+      <div class="report-section">
+        <div class="report-sec-label">SPIN · Qualidade das perguntas</div>
+        ${['situacao','problema','implicacao','necessidade'].map((k,i)=>`
+          <div class="report-bant-row">
+            <div class="report-bant-key" style="color:${bantColor(r.spin?.[k]||0)}">${['S','P','I','N'][i]} · ${k.charAt(0).toUpperCase()+k.slice(1)}</div>
+            <div class="report-bant-bar"><div class="report-bant-fill" style="width:${r.spin?.[k]||0}%;background:${bantColor(r.spin?.[k]||0)}"></div></div>
+            <div class="report-bant-val" style="color:${bantColor(r.spin?.[k]||0)}">${r.spin?.[k]||0}</div>
+          </div>`).join('')}
+      </div>
+
+      ${r.pontos_fortes?.length ? `
+      <div class="report-section">
+        <div class="report-sec-label">Pontos fortes</div>
+        <div class="report-tag-row">${r.pontos_fortes.map(t=>`<span class="report-tag good">✓ ${t}</span>`).join('')}</div>
+      </div>` : ''}
+
+      ${r.pontos_melhoria?.length ? `
+      <div class="report-section">
+        <div class="report-sec-label">Pontos de melhoria</div>
+        <div class="report-tag-row">${r.pontos_melhoria.map(t=>`<span class="report-tag bad">↑ ${t}</span>`).join('')}</div>
+      </div>` : ''}
+
+      ${r.momentos_chave?.length ? `
+      <div class="report-section">
+        <div class="report-sec-label">Momentos-chave da call</div>
+        ${r.momentos_chave.map(m=>`<div class="report-moment"><strong>Momento</strong>"${m.trecho}" — ${m.motivo}</div>`).join('')}
+      </div>` : ''}
+
+      ${r.proximos_passos?.length ? `
+      <div class="report-section">
+        <div class="report-sec-label">O que praticar na próxima simulação</div>
+        ${r.proximos_passos.map(p=>`<div class="report-next">${p}</div>`).join('')}
+      </div>` : ''}
+
+    </div>`;
+}
+
+function simRestart() {
+  simState = {personaIdx:null, messages:[], active:false, turnCount:0};
+  document.getElementById('sim-picker').style.display = 'block';
+  document.getElementById('sim-chat').style.display = 'none';
+  document.getElementById('sim-report-wrap').style.display = 'none';
+  document.querySelectorAll('.persona-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('sim-persona-brief').style.display = 'none';
+  document.getElementById('sim-start-btn').style.display = 'none';
+}
+
 document.addEventListener('click',e=>{
   const wrap=document.querySelector('.tb-search');
   if(wrap&&!wrap.contains(e.target))document.getElementById('search-results').classList.remove('show');
