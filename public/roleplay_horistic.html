@@ -40,6 +40,51 @@
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.6}
 
+/* ── LOGIN SCREEN ── */
+.login-screen{position:fixed;inset:0;background:var(--text);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#fff;border-radius:20px;padding:40px;width:100%;max-width:400px;text-align:center}
+.login-logo{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:28px;font-family:'Instrument Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.login-logo b{color:var(--text)}
+.login-title{font-size:24px;font-weight:700;color:var(--text);margin-bottom:6px}
+.login-sub{font-size:13px;color:var(--text3);margin-bottom:28px;line-height:1.5}
+.login-roles{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.login-role-btn{padding:14px 20px;border-radius:12px;border:2px solid var(--border);background:#fff;cursor:pointer;transition:all .15s;text-align:left;display:flex;align-items:center;gap:12px;font-family:'Space Grotesk',sans-serif}
+.login-role-btn:hover{border-color:var(--accent);background:var(--accent-dim)}
+.login-role-btn.selected{border-color:var(--accent);background:var(--accent-dim)}
+.login-role-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.login-role-name{font-size:14px;font-weight:600;color:var(--text)}
+.login-role-desc{font-size:11px;color:var(--text2);font-family:'Instrument Sans',sans-serif}
+.login-pw-wrap{margin-bottom:16px}
+.login-pw-label{font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif;text-align:left;margin-bottom:6px;display:block}
+.login-pw{width:100%;padding:12px 14px;border:1.5px solid var(--border2);border-radius:10px;font-size:14px;font-family:'Space Grotesk',sans-serif;color:var(--text);outline:none;text-align:center;letter-spacing:.1em;transition:border-color .15s}
+.login-pw:focus{border-color:var(--accent)}
+.login-pw.error{border-color:var(--red);background:var(--red-dim)}
+.login-error{font-size:12px;color:var(--red);margin-bottom:12px;display:none;font-family:'Instrument Sans',sans-serif}
+.login-error.show{display:block}
+.login-submit{width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .15s}
+.login-submit:hover{opacity:.85}
+.login-submit:disabled{opacity:.4;cursor:not-allowed}
+
+/* ── ROLE MODES ── */
+body.mode-closer .right-col{display:none}
+body.mode-closer .main{grid-template-columns:1fr}
+body.mode-avaliador .left-col{display:none!important}
+body.mode-avaliador .pack-nav{display:none}
+body.mode-avaliador .hero{display:none}
+body.mode-avaliador .main{grid-template-columns:1fr;max-width:680px}
+body.mode-avaliador .right-col{position:static}
+.role-badge{font-size:10px;font-family:'Instrument Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:20px;display:flex;align-items:center;gap:5px}
+.role-badge-closer{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid)}
+.role-badge-avaliador{background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)}
+.logout-btn{font-size:11px;font-family:'Instrument Sans',sans-serif;color:rgba(255,255,255,.4);cursor:pointer;background:none;border:none;padding:4px 8px;border-radius:6px;transition:color .15s}
+.logout-btn:hover{color:rgba(255,255,255,.8)}
+
+/* avaliador hero substitute */
+.avaliador-hero{background:var(--text);padding:28px 40px;display:none}
+body.mode-avaliador .avaliador-hero{display:block}
+.avaliador-hero-pack{font-size:13px;color:rgba(255,255,255,.5);font-family:'Instrument Sans',sans-serif;margin-bottom:4px}
+.avaliador-hero-title{font-size:22px;font-weight:700;color:#fff}
+
 /* ── TOP HEADER ── */
 .site-header{background:var(--text);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .site-header .logo{font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
@@ -202,18 +247,60 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 </head>
 <body>
 
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Horistic <b>·</b> Role Play Comercial</div>
+    <div class="login-title">Qual é o seu papel?</div>
+    <div class="login-sub">Selecione seu papel na dinâmica e insira a senha para acessar o conteúdo correto.</div>
+
+    <div class="login-roles">
+      <div class="login-role-btn" id="role-closer" onclick="selectRole('closer')">
+        <div class="login-role-icon" style="background:var(--accent-dim);color:var(--accent)">🎤</div>
+        <div>
+          <div class="login-role-name">Closer / Vendedor</div>
+          <div class="login-role-desc">Acessa o perfil do cliente, BANT, SPIN e produto recomendado</div>
+        </div>
+      </div>
+      <div class="login-role-btn" id="role-avaliador" onclick="selectRole('avaliador')">
+        <div class="login-role-icon" style="background:var(--green-dim);color:var(--green)">📋</div>
+        <div>
+          <div class="login-role-name">Avaliador / Observador</div>
+          <div class="login-role-desc">Acessa apenas o formulário de avaliação e perguntas de debriefing</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-pw-wrap">
+      <label class="login-pw-label" id="pw-label">Senha de acesso</label>
+      <input class="login-pw" type="password" id="login-pw" placeholder="••••••••" maxlength="20"
+        onkeydown="if(event.key==='Enter')submitLogin()"
+        oninput="document.getElementById('login-pw').classList.remove('error');document.getElementById('login-error').classList.remove('show')"
+      />
+    </div>
+    <div class="login-error" id="login-error">Senha incorreta. Tente novamente.</div>
+    <button class="login-submit" id="login-submit" onclick="submitLogin()" disabled>Entrar →</button>
+  </div>
+</div>
+
+<!-- AVALIADOR PACK HEADER (shown instead of hero for avaliadores) -->
+<div class="avaliador-hero" id="avaliador-hero">
+  <div class="avaliador-hero-pack" id="avaliador-hero-pack">Pack 01 · O Curioso Técnico</div>
+  <div class="avaliador-hero-title">Formulário de Avaliação</div>
+</div>
+
 <!-- HEADER -->
-<header class="site-header">
-  <div class="logo">Horistic <span>·</span> Role Play Comercial</div>
+<header class="site-header" id="site-header" style="display:none">
+  <div class="logo">Horistic <span>·</span> Role Play</div>
   <div class="header-right">
-    <div class="hbadge hbadge-o">3 Packs</div>
-    <div class="hbadge hbadge-w">BANT + SPIN</div>
+    <div class="role-badge" id="role-badge-display"></div>
     <div class="timer-display" id="timer-btn" onclick="openTimer()">⏱ Cronômetro</div>
+    <button class="logout-btn" onclick="logout()">Sair</button>
   </div>
 </header>
 
 <!-- HERO -->
-<div class="hero">
+<div class="hero" id="main-hero" style="display:none">
   <div class="hero-eyebrow">Dinâmica de time</div>
   <h1>Pratique antes<br>de <em>entrar na call.</em></h1>
   <p>3 perfis reais de clientes, com contexto, perguntas BANT e SPIN calibradas para a Horistic, armadilhas comuns e formulário de avaliação para quem assiste.</p>
@@ -227,7 +314,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 </div>
 
 <!-- PACK TABS -->
-<nav class="pack-nav">
+<nav class="pack-nav" id="pack-nav" style="display:none">
   <div class="pack-tab active-c1" onclick="switchPack(1,this)" id="tab1">
     <div class="pack-dot" style="background:var(--c1)"></div>
     Pack 01 · O Curioso Técnico
@@ -243,7 +330,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 </nav>
 
 <!-- MAIN CONTENT -->
-<div class="main">
+<div class="main" id="main-content" style="display:none">
 
   <!-- ══════════════════════════════════════ -->
   <!-- PACK 01 -->
@@ -908,32 +995,124 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 </div>
 
 <script>
-// ── PACK SWITCH ──
+// ── PASSWORDS ──
+const PASSWORDS = {
+  closer:     'closer2026',
+  avaliador:  'avalia2026'
+};
+
+// ── LOGIN ──
+let selectedRoleLogin = null;
+
+function selectRole(role) {
+  selectedRoleLogin = role;
+  document.getElementById('role-closer').classList.toggle('selected', role==='closer');
+  document.getElementById('role-avaliador').classList.toggle('selected', role==='avaliador');
+  document.getElementById('login-submit').disabled = false;
+  document.getElementById('pw-label').textContent = role==='closer' ? 'Senha do Closer' : 'Senha do Avaliador';
+  document.getElementById('login-pw').focus();
+}
+
+function submitLogin() {
+  if (!selectedRoleLogin) return;
+  const pw = document.getElementById('login-pw').value;
+  if (pw === PASSWORDS[selectedRoleLogin]) {
+    enterApp(selectedRoleLogin);
+  } else {
+    document.getElementById('login-pw').classList.add('error');
+    document.getElementById('login-error').classList.add('show');
+    document.getElementById('login-pw').value = '';
+    document.getElementById('login-pw').focus();
+  }
+}
+
+function enterApp(role) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('site-header').style.display = 'flex';
+  document.getElementById('main-content').style.display = 'grid';
+
+  const badge = document.getElementById('role-badge-display');
+
+  if (role === 'closer') {
+    document.body.classList.add('mode-closer');
+    document.getElementById('main-hero').style.display = 'block';
+    document.getElementById('pack-nav').style.display = 'flex';
+    badge.className = 'role-badge role-badge-closer';
+    badge.innerHTML = '🎤 Closer';
+  } else {
+    document.body.classList.add('mode-avaliador');
+    document.getElementById('avaliador-hero').style.display = 'block';
+    badge.className = 'role-badge role-badge-avaliador';
+    badge.innerHTML = '📋 Avaliador';
+    // In avaliador mode, show pack selector differently
+    buildAvaliadorPackNav();
+  }
+}
+
+function logout() {
+  document.body.classList.remove('mode-closer','mode-avaliador');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('site-header').style.display = 'none';
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('main-hero').style.display = 'none';
+  document.getElementById('pack-nav').style.display = 'none';
+  document.getElementById('avaliador-hero').style.display = 'none';
+  document.getElementById('login-pw').value = '';
+  selectedRoleLogin = null;
+  document.getElementById('role-closer').classList.remove('selected');
+  document.getElementById('role-avaliador').classList.remove('selected');
+  document.getElementById('login-submit').disabled = true;
+  resetEval();
+}
+
+function buildAvaliadorPackNav() {
+  // For avaliadores: show a simple pack selector above the eval form
+  const label = document.getElementById('eval-pack-label');
+  const existing = document.getElementById('avaliador-pack-switcher');
+  if (existing) return;
+  const sw = document.createElement('div');
+  sw.id = 'avaliador-pack-switcher';
+  sw.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0';
+  [1,2,3].forEach(n => {
+    const btn = document.createElement('button');
+    btn.textContent = 'Pack 0'+n;
+    btn.style.cssText = `font-size:11px;font-family:'Instrument Sans',sans-serif;font-weight:600;padding:6px 14px;border-radius:7px;border:1.5px solid var(--c${n}m);background:var(--c${n}d);color:var(--c${n});cursor:pointer;transition:all .15s`;
+    btn.onclick = () => switchEvalPack(n);
+    sw.appendChild(btn);
+  });
+  label.parentNode.insertBefore(sw, label);
+}
+
+function switchEvalPack(n) {
+  const names = {1:'Pack 01 · O Curioso Técnico',2:'Pack 02 · O Cético Experiente',3:'Pack 03 · O Impaciente de Alto Ticket'};
+  document.getElementById('eval-pack-name').textContent = names[n];
+  document.getElementById('avaliador-hero-pack').textContent = names[n];
+  const dot = document.getElementById('eval-dot');
+  dot.style.background = `var(--c${n})`;
+  const banner = document.getElementById('eval-pack-label');
+  banner.style.background = `var(--c${n}d)`;
+  banner.style.borderColor = `var(--c${n}m)`;
+  resetEval();
+}
+
+// ── PACK SWITCH (closer mode) ──
 const packNames = {
   1: 'Pack 01 · O Curioso Técnico',
   2: 'Pack 02 · O Cético Experiente',
   3: 'Pack 03 · O Impaciente de Alto Ticket'
 };
-const packColors = {
-  1: {c:'var(--c1)',d:'var(--c1d)',m:'var(--c1m)'},
-  2: {c:'var(--c2)',d:'var(--c2d)',m:'var(--c2m)'},
-  3: {c:'var(--c3)',d:'var(--c3d)',m:'var(--c3m)'}
-};
 
 let activePack = 1;
 
 function switchPack(n, el) {
-  // Hide all packs
   [1,2,3].forEach(i => {
     document.getElementById('pack'+i).style.display = 'none';
     document.getElementById('tab'+i).className = 'pack-tab';
   });
-  // Show selected
   document.getElementById('pack'+n).style.display = 'flex';
   el.classList.add('active-c'+n);
   activePack = n;
 
-  // Update eval label
   document.getElementById('eval-pack-name').textContent = packNames[n];
   const dot = document.getElementById('eval-dot');
   const banner = document.getElementById('eval-pack-label');
@@ -941,7 +1120,6 @@ function switchPack(n, el) {
   banner.style.background = `var(--c${n}d)`;
   banner.style.borderColor = `var(--c${n}m)`;
 
-  // Reset eval
   resetEval();
   window.scrollTo(0,0);
 }
@@ -1007,9 +1185,7 @@ function setDuration(min, el) {
   document.querySelectorAll('.tdur').forEach(d => d.classList.remove('active'));
   el.classList.add('active');
   updateTimerDisplay();
-  if (!timerRunning) {
-    document.getElementById('timer-label').textContent = 'Selecione a duração e inicie';
-  }
+  if (!timerRunning) document.getElementById('timer-label').textContent = 'Selecione a duração e inicie';
 }
 
 function updateTimerDisplay() {
@@ -1069,7 +1245,6 @@ function resetTimer() {
   updateTimerDisplay();
 }
 
-// init
 updateTimerDisplay();
 </script>
 </body>
