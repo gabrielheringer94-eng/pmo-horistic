@@ -3817,13 +3817,17 @@ const TK_OWNERS = [
   {name:'Victor',  email:'victor@horistic.com.br',  color:'#1A7F4B'},
   {name:'Gabriel', email:'gabriel@horistic.com.br', color:'#7C3AED'}
 ];
-// EmailJS — crie conta gratuita em emailjs.com, configure um service e 3 templates:
-const TK_EMAILJS = {
-  publicKey:  'COLE_SUA_PUBLIC_KEY',
-  serviceId:  'COLE_SEU_SERVICE_ID',
-  tplNovo:    'template_novo_ticket',     // vars: to_email, to_name, ticket_titulo, ticket_desc, ticket_prioridade, ticket_sla, autor_nome
-  tplStatus:  'template_status_ticket'    // vars: to_email, to_name, ticket_titulo, novo_status, dono_nome
-};
+// EDGE FUNCTION — envio de e-mails via Resend (backend Supabase)
+const TK_EMAIL_FN = TK_SUPA_URL + '/functions/v1/ticket-email';
+async function tkEmail(event, ticket){
+  try {
+    await fetch(TK_EMAIL_FN, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+TK_SUPA_KEY},
+      body: JSON.stringify({event, ticket})
+    });
+  } catch(e){ console.warn('email falhou', e); }
+}
 
 const TK_QUADS = [
   {tag:'Urgente + Importante', name:'🔥 Fazer agora', slaHoras:4,  slaLabel:'4h úteis',  color:'var(--red)',   badgeBg:'var(--red-dim)',   badgeBorder:'var(--red-mid)'},
@@ -3836,16 +3840,6 @@ let tkOwnerIdx = null, tkEisIdx = null, tkFilter = 'todos';
 
 function selOwner(i){ tkOwnerIdx=i; document.querySelectorAll('.tk-owner').forEach((el,x)=>el.classList.toggle('selected',x===i)); }
 function selEis(i){ tkEisIdx=i; document.querySelectorAll('.eis-q').forEach((el,x)=>el.classList.toggle('selected',x===i)); }
-
-async function tkEmail(templateId, params){
-  if (TK_EMAILJS.publicKey.startsWith('COLE')) return; // não configurado ainda
-  try {
-    await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({service_id:TK_EMAILJS.serviceId, template_id:templateId, user_id:TK_EMAILJS.publicKey, template_params:params})
-    });
-  } catch(e){ console.warn('email falhou', e); }
-}
 
 async function submitTicket(){
   const autor = document.getElementById('tk-autor').value.trim();
@@ -3872,8 +3866,8 @@ async function submitTicket(){
     });
     if(!res.ok) throw new Error(await res.text());
 
-    // e-mail para o dono
-    tkEmail(TK_EMAILJS.tplNovo, {to_email:owner.email, to_name:owner.name, ticket_titulo:titulo, ticket_desc:desc, ticket_prioridade:quad.tag, ticket_sla:quad.slaLabel, autor_nome:autor});
+    // e-mail para o dono via edge function
+    tkEmail('novo', {titulo, descricao:desc, quadrante:tkEisIdx, dono:owner.name, dono_email:owner.email, autor, autor_email:autorEmail});
 
     fb.style.display='block'; fb.style.background='var(--green-dim)'; fb.style.color='var(--green)'; fb.style.border='1px solid rgba(26,127,75,.2)';
     fb.textContent=`✓ Ticket aberto! ${owner.name} foi notificado. SLA de resposta: ${quad.slaLabel}.`;
@@ -3950,8 +3944,7 @@ async function tkStatus(id, novoStatus){
     const data = await res.json();
     const t = Array.isArray(data)?data[0]:data;
     if(t && t.autor_email){
-      const label = novoStatus==='andamento'?'foi iniciado':'foi concluído';
-      tkEmail(TK_EMAILJS.tplStatus,{to_email:t.autor_email,to_name:t.autor,ticket_titulo:t.titulo,novo_status:label,dono_nome:t.dono});
+      tkEmail(novoStatus, {titulo:t.titulo, dono:t.dono, autor:t.autor, autor_email:t.autor_email});
     }
     loadTickets(tkFilter);
   } catch(e){ alert('Erro ao atualizar status'); }
