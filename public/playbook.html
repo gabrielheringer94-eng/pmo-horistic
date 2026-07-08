@@ -2541,7 +2541,13 @@ td strong{color:var(--text);font-weight:500}
         <div class="tk-grid2">
           <div class="tk-field">
             <label class="tk-label">Seu nome</label>
-            <input class="tk-input" id="tk-autor" placeholder="Ex: João Silva">
+            <select class="tk-select" id="tk-autor">
+              <option value="">Selecione seu nome...</option>
+              <option>Leonardo</option>
+              <option>Luiz</option>
+              <option>Igor</option>
+              <option>Alecsander</option>
+            </select>
           </div>
           <div class="tk-field">
             <label class="tk-label">Seu e-mail (para receber atualizações)</label>
@@ -2550,8 +2556,15 @@ td strong{color:var(--text);font-weight:500}
         </div>
 
         <div class="tk-field">
-          <label class="tk-label">Título do problema</label>
-          <input class="tk-input" id="tk-titulo" placeholder="Ex: Link do APTC quebrado na página de checkout">
+          <label class="tk-label">Tipo do problema</label>
+          <select class="tk-select" id="tk-titulo">
+            <option value="">Selecione o tipo do problema...</option>
+            <option>Entrada do cliente em grupos Telegram</option>
+            <option>Problema com a Hubla</option>
+            <option>Salário e comissões</option>
+            <option>Processos ou Leads</option>
+            <option>Outros</option>
+          </select>
         </div>
 
         <div class="tk-field">
