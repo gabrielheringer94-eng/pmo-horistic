@@ -232,6 +232,9 @@ td strong{color:var(--text);font-weight:500}
 /* calendar */
 .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .cal-nav{display:flex;align-items:center;gap:10px}
+.cal-add-ev{font-size:10px;font-family:'Instrument Sans',sans-serif;color:var(--accent);background:var(--accent-dim);border:1px dashed var(--accent-mid);border-radius:5px;padding:3px 6px;margin-top:4px;cursor:pointer;text-align:center;transition:all .12s}
+.cal-add-ev:hover{background:var(--accent);color:#fff}
+.cal-event.editing{cursor:pointer;outline:1px dashed rgba(0,0,0,.2);outline-offset:1px}
 .cal-nav button{width:30px;height:30px;border-radius:8px;border:1px solid var(--border2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text2);transition:all .15s}
 .cal-nav button:hover{border-color:var(--accent);color:var(--accent)}
 .cal-month-label{font-size:16px;font-weight:700;color:var(--text)}
@@ -2859,10 +2862,13 @@ td strong{color:var(--text);font-weight:500}
           <div class="cal-month-label" id="cal-month-label"></div>
           <button onclick="calNext()">›</button>
         </div>
-        <div style="font-size:12px;color:var(--text3);font-family:'Instrument Sans',sans-serif;display:flex;align-items:center;gap:10px">
-          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--accent);border-radius:3px;display:inline-block"></span>Lançamento</span>
-          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--green);border-radius:3px;display:inline-block"></span>Pré-venda</span>
-          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--blue);border-radius:3px;display:inline-block"></span>Evento</span>
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="font-size:12px;color:var(--text3);font-family:'Instrument Sans',sans-serif;display:flex;align-items:center;gap:10px">
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--accent);border-radius:3px;display:inline-block"></span>Lançamento</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--green);border-radius:3px;display:inline-block"></span>Pré-venda</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--blue);border-radius:3px;display:inline-block"></span>Evento</span>
+          </div>
+          <button id="cal-edit-btn" onclick="calToggleEdit()" style="display:none;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif;padding:7px 14px;border-radius:8px;border:1.5px solid var(--accent-mid);background:var(--accent-dim);color:var(--accent);cursor:pointer;transition:all .15s">✏️ Editar eventos</button>
         </div>
       </div>
       <div class="cal-grid">
@@ -3018,6 +3024,47 @@ td strong{color:var(--text);font-weight:500}
       <div class="modal-title" id="modal-title"></div>
       <div class="modal-date" id="modal-date"></div>
       <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- EVENT EDITOR MODAL -->
+  <div class="modal-overlay" id="event-editor" onclick="if(event.target===this)closeEventEditor()">
+    <div class="modal" style="max-width:460px">
+      <button class="modal-close" onclick="closeEventEditor()">✕</button>
+      <div class="modal-title" id="ed-modal-title">Novo evento</div>
+      <div style="margin-top:16px">
+        <div class="tk-field">
+          <label class="tk-label">Data</label>
+          <input class="tk-input" type="date" id="ed-data">
+        </div>
+        <div class="tk-field">
+          <label class="tk-label">Título do evento</label>
+          <input class="tk-input" id="ed-titulo" placeholder="Ex: Orderbump Radar">
+        </div>
+        <div class="tk-field">
+          <label class="tk-label">Tipo</label>
+          <select class="tk-select" id="ed-tipo">
+            <option value="lancamento">Lançamento (laranja)</option>
+            <option value="prevenda">Pré-venda (verde)</option>
+            <option value="evento">Evento (azul)</option>
+          </select>
+        </div>
+        <div class="tk-grid2">
+          <div class="tk-field">
+            <label class="tk-label">Hora (opcional)</label>
+            <input class="tk-input" id="ed-hora" placeholder="Ex: 19h">
+          </div>
+        </div>
+        <div class="tk-field">
+          <label class="tk-label">Detalhe (opcional)</label>
+          <textarea class="tk-textarea" id="ed-detalhe" placeholder="Descrição que aparece ao clicar no evento..."></textarea>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="tk-submit" style="margin-top:0" id="ed-save" onclick="saveEvent()">Salvar evento</button>
+          <button id="ed-delete" onclick="deleteEvent()" style="display:none;background:var(--red-dim);color:var(--red);border:1px solid var(--red-mid);border-radius:10px;padding:13px 20px;font-size:14px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;white-space:nowrap">Excluir</button>
+        </div>
+        <div id="ed-feedback" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px"></div>
+      </div>
     </div>
   </div>
 
@@ -3200,7 +3247,10 @@ function stReset(id) {
 }
 
 // ── CALENDAR ──
-const calEvents = [
+// ── CALENDÁRIO (editável via Supabase) ──
+const TIPO_COLOR = {lancamento:'', prevenda:'green', evento:'blue'};
+// seed local — usado se a tabela do Supabase estiver vazia ou indisponível
+let calEvents = [
   {date:'2026-07-02',label:'Lançamento Estratégias',color:'purple',detail:'02/07 · 19h — LANÇAMENTO "Estratégias de Trading" + Opção de lives do Leo no Youtube. Fernando + Victor.'},
   {date:'2026-07-07',label:'Orderbump Radar',color:'',detail:'07/07 · 19h — ORDERBUMP RADAR via Streamyard. Fernando.'},
   {date:'2026-07-09',label:'Pico VIP',color:'green',detail:'09/07 · 19h — PICO VIP com Victor, Fernando e Leo no Youtube.'},
@@ -3213,6 +3263,27 @@ const calEvents = [
   {date:'2026-07-30',label:'Live Vendas Desafio',color:'green',detail:'30/07 · 19h — LIVE DE VENDAS DESAFIO TRADER. Victor.'},
   {date:'2026-08-03',label:'Fechamento Desafio',color:'purple',detail:'03/08 · 19h — FECHAMENTO DESAFIO TRADER. Victor.'},
 ];
+let calEditMode = false;
+let calLoaded = false;
+
+async function calLoadFromSupabase(){
+  try{
+    const res = await fetch(`${TK_SUPA_URL}/rest/v1/eventos?select=*&order=data.asc`,{
+      headers:{'apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY}
+    });
+    const data = await res.json();
+    if(Array.isArray(data) && data.length){
+      calEvents = data.map(e=>({
+        id:e.id, date:e.data, label:e.titulo, tipo:e.tipo,
+        color:TIPO_COLOR[e.tipo] ?? '',
+        hora:e.hora||'', rawDetail:e.detalhe||'',
+        detail: (e.hora?e.hora+' — ':'')+(e.detalhe||e.titulo)
+      }));
+      calLoaded = true;
+    }
+  }catch(err){ /* usa seed local */ }
+}
+
 let calYear=2026,calMonth=6;
 function calRender(){
   const mn=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -3231,12 +3302,121 @@ function calRender(){
     const isToday=day===today.getDate()&&month===today.getMonth()&&year===today.getFullYear();
     const ds=`${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
     const evs=calEvents.filter(e=>e.date===ds);
-    html+=`<div class="cal-day${cls?' '+cls:''}${isToday?' today':''}"><div class="cal-dn">${day}</div>${evs.map(e=>`<div class="cal-event${e.color?' '+e.color:''}" onclick="openEventModal('${e.date}','${e.label}','${e.detail}')">${e.label}</div>`).join('')}</div>`;
+    const addBtn = calEditMode ? `<div class="cal-add-ev" onclick="openEventEditor(null,'${ds}')">+ evento</div>` : '';
+    html+=`<div class="cal-day${cls?' '+cls:''}${isToday?' today':''}"><div class="cal-dn">${day}</div>${evs.map((e,idx)=>{
+      const gi = calEvents.indexOf(e);
+      return `<div class="cal-event${e.color?' '+e.color:''}${calEditMode?' editing':''}" onclick="${calEditMode?`openEventEditor(${gi})`:`openEventModalIdx(${gi})`}">${e.label}${calEditMode?' ✏️':''}</div>`;
+    }).join('')}${addBtn}</div>`;
   }
   body.innerHTML=html;
 }
 function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}calRender();}
 function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}calRender();}
+
+function calToggleEdit(){
+  calEditMode = !calEditMode;
+  const btn = document.getElementById('cal-edit-btn');
+  btn.textContent = calEditMode ? '✓ Concluir edição' : '✏️ Editar eventos';
+  btn.style.background = calEditMode ? 'var(--accent)' : 'var(--accent-dim)';
+  btn.style.color = calEditMode ? '#fff' : 'var(--accent)';
+  calRender();
+}
+
+function openEventModalIdx(gi){
+  const e = calEvents[gi];
+  openEventModal(e.date, e.label, e.detail);
+}
+
+// ── EDITOR ──
+let edEditingId = null, edEditingIdx = null;
+function openEventEditor(gi, presetDate){
+  edEditingIdx = gi;
+  document.getElementById('ed-feedback').style.display='none';
+  if(gi===null){
+    // novo
+    edEditingId = null;
+    document.getElementById('ed-modal-title').textContent='Novo evento';
+    document.getElementById('ed-data').value = presetDate||'';
+    document.getElementById('ed-titulo').value = '';
+    document.getElementById('ed-tipo').value = 'lancamento';
+    document.getElementById('ed-hora').value = '';
+    document.getElementById('ed-detalhe').value = '';
+    document.getElementById('ed-delete').style.display='none';
+  }else{
+    const e = calEvents[gi];
+    edEditingId = e.id||null;
+    document.getElementById('ed-modal-title').textContent='Editar evento';
+    document.getElementById('ed-data').value = e.date;
+    document.getElementById('ed-titulo').value = e.label;
+    document.getElementById('ed-tipo').value = e.tipo || (e.color==='green'?'prevenda':e.color==='blue'?'evento':'lancamento');
+    document.getElementById('ed-hora').value = e.hora||'';
+    document.getElementById('ed-detalhe').value = e.rawDetail||e.detail||'';
+    document.getElementById('ed-delete').style.display = e.id?'block':'none';
+  }
+  document.getElementById('event-editor').classList.add('show');
+}
+function closeEventEditor(){ document.getElementById('event-editor').classList.remove('show'); }
+
+function edFeedback(msg, ok){
+  const fb=document.getElementById('ed-feedback');
+  fb.style.display='block';
+  fb.style.background = ok?'var(--green-dim)':'var(--red-dim)';
+  fb.style.color = ok?'var(--green)':'var(--red)';
+  fb.style.border = '1px solid '+(ok?'rgba(26,127,75,.2)':'var(--red-mid)');
+  fb.textContent = msg;
+}
+
+async function saveEvent(){
+  const data = document.getElementById('ed-data').value;
+  const titulo = document.getElementById('ed-titulo').value.trim();
+  const tipo = document.getElementById('ed-tipo').value;
+  const hora = document.getElementById('ed-hora').value.trim();
+  const detalhe = document.getElementById('ed-detalhe').value.trim();
+  if(!data || !titulo){ edFeedback('Preencha data e título.', false); return; }
+
+  const btn=document.getElementById('ed-save');
+  btn.disabled=true; btn.textContent='Salvando...';
+  const payload = {data, titulo, tipo, hora:hora||null, detalhe:detalhe||null};
+
+  try{
+    let res;
+    if(edEditingId){
+      res = await fetch(`${TK_SUPA_URL}/rest/v1/eventos?id=eq.${edEditingId}`,{
+        method:'PATCH',
+        headers:{'Content-Type':'application/json','apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY},
+        body: JSON.stringify(payload)
+      });
+    }else{
+      res = await fetch(`${TK_SUPA_URL}/rest/v1/eventos`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY},
+        body: JSON.stringify(payload)
+      });
+    }
+    if(!res.ok) throw new Error(await res.text());
+    await calLoadFromSupabase();
+    calRender();
+    closeEventEditor();
+  }catch(err){
+    edFeedback('Erro ao salvar. A tabela "eventos" existe no Supabase?', false);
+  }
+  btn.disabled=false; btn.textContent='Salvar evento';
+}
+
+async function deleteEvent(){
+  if(!edEditingId) return;
+  if(!confirm('Excluir este evento? Isso vale para todo o time.')) return;
+  try{
+    const res = await fetch(`${TK_SUPA_URL}/rest/v1/eventos?id=eq.${edEditingId}`,{
+      method:'DELETE',
+      headers:{'apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY}
+    });
+    if(!res.ok) throw new Error();
+    await calLoadFromSupabase();
+    calRender();
+    closeEventEditor();
+  }catch(err){ edFeedback('Erro ao excluir.', false); }
+}
 function openEventModal(date,title,detail){
   const m=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   const d=new Date(date+'T12:00:00');
@@ -3299,7 +3479,7 @@ function nav(pageId,el){
   const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais',treinamentos:'Conteúdos · Learning',tickets:'Abertura de Ticket',gestao:'Painel do Gestor'};
   document.getElementById('crumb-label').textContent=labels[pageId]||'';
   if(pageId==='treino')buildTreino();
-  if(pageId==='lancamentos')calRender();
+  if(pageId==='lancamentos'){ if(!calLoaded){ calLoadFromSupabase().then(()=>{calRender();calShowEditBtn();}); } calRender(); calShowEditBtn(); }
   if(pageId==='home')renderProgressGrid();
   if(pageId==='treinamentos')initLmsCards();
   if(pageId==='tickets')loadTickets('todos');
@@ -4016,16 +4196,24 @@ async function trackActivity(tipo, detalhe, valor) {
 const MG_PASSWORD = 'gestor2026';
 let mgTab = 'uso';
 
+let IS_GESTOR = false;
 function mgUnlock() {
   const pw = document.getElementById('mg-pw').value;
   if (pw === MG_PASSWORD) {
     document.getElementById('mg-lock').style.display = 'none';
     document.getElementById('mg-wrap').classList.add('show');
+    IS_GESTOR = true;
+    try{ sessionStorage.setItem('hIsGestor','1'); }catch(e){}
     mgLoadAll();
   } else {
     document.getElementById('mg-pw-err').style.display = 'block';
     document.getElementById('mg-pw').value = '';
   }
+}
+function calShowEditBtn(){
+  try{ if(sessionStorage.getItem('hIsGestor')==='1') IS_GESTOR=true; }catch(e){}
+  const btn=document.getElementById('cal-edit-btn');
+  if(btn) btn.style.display = IS_GESTOR ? 'block' : 'none';
 }
 
 function mgSwitch(tab) {
