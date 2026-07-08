@@ -470,8 +470,10 @@ td strong{color:var(--text);font-weight:500}
 .tk-owner{background:var(--bg2);border:1.5px solid var(--border2);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s}
 .tk-owner:hover{border-color:var(--accent-mid)}
 .tk-owner.selected{border-color:var(--accent);background:var(--accent-dim)}
-.tk-owner-avatar{width:34px;height:34px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;font-family:'Instrument Sans',sans-serif}
-.tk-owner-name{font-size:12px;font-weight:600;color:var(--text)}
+.tk-owner-avatar{width:28px;height:28px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;font-family:'Instrument Sans',sans-serif;background:var(--text3);transition:background .15s}
+.tk-owner.selected .tk-owner-avatar{background:var(--accent)}
+.tk-owner-name{font-size:11px;font-weight:600;color:var(--text2)}
+.tk-owner.selected .tk-owner-name{color:var(--text)}
 /* eisenhower matrix */
 .eis-matrix{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .eis-q{border:1.5px solid var(--border2);border-radius:11px;padding:14px;cursor:pointer;transition:all .15s;position:relative}
@@ -2575,10 +2577,10 @@ td strong{color:var(--text);font-weight:500}
         <div class="tk-field">
           <label class="tk-label">Dono do problema</label>
           <div class="tk-owner-grid">
-            <div class="tk-owner" id="own-0" onclick="selOwner(0)"><div class="tk-owner-avatar" style="background:#1C62C8">C</div><div class="tk-owner-name">Caio</div></div>
-            <div class="tk-owner" id="own-1" onclick="selOwner(1)"><div class="tk-owner-avatar" style="background:#FF8300">F</div><div class="tk-owner-name">Fernando</div></div>
-            <div class="tk-owner" id="own-2" onclick="selOwner(2)"><div class="tk-owner-avatar" style="background:#1A7F4B">V</div><div class="tk-owner-name">Victor</div></div>
-            <div class="tk-owner" id="own-3" onclick="selOwner(3)"><div class="tk-owner-avatar" style="background:#7C3AED">G</div><div class="tk-owner-name">Gabriel</div></div>
+            <div class="tk-owner" id="own-0" onclick="selOwner(0)"><div class="tk-owner-avatar">C</div><div class="tk-owner-name">Caio</div></div>
+            <div class="tk-owner" id="own-1" onclick="selOwner(1)"><div class="tk-owner-avatar">F</div><div class="tk-owner-name">Fernando</div></div>
+            <div class="tk-owner" id="own-2" onclick="selOwner(2)"><div class="tk-owner-avatar">V</div><div class="tk-owner-name">Victor</div></div>
+            <div class="tk-owner" id="own-3" onclick="selOwner(3)"><div class="tk-owner-avatar">G</div><div class="tk-owner-name">Gabriel</div></div>
           </div>
         </div>
 
