@@ -49,6 +49,16 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 .sb-item:hover{background:var(--bg3);color:var(--text)}
 .sb-item.active{border-left-color:var(--accent);background:var(--accent-dim);color:var(--text);font-weight:500}
 .sb-item .ic{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+/* collapsed learning sub-items */
+.sb-sub{display:none;flex-direction:column}
+.sb-sub.open{display:flex}
+.sb-sub .sb-item{padding-left:36px;font-size:12px}
+.sb-parent{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;border-left:2px solid transparent;transition:all .15s;color:var(--text2);font-size:13px}
+.sb-parent:hover{background:var(--bg3);color:var(--text)}
+.sb-parent.open{color:var(--text);border-left-color:var(--accent);background:var(--accent-dim)}
+.sb-parent .ic{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+.sb-parent-chev{margin-left:auto;font-size:11px;color:var(--text3);transition:transform .2s}
+.sb-parent.open .sb-parent-chev{transform:rotate(90deg);color:var(--accent)}
 .sb-foot{padding:14px 20px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)}
 
 /* ─── MAIN ─── */
@@ -612,20 +622,39 @@ td strong{color:var(--text);font-weight:500}
     <div class="sb-group">Início</div>
     <a class="sb-item active" onclick="nav('home',this)"><span class="ic">⊞</span>Visão geral</a>
 
-    <div class="sb-group" style="margin-top:6px">Ferramentas</div>
+    <div class="sb-group" style="margin-top:6px">Operacional</div>
     <a class="sb-item" onclick="nav('lancamentos',this)"><span class="ic">🚀</span>Lançamentos</a>
     <a class="sb-item" onclick="nav('funil',this)"><span class="ic">◑</span>Funil interativo</a>
-    <a class="sb-item" onclick="nav('canal',this)"><span class="ic">💬</span>Comunicação</a>
-    <a class="sb-item" onclick="nav('scripts',this)"><span class="ic">✦</span>Scripts de venda</a>
-    <a class="sb-item" onclick="nav('objecoes',this)"><span class="ic">⊘</span>Contornos de objeção</a>
-    <a class="sb-item" onclick="nav('treino',this)"><span class="ic">◈</span>Modo treino</a>
-    <a class="sb-item" href="./roleplay_horistic.html" target="_blank" style="border-left:2px solid transparent">
-      <span class="ic">🎭</span>Role Play
-      <span style="font-size:9px;font-family:'Instrument Sans',sans-serif;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid);padding:1px 6px;border-radius:10px;margin-left:auto">↗</span>
-    </a>
     <a class="sb-item" onclick="nav('priorizacao',this)"><span class="ic">◐</span>Priorização da base</a>
     <a class="sb-item" onclick="nav('cadencia',this)"><span class="ic">◎</span>Cadência de contato</a>
     <a class="sb-item" onclick="nav('rituais',this)"><span class="ic">⊡</span>Rituais do comercial</a>
+
+    <div class="sb-group" style="margin-top:6px">Learning</div>
+
+    <!-- Scripts & Técnicas expandível -->
+    <div class="sb-parent" id="sbp-tecnicas" onclick="toggleSbGroup('tecnicas',this)">
+      <span class="ic">✦</span>Scripts &amp; Técnicas
+      <span class="sb-parent-chev">›</span>
+    </div>
+    <div class="sb-sub" id="sbs-tecnicas">
+      <a class="sb-item" onclick="nav('scripts',this)"><span class="ic">✦</span>Scripts de venda</a>
+      <a class="sb-item" onclick="nav('canal',this)"><span class="ic">💬</span>Comunicação</a>
+      <a class="sb-item" onclick="nav('objecoes',this)"><span class="ic">⊘</span>Contornos de objeção</a>
+    </div>
+
+    <!-- Treinamentos expandível -->
+    <div class="sb-parent" id="sbp-treinos" onclick="toggleSbGroup('treinos',this)">
+      <span class="ic">🎓</span>Treinamentos
+      <span class="sb-parent-chev">›</span>
+    </div>
+    <div class="sb-sub" id="sbs-treinos">
+      <a class="sb-item" onclick="nav('treinamentos',this)"><span class="ic">📚</span>Conteúdos</a>
+      <a class="sb-item" onclick="nav('treino',this)"><span class="ic">◈</span>Modo treino</a>
+      <a class="sb-item" href="./roleplay_horistic.html" target="_blank" style="border-left:2px solid transparent">
+        <span class="ic">🎭</span>Role Play
+        <span style="font-size:9px;font-family:'Instrument Sans',sans-serif;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid);padding:1px 6px;border-radius:10px;margin-left:auto">↗</span>
+      </a>
+    </div>
 
     <div class="sb-group" style="margin-top:6px">Contexto</div>
     <a class="sb-item" onclick="nav('produtos',this)"><span class="ic">◧</span>Preço &amp; Produtos</a>
@@ -2063,7 +2092,188 @@ td strong{color:var(--text);font-weight:500}
   </div>
 
 
-    <!-- ════════════════════ HISTÓRIA ════════════════════ -->
+    <!-- ════════════════════ TREINAMENTOS ════════════════════ -->
+  <div class="page" id="page-treinamentos">
+    <div class="section">
+      <div class="sec-header">
+        <div class="eyebrow">Learning · Treinamentos</div>
+        <div class="sec-title">Conteúdos e trilhas de desenvolvimento</div>
+        <div class="sec-desc">Material de referência para o closer evoluir em técnica, produto e comportamento comercial. Cada módulo tem objetivo claro e está ligado ao dia a dia de vendas.</div>
+      </div>
+
+      <!-- MÓDULO 1 -->
+      <div class="eyebrow" style="margin-bottom:14px">Módulo 01 · Fundamentos de venda consultiva</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px">
+
+        <div class="obj-card" onclick="toggleObj(this)">
+          <div class="obj-head">
+            <div class="obj-head-left">
+              <div class="obj-meta"><span class="tag g">Conceito</span><span class="tag">Leitura 5 min</span></div>
+              <div class="obj-question-text">O que é venda consultiva e por que muda tudo</div>
+            </div>
+            <span class="obj-chevron">›</span>
+          </div>
+          <div class="obj-answer">
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px">Venda consultiva é o oposto de venda por pressão. Em vez de empurrar produto, o closer age como um consultor: diagnostica primeiro, apresenta depois. O resultado é uma venda que o cliente entendeu e escolheu — sem remorso, sem chargeback, sem "preciso pensar".</p>
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px">Na Horistic, isso significa nunca abrir com o produto. Sempre abrir com uma pergunta. O produto só aparece quando o cliente verbalizou o problema — e a solução surge como consequência natural da conversa.</p>
+            <div class="signal-block" style="background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-left:3px solid var(--green);border-radius:7px;padding:12px 14px">
+              <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-family:'Instrument Sans',sans-serif;font-weight:600;margin-bottom:4px">Princípio central</div>
+              <div style="font-size:12px;color:#0F4D2A;line-height:1.6">Quem faz mais perguntas controla a conversa. Quem fala mais perde a venda.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="obj-card" onclick="toggleObj(this)">
+          <div class="obj-head">
+            <div class="obj-head-left">
+              <div class="obj-meta"><span class="tag g">Framework</span><span class="tag">Leitura 8 min</span></div>
+              <div class="obj-question-text">BANT — qualificar sem parecer questionário</div>
+            </div>
+            <span class="obj-chevron">›</span>
+          </div>
+          <div class="obj-answer">
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px">BANT é um framework de qualificação: Budget (orçamento), Authority (decisor), Need (necessidade real) e Timeline (urgência). O erro do júnior é usar o BANT como interrogatório — perguntando diretamente "qual seu orçamento?" logo de cara.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+              <div style="background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-radius:8px;padding:11px 13px"><div style="font-size:10px;color:var(--green);font-family:'Instrument Sans',sans-serif;font-weight:600;margin-bottom:4px">BUDGET</div><div style="font-size:12px;color:#0F4D2A">Descubra pelo contexto: profissão, empresa, o quanto já investiu antes. Nunca pergunte direto.</div></div>
+              <div style="background:var(--blue-dim);border:1px solid var(--blue-mid);border-radius:8px;padding:11px 13px"><div style="font-size:10px;color:var(--blue);font-family:'Instrument Sans',sans-serif;font-weight:600;margin-bottom:4px">AUTHORITY</div><div style="font-size:12px;color:#0A2F6E">Pergunte: "Você que decide sobre isso ou tem mais alguém envolvido?" — naturalmente.</div></div>
+              <div style="background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:8px;padding:11px 13px"><div style="font-size:10px;color:var(--accent);font-family:'Instrument Sans',sans-serif;font-weight:600;margin-bottom:4px">NEED</div><div style="font-size:12px;color:#7A4500">Faça o cliente nomear o problema. Nunca assuma a dor — deixe ele dizer.</div></div>
+              <div style="background:var(--purple-dim);border:1px solid var(--purple-mid);border-radius:8px;padding:11px 13px"><div style="font-size:10px;color:var(--purple);font-family:'Instrument Sans',sans-serif;font-weight:600;margin-bottom:4px">TIMELINE</div><div style="font-size:12px;color:#3B0F80">Identifique o que cria urgência real. Pode ser emocional (sócio ganhando), não só racional.</div></div>
+            </div>
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;font-size:12px;color:var(--text2)"><strong style="color:var(--text)">Regra de ouro:</strong> Um closer experiente mapeia todo o BANT sem o cliente perceber que está sendo qualificado.</div>
+          </div>
+        </div>
+
+        <div class="obj-card" onclick="toggleObj(this)">
+          <div class="obj-head">
+            <div class="obj-head-left">
+              <div class="obj-meta"><span class="tag g">Framework</span><span class="tag">Leitura 10 min</span></div>
+              <div class="obj-question-text">SPIN Selling — as 4 perguntas que abrem qualquer cliente</div>
+            </div>
+            <span class="obj-chevron">›</span>
+          </div>
+          <div class="obj-answer">
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px">SPIN é uma sequência de 4 tipos de pergunta que move o cliente do status quo para a decisão de compra. Criado por Neil Rackham após estudar 35.000 calls de vendas, funciona porque não vende — faz o cliente se vender.</p>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
+              <div style="display:flex;gap:10px;align-items:flex-start;background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-radius:8px;padding:10px 13px"><div style="font-size:13px;font-weight:700;color:var(--green);flex-shrink:0;width:20px">S</div><div><div style="font-size:11px;font-weight:600;color:var(--green);font-family:'Instrument Sans',sans-serif;margin-bottom:2px">SITUAÇÃO</div><div style="font-size:12px;color:#0F4D2A">Contexto do cliente. "Como você opera hoje?" — mapear sem pressionar. Use poucas perguntas de S.</div></div></div>
+              <div style="display:flex;gap:10px;align-items:flex-start;background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:8px;padding:10px 13px"><div style="font-size:13px;font-weight:700;color:var(--accent);flex-shrink:0;width:20px">P</div><div><div style="font-size:11px;font-weight:600;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:2px">PROBLEMA</div><div style="font-size:12px;color:#7A4500">Faça o cliente nomear a dor. "Quando você entrou sem método, o que aconteceu?" — ele conta, você escuta.</div></div></div>
+              <div style="display:flex;gap:10px;align-items:flex-start;background:var(--blue-dim);border:1px solid var(--blue-mid);border-radius:8px;padding:10px 13px"><div style="font-size:13px;font-weight:700;color:var(--blue);flex-shrink:0;width:20px">I</div><div><div style="font-size:11px;font-weight:600;color:var(--blue);font-family:'Instrument Sans',sans-serif;margin-bottom:2px">IMPLICAÇÃO</div><div style="font-size:12px;color:#0A2F6E">Amplie a consequência da dor. "Se continuar assim por mais 12 meses, como você vai estar?" — cria urgência sem pressão.</div></div></div>
+              <div style="display:flex;gap:10px;align-items:flex-start;background:var(--purple-dim);border:1px solid var(--purple-mid);border-radius:8px;padding:10px 13px"><div style="font-size:13px;font-weight:700;color:var(--purple);flex-shrink:0;width:20px">N</div><div><div style="font-size:11px;font-weight:600;color:var(--purple);font-family:'Instrument Sans',sans-serif;margin-bottom:2px">NECESSIDADE DE SOLUÇÃO</div><div style="font-size:12px;color:#3B0F80">Abra espaço para a solução. "Se você tivesse um critério claro de entrada, mudaria seus resultados?" — o cliente se convence.</div></div></div>
+            </div>
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;font-size:12px;color:var(--text2)"><strong style="color:var(--text)">Sequência obrigatória:</strong> S → P → I → N → Produto. Nunca pule etapas. Nunca apresente produto antes do N.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MÓDULO 2 -->
+      <div class="eyebrow" style="margin-bottom:14px">Módulo 02 · Gestão da call</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px">
+
+        <div class="obj-card" onclick="toggleObj(this)">
+          <div class="obj-head">
+            <div class="obj-head-left">
+              <div class="obj-meta"><span class="tag b">Técnica</span><span class="tag">Leitura 5 min</span></div>
+              <div class="obj-question-text">Abertura de call — os primeiros 30 segundos decidem tudo</div>
+            </div>
+            <span class="obj-chevron">›</span>
+          </div>
+          <div class="obj-answer">
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px">Os primeiros 30 segundos de uma call definem se o cliente vai ouvir ou já mentalmente fechar. Um início fraco ("oi, tudo bem? então... eu queria falar sobre...") mata o engajamento antes de começar.</p>
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;margin-bottom:10px">
+              <div style="font-size:10px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em">Estrutura dos 30 segundos</div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="font-size:12px;color:var(--text2);display:flex;gap:8px"><span style="color:var(--accent);font-weight:700;flex-shrink:0">1.</span>Apresentação + referência ("Oi Rafael, aqui é o [Closer] da Horistic — você fez a consultoria conosco há 3 dias")</div>
+                <div style="font-size:12px;color:var(--text2);display:flex;gap:8px"><span style="color:var(--accent);font-weight:700;flex-shrink:0">2.</span>Âncora na conversa anterior ("você havia me dito que quer sair do achismo")</div>
+                <div style="font-size:12px;color:var(--text2);display:flex;gap:8px"><span style="color:var(--accent);font-weight:700;flex-shrink:0">3.</span>Pedido de tempo com prazo curto ("você tem 10 minutos?")</div>
+              </div>
+            </div>
+            <div style="background:var(--red-dim);border:1px solid var(--red-mid);border-left:3px solid var(--red);border-radius:7px;padding:10px 13px;font-size:12px;color:#7A1A1A">❌ Nunca perguntar "posso te apresentar nossos produtos?" — é o sinal mais claro de que vem venda por pressão.</div>
+          </div>
+        </div>
+
+        <div class="obj-card" onclick="toggleObj(this)">
+          <div class="obj-head">
+            <div class="obj-head-left">
+              <div class="obj-meta"><span class="tag b">Técnica</span><span class="tag">Leitura 4 min</span></div>
+              <div class="obj-question-text">O poder do silêncio — quando parar de falar é a melhor jogada</div>
+            </div>
+            <span class="obj-chevron">›</span>
+          </div>
+          <div class="obj-answer">
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px">O silêncio é a ferramenta mais subutilizada em vendas. Depois de uma pergunta de implicação, de uma proposta de preço, ou de um "o que você está pensando?" — o closer deve calar e esperar. Quem fala primeiro nesse momento sinaliza fraqueza.</p>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-radius:7px;padding:10px 13px;font-size:12px;color:#0F4D2A"><strong>Após apresentar o preço:</strong> diga o número e pare. Não explique, não justifique, não quebre o silêncio. Espere.</div>
+              <div style="background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-radius:7px;padding:10px 13px;font-size:12px;color:#0F4D2A"><strong>Após "o que você está pensando?":</strong> espere até 8 segundos antes de completar. O desconforto é produtivo — o cliente vai revelar o bloqueio real.</div>
+              <div style="background:var(--red-dim);border:1px solid var(--red-mid);border-radius:7px;padding:10px 13px;font-size:12px;color:#7A1A1A"><strong>Não fazer:</strong> preencher o silêncio com mais argumentos. Cada argumento extra reduz o valor percebido do produto.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="obj-card" onclick="toggleObj(this)">
+          <div class="obj-head">
+            <div class="obj-head-left">
+              <div class="obj-meta"><span class="tag b">Técnica</span><span class="tag">Leitura 5 min</span></div>
+              <div class="obj-question-text">Fechamento — como terminar toda call com próximo passo concreto</div>
+            </div>
+            <span class="obj-chevron">›</span>
+          </div>
+          <div class="obj-answer">
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px">Toda call deve terminar com uma ação concreta — data, link, compromisso. "Vou pensar e te falo" sem âncora é o começo do ghosting. O closer que encerra sem próximo passo perde o controle do processo.</p>
+            <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:13px 15px;margin-bottom:10px">
+              <div style="font-size:10px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em">Fechamentos possíveis por situação</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">✓</span><div><strong style="color:var(--text)">Cliente decidido:</strong> "Posso te enviar o link agora e você acessa ainda hoje?"</div></div>
+                <div style="font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px"><span style="color:var(--accent);flex-shrink:0">→</span><div><strong style="color:var(--text)">Cliente em dúvida:</strong> "Que tal marcarmos uma conversa na [data] pra você ter tempo de pensar e eu esclarecer o que restar?"</div></div>
+                <div style="font-size:12px;color:var(--text2);padding:6px 0;display:flex;gap:8px"><span style="color:var(--blue);flex-shrink:0">◎</span><div><strong style="color:var(--text)">Cliente frio:</strong> "Posso te mandar um material curto e a gente fala semana que vem? Que dia funciona melhor?"</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MÓDULO 3 -->
+      <div class="eyebrow" style="margin-bottom:14px">Módulo 03 · Mindset do closer</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:48px">
+
+        <div class="obj-card" onclick="toggleObj(this)">
+          <div class="obj-head">
+            <div class="obj-head-left">
+              <div class="obj-meta"><span class="tag o">Mindset</span><span class="tag">Leitura 4 min</span></div>
+              <div class="obj-question-text">Desapego do resultado — vender sem precisar vender</div>
+            </div>
+            <span class="obj-chevron">›</span>
+          </div>
+          <div class="obj-answer">
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px">O paradoxo das vendas: quanto mais você precisa fechar, menos você fecha. O cliente sente o desespero — e recua. O closer que opera com desapego do resultado (focado em diagnosticar, não em fechar) fecha mais porque o cliente não se sente pressionado.</p>
+            <div style="background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:8px;padding:13px 15px;font-size:13px;color:#7A4500;line-height:1.65">Seu objetivo em qualquer call não é fechar — é descobrir se essa pessoa tem um problema que você resolve. Se tiver, a venda acontece naturalmente. Se não tiver, encerrar educadamente e focar em quem tem.</div>
+          </div>
+        </div>
+
+        <div class="obj-card" onclick="toggleObj(this)">
+          <div class="obj-head">
+            <div class="obj-head-left">
+              <div class="obj-meta"><span class="tag o">Mindset</span><span class="tag">Leitura 3 min</span></div>
+              <div class="obj-question-text">Como processar um "não" sem deixar afetar a próxima call</div>
+            </div>
+            <span class="obj-chevron">›</span>
+          </div>
+          <div class="obj-answer">
+            <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px">Todo closer leva um "não" para a próxima call. O padrão: cliente rejeitou → energia cai → próxima call começa com tom errado → mais rejeição. Quebrar esse ciclo é uma habilidade técnica, não emocional.</p>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 13px;font-size:12px;color:var(--text2);display:flex;gap:8px"><span style="color:var(--accent);flex-shrink:0;font-weight:700">1.</span>Após um "não", registre no CRM o motivo antes de partir para o próximo. Nomear o que aconteceu fecha o ciclo.</div>
+              <div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 13px;font-size:12px;color:var(--text2);display:flex;gap:8px"><span style="color:var(--accent);flex-shrink:0;font-weight:700">2.</span>Pergunte: "o que eu poderia ter feito diferente?" — não "por que ele não comprou?" Foco em ação, não em julgamento.</div>
+              <div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 13px;font-size:12px;color:var(--text2);display:flex;gap:8px"><span style="color:var(--accent);flex-shrink:0;font-weight:700">3.</span>Antes da próxima call, leia o perfil do cliente e defina o objetivo. Estrutura evita que o estado emocional anterior invada a nova conversa.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════ HISTÓRIA ════════════════════ -->
   <div class="page" id="page-historia">
     <div class="section">
       <div class="sec-header">
@@ -2304,7 +2514,7 @@ td strong{color:var(--text);font-weight:500}
 <script>
 // ── SEARCH INDEX ──
 const searchIndex = [
-  {page:'scripts',label:'Scripts de venda',section:'Ferramentas',keys:['script','venda','pitch','abordagem','cross','up-sell','aptc','rip','mentoria','indicação','closer','diagnóstico','treino de script']},
+  {page:'treinamentos',label:'Conteúdos · Learning',section:'Learning',keys:['treinamento','conteúdo','learning','bant','spin','mindset','venda consultiva','abertura','fechamento','silêncio','módulo']},
   {page:'objecoes',label:'Contornos de objeção',section:'Ferramentas',keys:['objeção','resistência','medo','risco','preço','momento','pensar','escola','caro','não preciso','outro']},
   {page:'treino',label:'Modo treino',section:'Ferramentas',keys:['treino','quiz','teste','prática','exercício','simulação']},
   {page:'funil',label:'Funil interativo',section:'Ferramentas',keys:['funil','etapa','pipeline','ativação','diagnóstico','apresentação','negociação','fechamento','critério','sla']},
@@ -2572,11 +2782,12 @@ function nav(pageId,el){
   document.getElementById('page-'+pageId).classList.add('active');
   document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
   if(el)el.classList.add('active');
-  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais'};
+  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais',treinamentos:'Conteúdos · Learning'};
   document.getElementById('crumb-label').textContent=labels[pageId]||'';
   if(pageId==='treino')buildTreino();
   if(pageId==='lancamentos')calRender();
   if(pageId==='home')renderProgressGrid();
+  openLearningGroup(pageId);
   window.scrollTo(0,0);
 }
 function toggleLevel(){
@@ -2589,7 +2800,26 @@ document.getElementById('main-content').classList.add('level-junior');
 renderProgressGrid();
 function toggleObj(card){card.classList.toggle('open');}
 function toggleHist(t){t.classList.toggle('open');}
-// ── TREINO TAB SWITCH ──
+// ── SIDEBAR GROUP TOGGLE ──
+function toggleSbGroup(id, el) {
+  const sub = document.getElementById('sbs-'+id);
+  const isOpen = sub.classList.toggle('open');
+  el.classList.toggle('open', isOpen);
+}
+
+// auto-open learning groups when navigating to child pages
+function openLearningGroup(pageId) {
+  const tecnicas = ['scripts','canal','objecoes'];
+  const treinos  = ['treinamentos','treino'];
+  if (tecnicas.includes(pageId)) {
+    document.getElementById('sbs-tecnicas').classList.add('open');
+    document.getElementById('sbp-tecnicas').classList.add('open');
+  }
+  if (treinos.includes(pageId)) {
+    document.getElementById('sbs-treinos').classList.add('open');
+    document.getElementById('sbp-treinos').classList.add('open');
+  }
+}
 function switchTreinoTab(tab) {
   document.getElementById('tab-quiz').classList.toggle('active', tab==='quiz');
   document.getElementById('tab-sim').classList.toggle('active', tab==='sim');
