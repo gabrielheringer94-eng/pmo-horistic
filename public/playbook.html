@@ -438,6 +438,54 @@ td strong{color:var(--text);font-weight:500}
 .sim-start-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .15s}
 .sim-start-btn:hover{opacity:.85}
 
+/* ─── LOGIN GATE ─── */
+.pb-login{position:fixed;inset:0;background:linear-gradient(135deg,#141413 0%,#2a2a28 60%,#3d2a10 100%);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.pb-login-box{background:#fff;border-radius:20px;padding:38px;width:100%;max-width:380px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+.pb-login-logo{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:6px;font-family:'Instrument Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.pb-login-logo b{color:var(--text)}
+.pb-login-title{font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px}
+.pb-login-sub{font-size:13px;color:var(--text3);margin-bottom:24px;line-height:1.5}
+.pb-login-select{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:11px;padding:13px 15px;font-size:14px;font-family:'Space Grotesk',sans-serif;color:var(--text);outline:none;margin-bottom:12px;transition:border-color .15s}
+.pb-login-select:focus{border-color:var(--accent)}
+.pb-login-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:13px;font-size:14px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .15s}
+.pb-login-btn:hover{opacity:.88}
+.pb-login-btn:disabled{opacity:.4;cursor:not-allowed}
+.pb-user-chip{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text2);font-family:'Instrument Sans',sans-serif}
+.pb-user-avatar{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+
+/* ─── MANAGER DASHBOARD ─── */
+.mg-lock{padding:60px 36px;max-width:400px;margin:0 auto;text-align:center}
+.mg-lock-icon{font-size:40px;margin-bottom:16px}
+.mg-lock input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:11px;padding:13px 15px;font-size:14px;font-family:'Space Grotesk',sans-serif;text-align:center;letter-spacing:.1em;outline:none;margin-bottom:12px}
+.mg-lock input:focus{border-color:var(--accent)}
+.mg-wrap{padding:28px 36px 60px;max-width:1000px;display:none}
+.mg-wrap.show{display:block}
+.mg-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.mg-kpi{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px 18px}
+.mg-kpi-label{font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:6px}
+.mg-kpi-num{font-size:28px;font-weight:700;color:var(--text);font-family:'Instrument Sans',sans-serif;line-height:1}
+.mg-kpi-sub{font-size:11px;color:var(--text3);margin-top:4px;font-family:'Instrument Sans',sans-serif}
+.mg-section{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+.mg-section-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.mg-bar-row{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.mg-bar-name{font-size:12px;color:var(--text2);width:130px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mg-bar-track{flex:1;height:22px;background:var(--bg3);border-radius:6px;overflow:hidden;position:relative}
+.mg-bar-fill{height:100%;border-radius:6px;transition:width .6s ease;display:flex;align-items:center;padding-left:8px}
+.mg-bar-val{font-size:11px;font-weight:700;color:#fff;font-family:'Instrument Sans',sans-serif}
+.mg-bar-val.dark{color:var(--text2)}
+.mg-tab-row{display:flex;gap:6px;margin-bottom:20px}
+.mg-tab{padding:8px 16px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif;color:var(--text2);cursor:pointer;transition:all .15s}
+.mg-tab:hover{border-color:var(--accent);color:var(--accent)}
+.mg-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.mg-panel{display:none}.mg-panel.active{display:block}
+.mg-table{width:100%;border-collapse:collapse;font-size:12px}
+.mg-table th{text-align:left;padding:8px 10px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;border-bottom:1px solid var(--border)}
+.mg-table td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text2)}
+.mg-table tr:last-child td{border-bottom:none}
+.mg-empty{text-align:center;padding:30px;color:var(--text3);font-size:13px}
+
+/* ─── LOGIN GATE END ─── */
+
 /* ─── HOME HERO PREMIUM ─── */
 .home-hero{background:linear-gradient(135deg,#141413 0%,#2a2a28 60%,#3d2a10 100%);padding:44px 36px 40px;position:relative;overflow:hidden}
 .home-hero::before{content:'';position:absolute;top:-100px;right:-60px;width:340px;height:340px;background:radial-gradient(circle,rgba(255,131,0,.18) 0%,transparent 70%);border-radius:50%}
@@ -777,6 +825,27 @@ td strong{color:var(--text);font-weight:500}
 </head>
 <body>
 
+<!-- LOGIN GATE -->
+<div class="pb-login" id="pb-login">
+  <div class="pb-login-box">
+    <div class="pb-login-logo">Horistic <b>·</b> Playbook Comercial</div>
+    <div class="pb-login-title">Bem-vindo!</div>
+    <div class="pb-login-sub">Selecione seu nome para entrar. Isso ajuda a acompanhar seu progresso nos treinamentos.</div>
+    <select class="pb-login-select" id="pb-login-name" onchange="document.getElementById('pb-login-submit').disabled=!this.value">
+      <option value="">Selecione seu nome...</option>
+      <option>Leonardo</option>
+      <option>Luiz</option>
+      <option>Igor</option>
+      <option>Alecsander</option>
+      <option>Caio</option>
+      <option>Fernando</option>
+      <option>Victor</option>
+      <option>Gabriel</option>
+    </select>
+    <button class="pb-login-btn" id="pb-login-submit" onclick="pbDoLogin()" disabled>Entrar →</button>
+  </div>
+</div>
+
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sb-logo">
@@ -830,6 +899,7 @@ td strong{color:var(--text);font-weight:500}
       <span class="ic">🌡️</span>Clima &amp; Engajamento
       <span style="font-size:9px;font-family:'Instrument Sans',sans-serif;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid);padding:1px 6px;border-radius:10px;margin-left:auto">↗</span>
     </a>
+    <a class="sb-item" onclick="nav('gestao',this)"><span class="ic">📊</span>Painel do Gestor</a>
   </nav>
   <div class="sb-foot">Gabriel Heringer · Sales Consulting</div>
 </aside>
@@ -2637,6 +2707,84 @@ td strong{color:var(--text);font-weight:500}
     </div>
   </div>
 
+  <!-- ════════════════════ GESTÃO ════════════════════ -->
+  <div class="page" id="page-gestao">
+    <!-- LOCK -->
+    <div class="mg-lock" id="mg-lock">
+      <div class="mg-lock-icon">🔒</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px">Painel do Gestor</div>
+      <div style="font-size:13px;color:var(--text3);margin-bottom:20px;line-height:1.5">Área restrita. Digite a senha para ver o acompanhamento de uso e tickets do time.</div>
+      <input type="password" id="mg-pw" placeholder="senha" onkeydown="if(event.key==='Enter')mgUnlock()">
+      <button class="pb-login-btn" onclick="mgUnlock()">Acessar painel →</button>
+      <div id="mg-pw-err" style="display:none;font-size:12px;color:var(--red);margin-top:10px;font-family:'Instrument Sans',sans-serif">Senha incorreta.</div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="mg-wrap" id="mg-wrap">
+      <div class="sec-header" style="padding:0 0 4px">
+        <div class="eyebrow">Painel do Gestor</div>
+        <div class="sec-title">Acompanhamento do time</div>
+        <div class="sec-desc">Uso do playbook, treinamentos e tickets — atualizado em tempo real.</div>
+      </div>
+
+      <div class="mg-tab-row">
+        <button class="mg-tab active" id="mgt-uso" onclick="mgSwitch('uso')">📊 Uso &amp; Treinamentos</button>
+        <button class="mg-tab" id="mgt-tickets" onclick="mgSwitch('tickets')">🎫 Tickets</button>
+      </div>
+
+      <!-- PANEL USO -->
+      <div class="mg-panel active" id="mgp-uso">
+        <div class="mg-kpi-row">
+          <div class="mg-kpi"><div class="mg-kpi-label">Acessos (30d)</div><div class="mg-kpi-num" id="k-acessos">—</div><div class="mg-kpi-sub">total de logins</div></div>
+          <div class="mg-kpi"><div class="mg-kpi-label">Conteúdos concluídos</div><div class="mg-kpi-num" id="k-conteudos">—</div><div class="mg-kpi-sub">lições de learning</div></div>
+          <div class="mg-kpi"><div class="mg-kpi-label">Treinos feitos</div><div class="mg-kpi-num" id="k-treinos">—</div><div class="mg-kpi-sub">quiz + simulador</div></div>
+          <div class="mg-kpi"><div class="mg-kpi-label">Role plays</div><div class="mg-kpi-num" id="k-roleplays">—</div><div class="mg-kpi-sub">simulações concluídas</div></div>
+        </div>
+
+        <div class="mg-section">
+          <div class="mg-section-title">🏆 Ranking de engajamento por pessoa</div>
+          <div id="mg-ranking"><div class="mg-empty">Carregando...</div></div>
+        </div>
+
+        <div class="mg-section">
+          <div class="mg-section-title">📚 Conteúdos mais concluídos</div>
+          <div id="mg-conteudos-rank"><div class="mg-empty">Carregando...</div></div>
+        </div>
+
+        <div class="mg-section">
+          <div class="mg-section-title">🕐 Últimas atividades</div>
+          <div id="mg-atividades"><div class="mg-empty">Carregando...</div></div>
+        </div>
+      </div>
+
+      <!-- PANEL TICKETS -->
+      <div class="mg-panel" id="mgp-tickets">
+        <div class="mg-kpi-row">
+          <div class="mg-kpi"><div class="mg-kpi-label">Tickets abertos</div><div class="mg-kpi-num" id="k-tk-abertos">—</div><div class="mg-kpi-sub">aguardando ou em andamento</div></div>
+          <div class="mg-kpi"><div class="mg-kpi-label">Tempo médio</div><div class="mg-kpi-num" id="k-tk-tempo">—</div><div class="mg-kpi-sub">abertura → conclusão</div></div>
+          <div class="mg-kpi"><div class="mg-kpi-label">SLA estourado</div><div class="mg-kpi-num" id="k-tk-sla">—</div><div class="mg-kpi-sub">passou do prazo</div></div>
+          <div class="mg-kpi"><div class="mg-kpi-label">Total (30d)</div><div class="mg-kpi-num" id="k-tk-total">—</div><div class="mg-kpi-sub">tickets abertos</div></div>
+        </div>
+
+        <div class="mg-section">
+          <div class="mg-section-title">📊 Volume por tipo de problema</div>
+          <div id="mg-tk-tipos"><div class="mg-empty">Carregando...</div></div>
+        </div>
+
+        <div class="mg-section">
+          <div class="mg-section-title">🎯 Tickets por dono</div>
+          <div id="mg-tk-donos"><div class="mg-empty">Carregando...</div></div>
+        </div>
+
+        <div class="mg-section">
+          <div class="mg-section-title">⏱ Tickets em aberto há mais tempo</div>
+          <div id="mg-tk-antigos"><div class="mg-empty">Carregando...</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ════════════════════ HISTÓRIA ════════════════════ -->
   <div class="page" id="page-historia">
     <div class="section">
@@ -3132,6 +3280,7 @@ function treinoNext(){
 }
 function showTreinoResult(){
   const s=treinoState.score,t=treinoQuestions.length,pct=Math.round((s/t)*100);
+  trackActivity('treino','Quiz de objeções',s);
   let msg,color;
   if(pct>=80){msg="Excelente! Você está pronto pra call.";color="var(--green)";}
   else if(pct>=50){msg="Bom progresso — revise as objeções que errou antes da próxima call.";color="var(--accent)";}
@@ -3147,13 +3296,15 @@ function nav(pageId,el){
   document.getElementById('page-'+pageId).classList.add('active');
   document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
   if(el)el.classList.add('active');
-  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais',treinamentos:'Conteúdos · Learning',tickets:'Abertura de Ticket'};
+  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais',treinamentos:'Conteúdos · Learning',tickets:'Abertura de Ticket',gestao:'Painel do Gestor'};
   document.getElementById('crumb-label').textContent=labels[pageId]||'';
   if(pageId==='treino')buildTreino();
   if(pageId==='lancamentos')calRender();
   if(pageId==='home')renderProgressGrid();
   if(pageId==='treinamentos')initLmsCards();
   if(pageId==='tickets')loadTickets('todos');
+  if(pageId==='gestao' && document.getElementById('mg-wrap').classList.contains('show')) mgLoadAll();
+  if(typeof trackActivity==='function' && PB_USER) trackActivity('pagina', labels[pageId]||pageId);
   openLearningGroup(pageId);
   window.scrollTo(0,0);
 }
@@ -3420,6 +3571,7 @@ function mlComplete() {
   const prog = loadLmsProgress();
   prog[lmsCurrentId] = !prog[lmsCurrentId];
   saveLmsProgress(prog);
+  if (prog[lmsCurrentId]) trackActivity('conteudo', LMS_DATA[lmsCurrentId].title);
   initLmsCards();
   renderMlLesson();
 }
@@ -3432,6 +3584,7 @@ function toggleLmsDone() {
   const prog = loadLmsProgress();
   prog[lmsCurrentId] = !prog[lmsCurrentId];
   saveLmsProgress(prog);
+  if (prog[lmsCurrentId]) trackActivity('conteudo', LMS_DATA[lmsCurrentId].title);
   initLmsCards();
   openLmsModal(lmsCurrentId);
 }
@@ -3727,6 +3880,7 @@ Retorne este JSON exato:
     raw = raw.replace(/```json|```/g,'').trim();
     const report = JSON.parse(raw);
     renderReport(report, p, userMsgs);
+    trackActivity('roleplay', 'Simulador · '+p.name, report.score);
   } catch(e) {
     document.getElementById('sim-report').innerHTML = `<div style="padding:24px;text-align:center;color:var(--red)">Erro ao gerar relatório. Tente novamente.</div>`;
   }
@@ -3807,6 +3961,198 @@ function simRestart() {
   document.querySelectorAll('.persona-card').forEach(c=>c.classList.remove('selected'));
   document.getElementById('sim-persona-brief').style.display = 'none';
   document.getElementById('sim-start-btn').style.display = 'none';
+}
+
+// ══════════ LOGIN & TRACKING ══════════
+let PB_USER = null;
+
+function pbDoLogin() {
+  const name = document.getElementById('pb-login-name').value;
+  if (!name) return;
+  PB_USER = name;
+  try { localStorage.setItem('hPbUser', name); } catch(e){}
+  document.getElementById('pb-login').style.display = 'none';
+  showUserChip();
+  trackActivity('acesso', 'login');
+}
+
+function showUserChip() {
+  // add user chip to topbar if not present
+  const tb = document.querySelector('.tb-right') || document.querySelector('.topbar');
+  if (!tb || document.getElementById('pb-user-chip')) return;
+  const chip = document.createElement('div');
+  chip.id = 'pb-user-chip';
+  chip.className = 'pb-user-chip';
+  chip.innerHTML = `<div class="pb-user-avatar">${PB_USER[0]}</div>${PB_USER}`;
+  tb.insertBefore(chip, tb.firstChild);
+}
+
+async function trackActivity(tipo, detalhe, valor) {
+  if (!PB_USER) return;
+  try {
+    await fetch(`${TK_SUPA_URL}/rest/v1/atividades`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY},
+      body: JSON.stringify({usuario:PB_USER, tipo, detalhe:detalhe||null, valor:valor||null})
+    });
+  } catch(e){ /* silencioso */ }
+}
+
+// auto-login se já tem usuário salvo
+(function(){
+  try {
+    const saved = localStorage.getItem('hPbUser');
+    if (saved) {
+      PB_USER = saved;
+      const login = document.getElementById('pb-login');
+      if (login) login.style.display = 'none';
+      setTimeout(showUserChip, 100);
+      trackActivity('acesso', 'retorno');
+    }
+  } catch(e){}
+})();
+
+// ══════════ MANAGER DASHBOARD ══════════
+const MG_PASSWORD = 'gestor2026';
+let mgTab = 'uso';
+
+function mgUnlock() {
+  const pw = document.getElementById('mg-pw').value;
+  if (pw === MG_PASSWORD) {
+    document.getElementById('mg-lock').style.display = 'none';
+    document.getElementById('mg-wrap').classList.add('show');
+    mgLoadAll();
+  } else {
+    document.getElementById('mg-pw-err').style.display = 'block';
+    document.getElementById('mg-pw').value = '';
+  }
+}
+
+function mgSwitch(tab) {
+  mgTab = tab;
+  document.getElementById('mgt-uso').classList.toggle('active', tab==='uso');
+  document.getElementById('mgt-tickets').classList.toggle('active', tab==='tickets');
+  document.getElementById('mgp-uso').classList.toggle('active', tab==='uso');
+  document.getElementById('mgp-tickets').classList.toggle('active', tab==='tickets');
+}
+
+async function mgFetch(table, query) {
+  try {
+    const res = await fetch(`${TK_SUPA_URL}/rest/v1/${table}?${query}`, {
+      headers:{'apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY}
+    });
+    return await res.json();
+  } catch(e){ return []; }
+}
+
+async function mgLoadAll() {
+  mgLoadUso();
+  mgLoadTickets();
+}
+
+async function mgLoadUso() {
+  const atv = await mgFetch('atividades', 'select=*&order=created_at.desc&limit=500');
+  if (!Array.isArray(atv)) return;
+
+  // KPIs
+  const count = t => atv.filter(a=>a.tipo===t).length;
+  document.getElementById('k-acessos').textContent = count('acesso');
+  document.getElementById('k-conteudos').textContent = count('conteudo');
+  document.getElementById('k-treinos').textContent = count('treino');
+  document.getElementById('k-roleplays').textContent = count('roleplay');
+
+  // Ranking por pessoa (peso: conteudo/treino/roleplay=3, acesso=1)
+  const byUser = {};
+  atv.forEach(a=>{
+    if(!byUser[a.usuario]) byUser[a.usuario]={acesso:0,conteudo:0,treino:0,roleplay:0,total:0};
+    byUser[a.usuario][a.tipo]=(byUser[a.usuario][a.tipo]||0)+1;
+    byUser[a.usuario].total += (a.tipo==='acesso'?1:3);
+  });
+  const ranked = Object.entries(byUser).sort((a,b)=>b[1].total-a[1].total);
+  const maxScore = ranked.length?ranked[0][1].total:1;
+  document.getElementById('mg-ranking').innerHTML = ranked.length ? ranked.map(([user,d])=>{
+    const pct = Math.round((d.total/maxScore)*100);
+    return `<div class="mg-bar-row">
+      <div class="mg-bar-name">${user}</div>
+      <div class="mg-bar-track"><div class="mg-bar-fill" style="width:${Math.max(pct,12)}%;background:var(--accent)"><span class="mg-bar-val">${d.conteudo+d.treino+d.roleplay} ações</span></div></div>
+    </div>`;
+  }).join('') : '<div class="mg-empty">Nenhuma atividade registrada ainda.</div>';
+
+  // Conteúdos mais concluídos
+  const byContent = {};
+  atv.filter(a=>a.tipo==='conteudo'&&a.detalhe).forEach(a=>{byContent[a.detalhe]=(byContent[a.detalhe]||0)+1;});
+  const contentRank = Object.entries(byContent).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const maxC = contentRank.length?contentRank[0][1]:1;
+  document.getElementById('mg-conteudos-rank').innerHTML = contentRank.length ? contentRank.map(([c,n])=>`
+    <div class="mg-bar-row"><div class="mg-bar-name">${c}</div>
+    <div class="mg-bar-track"><div class="mg-bar-fill" style="width:${Math.max(Math.round(n/maxC*100),14)}%;background:var(--green)"><span class="mg-bar-val">${n}</span></div></div></div>
+  `).join('') : '<div class="mg-empty">Nenhum conteúdo concluído ainda.</div>';
+
+  // Últimas atividades
+  document.getElementById('mg-atividades').innerHTML = atv.length ? `<table class="mg-table">
+    <thead><tr><th>Quando</th><th>Pessoa</th><th>Ação</th><th>Detalhe</th></tr></thead><tbody>
+    ${atv.slice(0,15).map(a=>{
+      const d=new Date(a.created_at);
+      const tipoLabel={acesso:'🔑 Acesso',conteudo:'📚 Conteúdo',treino:'◈ Treino',roleplay:'🎭 Role play',pagina:'📄 Página'}[a.tipo]||a.tipo;
+      return `<tr><td>${d.toLocaleDateString('pt-BR')} ${d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</td><td><strong>${a.usuario}</strong></td><td>${tipoLabel}</td><td>${a.detalhe||'—'}${a.valor?' ('+a.valor+' pts)':''}</td></tr>`;
+    }).join('')}</tbody></table>` : '<div class="mg-empty">Sem atividades.</div>';
+}
+
+async function mgLoadTickets() {
+  const tks = await mgFetch('tickets', 'select=*&order=created_at.desc&limit=200');
+  if (!Array.isArray(tks)) return;
+  const QUADT = ['🔥 Fazer agora','📅 Agendar','⚡ Delegar','📋 Backlog'];
+
+  const abertos = tks.filter(t=>t.status!=='concluido').length;
+  document.getElementById('k-tk-abertos').textContent = abertos;
+
+  // tempo médio de resolução (concluídos)
+  const done = tks.filter(t=>t.status==='concluido'&&t.concluido_em);
+  if (done.length) {
+    const avgMs = done.reduce((s,t)=>s+(new Date(t.concluido_em)-new Date(t.created_at)),0)/done.length;
+    const h = Math.round(avgMs/3600000);
+    document.getElementById('k-tk-tempo').textContent = h<24?h+'h':Math.round(h/24)+'d';
+  } else document.getElementById('k-tk-tempo').textContent = '—';
+
+  // SLA estourado
+  const now = new Date();
+  const late = tks.filter(t=>t.status!=='concluido' && new Date(new Date(t.created_at).getTime()+t.sla_horas*3600000)<now).length;
+  document.getElementById('k-tk-sla').textContent = late;
+  document.getElementById('k-tk-total').textContent = tks.length;
+
+  // volume por tipo
+  const byType = {};
+  tks.forEach(t=>{byType[t.titulo]=(byType[t.titulo]||0)+1;});
+  const typeRank = Object.entries(byType).sort((a,b)=>b[1]-a[1]);
+  const maxT = typeRank.length?typeRank[0][1]:1;
+  document.getElementById('mg-tk-tipos').innerHTML = typeRank.length ? typeRank.map(([t,n])=>`
+    <div class="mg-bar-row"><div class="mg-bar-name" style="width:200px">${t}</div>
+    <div class="mg-bar-track"><div class="mg-bar-fill" style="width:${Math.max(Math.round(n/maxT*100),14)}%;background:var(--accent)"><span class="mg-bar-val">${n}</span></div></div></div>
+  `).join('') : '<div class="mg-empty">Nenhum ticket ainda.</div>';
+
+  // por dono
+  const byOwner = {};
+  tks.forEach(t=>{byOwner[t.dono]=(byOwner[t.dono]||0)+1;});
+  const ownerRank = Object.entries(byOwner).sort((a,b)=>b[1]-a[1]);
+  const maxO = ownerRank.length?ownerRank[0][1]:1;
+  document.getElementById('mg-tk-donos').innerHTML = ownerRank.length ? ownerRank.map(([o,n])=>`
+    <div class="mg-bar-row"><div class="mg-bar-name">${o}</div>
+    <div class="mg-bar-track"><div class="mg-bar-fill" style="width:${Math.max(Math.round(n/maxO*100),14)}%;background:var(--blue)"><span class="mg-bar-val">${n}</span></div></div></div>
+  `).join('') : '<div class="mg-empty">Nenhum ticket ainda.</div>';
+
+  // mais antigos em aberto
+  const oldOpen = tks.filter(t=>t.status!=='concluido').sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).slice(0,8);
+  document.getElementById('mg-tk-antigos').innerHTML = oldOpen.length ? `<table class="mg-table">
+    <thead><tr><th>Problema</th><th>Dono</th><th>Aberto há</th><th>Status</th></tr></thead><tbody>
+    ${oldOpen.map(t=>{
+      const dias = Math.floor((now-new Date(t.created_at))/86400000);
+      const horas = Math.floor((now-new Date(t.created_at))/3600000);
+      const idade = dias>0?dias+'d':horas+'h';
+      const slaEnd = new Date(new Date(t.created_at).getTime()+t.sla_horas*3600000);
+      const estourou = slaEnd<now;
+      const st={aberto:'Aberto',andamento:'Em andamento'}[t.status]||t.status;
+      return `<tr><td><strong>${t.titulo}</strong></td><td>${t.dono}</td><td style="color:${estourou?'var(--red)':'var(--text2)'}">${idade}${estourou?' ⚠':''}</td><td>${st}</td></tr>`;
+    }).join('')}</tbody></table>` : '<div class="mg-empty">Nenhum ticket em aberto.</div>';
 }
 
 // ══════════ TICKETS ══════════
