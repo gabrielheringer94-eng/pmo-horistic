@@ -438,6 +438,36 @@ td strong{color:var(--text);font-weight:500}
 .sim-start-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .15s}
 .sim-start-btn:hover{opacity:.85}
 
+/* ─── MICROLEARNING ─── */
+.ml-progress-row{display:flex;gap:4px;margin-bottom:16px}
+.ml-progress-dot{flex:1;height:4px;border-radius:2px;background:var(--bg3);transition:background .3s}
+.ml-progress-dot.done{background:var(--accent)}
+.ml-progress-dot.current{background:var(--accent);opacity:.5}
+.ml-lesson-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:6px;font-weight:600}
+.ml-lesson-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.25}
+.ml-lesson-body{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:16px}
+.ml-lesson-body p{margin-bottom:10px}
+.ml-lesson-body strong{color:var(--text)}
+.ml-card{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:12px 15px;margin-bottom:8px}
+.ml-card-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;font-weight:600;margin-bottom:5px}
+.ml-card-text{font-size:12px;color:var(--text2);line-height:1.6}
+.ml-do{background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-radius:8px;padding:11px 14px;margin-bottom:6px;font-size:12px;color:#0F4D2A;line-height:1.6}
+.ml-dont{background:var(--red-dim);border:1px solid var(--red-mid);border-radius:8px;padding:11px 14px;margin-bottom:6px;font-size:12px;color:#7A1A1A;line-height:1.6}
+.ml-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.ml-stat{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:14px;text-align:center}
+.ml-stat-num{font-size:24px;font-weight:700;color:var(--accent);margin-bottom:3px;font-family:'Instrument Sans',sans-serif}
+.ml-stat-desc{font-size:11px;color:var(--text3);line-height:1.4}
+.ml-letter-card{display:flex;gap:12px;align-items:flex-start;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:7px}
+.ml-letter{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;font-family:'Instrument Sans',sans-serif}
+.ml-nav{display:flex;gap:8px;align-items:center;margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+.ml-nav-count{font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-right:auto}
+.ml-btn{font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif;padding:9px 18px;border-radius:9px;cursor:pointer;border:1px solid var(--border2);background:#fff;color:var(--text2);transition:all .15s}
+.ml-btn:hover{border-color:var(--accent);color:var(--accent)}
+.ml-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.ml-btn.primary:hover{opacity:.85}
+.ml-btn.success{background:var(--green);color:#fff;border-color:var(--green)}
+.ml-btn:disabled{opacity:.35;cursor:not-allowed}
+
 /* ─── NETFLIX CARDS ─── */
 .lms-wrap{padding:28px 36px 60px;max-width:1000px}
 .lms-section{margin-bottom:36px}
@@ -2206,7 +2236,7 @@ td strong{color:var(--text);font-weight:500}
             <div class="lms-body">
               <div class="lms-cat-row">
                 <span class="lms-cat" style="background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)">Framework</span>
-                <span class="lms-duration">17 slides · PDF</span>
+                <span class="lms-duration">12 lições · microlearning</span>
               </div>
               <div class="lms-title">BANT — qualificar sem parecer questionário</div>
               <div class="lms-desc">Treinamento conduzido pelo treinador. A ordem certa é N→A→B→T: dor primeiro, dinheiro com contexto.</div>
@@ -2950,20 +2980,97 @@ const LMS_DATA = [
      {n:'02',title:'Por que apresentar produto antes de diagnosticar mata a venda',desc:'O erro mais comum do júnior'},
      {n:'03',title:'Como o cliente percebe a diferença — e por que isso muda o resultado',desc:'Perspectiva do cliente'}
    ]},
-  {id:1,title:'BANT — qualificar sem parecer questionário',tag:'Framework',tagStyle:'background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)',duration:'17 slides',bg:'linear-gradient(135deg,#1A7F4B 0%,#0F4D2A 100%)',
-   pdf:'./treinamento_bant_horistic.pdf',
-   desc:'Treinamento oficial conduzido pelo treinador. BANT = Budget, Authority, Need, Timeline — o filtro de entrada criado pela IBM nos anos 1950 que ainda separa lead boa de curioso. A ordem certa na conversa é N → A → B → T: abra pela dor, mapeie quem decide, ancore o valor, amarre o prazo.',
-   modules:[
-     {n:'01',title:'O que é e de onde veio — filtro de 60 anos',desc:'IBM anos 1950 · filtro de entrada, não sistema de fechamento'},
-     {n:'02',title:'Os dados — por que qualificar bem encurta o ciclo',desc:'+59% conversão · −54% ciclo de vendas · SQL converte 20–30%'},
-     {n:'03',title:'A ordem certa: N → A → B → T, não o acrônimo',desc:'Abra pela dor — dinheiro antes de valor soa cobrança'},
-     {n:'04',title:'Need — comece pela dor, não pelo produto',desc:'Perguntas-modelo + o que escutar · dor vaga não é dor'},
-     {n:'05',title:'Authority — mapeie o círculo de decisão',desc:'"Quem mais participaria dessa decisão?" — nunca "você decide?"'},
-     {n:'06',title:'Budget — só depois do valor, e por faixa',desc:'Ancore o investimento no custo da dor · ofereça faixa primeiro'},
-     {n:'07',title:'Timeline — ache o evento que cria urgência',desc:'"Quando der" não é prazo · prazo é evento com data'},
-     {n:'08',title:'A arte da pergunta — 6 técnicas transversais',desc:'Abra não feche · camadas · silêncio · espelhe · uma de cada vez · confirme'},
-     {n:'09',title:'As 5 armadilhas que matam o BANT',desc:'Checklist · pular o N · dinheiro cedo · resposta rasa · achar que é tudo'},
-     {n:'10',title:'Onde o BANT encaixa — e onde passa o bastão',desc:'BANT tria → GPCT aprofunda → MEDDPICC fecha'}
+  {id:1,title:'BANT — qualificar sem parecer questionário',tag:'Framework',tagStyle:'background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)',duration:'12 lições',bg:'linear-gradient(135deg,#1A7F4B 0%,#0F4D2A 100%)',
+   desc:'Treinamento oficial em formato microlearning. Avance lição por lição no seu ritmo.',
+   lessons:[
+     {label:'Lição 1 · O que é',title:'Um filtro de 60 anos que ainda separa lead boa de curioso',html:`
+       <p>O BANT foi criado pela <strong>IBM nos anos 1950</strong> para vender mainframes: bastavam quatro perguntas para saber se valia a visita do vendedor. <strong>Orçamento? Quem assina? Precisa? Para quando?</strong></p>
+       <p>Virou padrão do B2B porque é <strong>simples, rápido e memorável</strong> — perfeito para triar nas primeiras conversas.</p>
+       <div class="ml-card" style="border-left:3px solid var(--accent)"><div class="ml-card-label" style="color:var(--accent)">Importante</div><div class="ml-card-text">BANT não é um sistema de fechamento como o MEDDPICC. É um <strong>filtro de entrada</strong>: serve para decidir, rápido, em quem o time investe tempo.</div></div>`},
+     {label:'Lição 2 · Os dados',title:'Qualificar bem encurta o ciclo e aumenta a conversão',html:`
+       <div class="ml-stat-grid">
+         <div class="ml-stat"><div class="ml-stat-num">+59%</div><div class="ml-stat-desc">na conversão de quem aplica BANT de forma consistente</div></div>
+         <div class="ml-stat"><div class="ml-stat-num">−54%</div><div class="ml-stat-desc">no ciclo de vendas quando a qualificação é completa já na 1ª call</div></div>
+         <div class="ml-stat"><div class="ml-stat-num">52%</div><div class="ml-stat-desc">dos vendedores consideram o BANT confiável (Gartner, 2023)</div></div>
+         <div class="ml-stat"><div class="ml-stat-num">2+</div><div class="ml-stat-desc">pessoas entram numa decisão de ticket alto — por isso o "A" pesa</div></div>
+       </div>
+       <div class="ml-card" style="border-left:3px solid var(--accent)"><div class="ml-card-label" style="color:var(--accent)">A leitura</div><div class="ml-card-text">A lead <strong>SQL bem qualificada</strong> converte em oportunidade a <strong>20–30%</strong>; a MQL que pula a qualificação, só <strong>5–15%</strong>. O BANT é o que faz essa diferença.</div></div>`},
+     {label:'Lição 3 · As 4 letras',title:'Cada letra responde uma pergunta de negócio',html:`
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--green-dim);color:var(--green)">B</div><div><strong style="font-size:13px;color:var(--text)">Budget · orçamento</strong><div class="ml-card-text"><strong>Tem como investir?</strong> Existe verba, faixa ou apetite para resolver isso?</div></div></div>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--blue-dim);color:var(--blue)">A</div><div><strong style="font-size:13px;color:var(--text)">Authority · autoridade</strong><div class="ml-card-text"><strong>Quem decide?</strong> Quem mais participa e quem assina no fim?</div></div></div>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--accent-dim);color:var(--accent)">N</div><div><strong style="font-size:13px;color:var(--text)">Need · necessidade</strong><div class="ml-card-text"><strong>Qual a dor?</strong> O problema é real, mensurável e dói o suficiente?</div></div></div>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--purple-dim);color:var(--purple)">T</div><div><strong style="font-size:13px;color:var(--text)">Timeline · prazo</strong><div class="ml-card-text"><strong>Para quando?</strong> Que evento puxa a urgência de agir agora?</div></div></div>
+       <p style="margin-top:10px">Lead <strong>BANT-qualificada</strong> = tem verba, tem dor real, fala com quem decide e tem prazo. As quatro, juntas, viram uma oportunidade de verdade.</p>`},
+     {label:'Lição 4 · A ordem muda tudo',title:'Pergunte na ordem N → A → B → T, não na ordem do acrônimo',html:`
+       <p>Começar pela <strong>dor</strong> cria confiança e abre as outras portas naturalmente. Falar de <strong>dinheiro</strong> antes de mostrar valor soa cobrança — e a lead fecha.</p>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--accent-dim);color:var(--accent)">1</div><div><strong style="font-size:13px;color:var(--text)">Need</strong><div class="ml-card-text">Abra pela dor — é onde a lead quer falar</div></div></div>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--blue-dim);color:var(--blue)">2</div><div><strong style="font-size:13px;color:var(--text)">Authority</strong><div class="ml-card-text">Entenda quem mais resolve isso com ela</div></div></div>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--green-dim);color:var(--green)">3</div><div><strong style="font-size:13px;color:var(--text)">Budget</strong><div class="ml-card-text">Agora o dinheiro entra com contexto</div></div></div>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--purple-dim);color:var(--purple)">4</div><div><strong style="font-size:13px;color:var(--text)">Timeline</strong><div class="ml-card-text">Fecha amarrando o prazo a um evento</div></div></div>
+       <div class="ml-card" style="border-left:3px solid var(--accent);margin-top:10px"><div class="ml-card-label" style="color:var(--accent)">Regra de ouro</div><div class="ml-card-text">BANT é um <strong>roteiro de conversa</strong>, não um checklist. Você coleta as quatro letras conduzindo — não interrogando em sequência.</div></div>`},
+     {label:'Lição 5 · Need',title:'Need — comece pela dor, não pelo produto',html:`
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--text3)">Perguntas-modelo</div><div class="ml-card-text">
+         → "Qual o maior problema nos seus resultados que está tirando seu sono hoje?"<br>
+         → "O que já tentaram pra resolver isso — e por que não colou?"<br>
+         → "Se nada mudar até o fim do ano, o que acontece?"</div></div>
+       <p>★ Ouça o <strong>número por trás da dor</strong>: "perco 15% da banca por mês", "opero há 2 anos sem consistência". É o que você vai quantificar depois.</p>
+       <p>Dor <strong>vaga</strong> ("queremos melhorar") não é dor. Você precisa de problema <strong>específico, com impacto</strong> e consequência de não agir.</p>
+       <div class="ml-do">✓ <strong>Faça:</strong> aprofunde com "me conta mais", "como isso impacta a sua banca?"</div>
+       <div class="ml-dont">✕ <strong>Evite:</strong> aceitar "está tudo ok" e já partir pro pitch da solução</div>`},
+     {label:'Lição 6 · Authority',title:'Authority — mapeie o círculo de decisão, não só o lead',html:`
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--text3)">Perguntas-modelo</div><div class="ml-card-text">
+         → "Além de você, quem mais costuma participar de uma decisão como essa?"<br>
+         → "Como você costuma decidir investimentos parecidos com esse?"<br>
+         → "Tem alguém que decide investimentos junto com você — sócio, cônjuge?"</div></div>
+       <p>★ Quando o valor pesa no orçamento da casa, a decisão costuma passar por <strong>mais de uma pessoa</strong>. Entenda o processo, não force o "você decide?".</p>
+       <p>Se há outra pessoa na decisão, transforme seu contato em <strong>aliado</strong>: entenda o que o cônjuge ou sócio precisa ver pra dar o sim — e ajude-o a defender a ideia em casa.</p>
+       <div class="ml-do">✓ <strong>Faça:</strong> "quem mais participaria dessa decisão com você?" — soa colaborativo</div>
+       <div class="ml-dont">✕ <strong>Evite:</strong> "você tem poder de decisão?" — soa desconfiado e diminui</div>`},
+     {label:'Lição 7 · Budget',title:'Budget — só depois do valor, e por faixa',html:`
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--text3)">Perguntas-modelo</div><div class="ml-card-text">
+         → "Você já reservou um valor pra resolver isso, ou ainda é algo a planejar?"<br>
+         → "Pra um programa que resolve isso, qual faixa de investimento faz sentido pra você?"<br>
+         → "Você já perdeu ~R$ X operando sem método. Faz sentido investir uma fração disso pra parar?"</div></div>
+       <p>★ A melhor pergunta de budget é uma <strong>conta</strong>: ancore o investimento no custo da dor que a lead acabou de te contar.</p>
+       <p>"Não temos budget" raramente significa "não". Significa <strong>"ainda não priorizei"</strong>. Reabra pela dor e pelo custo de não agir.</p>
+       <div class="ml-do">✓ <strong>Faça:</strong> ofereça uma faixa primeiro — fica fácil pra lead reagir a ela</div>
+       <div class="ml-dont">✕ <strong>Evite:</strong> "qual o seu orçamento?" logo de cara, antes de gerar valor</div>`},
+     {label:'Lição 8 · Timeline',title:'Timeline — ache o evento que cria a urgência',html:`
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--text3)">Perguntas-modelo</div><div class="ml-card-text">
+         → "Tem algo puxando isso agora — um novo aporte, uma meta de renda, cansaço de perder?"<br>
+         → "O que muda pra você se isso estiver resolvido até [trimestre]?"<br>
+         → "E se ficar pra ano que vem — qual o custo de esperar?"</div></div>
+       <p>★ "Quando der" não é prazo. Prazo é um <strong>evento com data</strong>: um novo aporte, meta de renda mensal, virada de ano, mercado em tendência.</p>
+       <p>Sem gatilho, a lead é real mas <strong>não é agora</strong> — vai pro nurturing. Com gatilho, vira prioridade do funil hoje.</p>
+       <div class="ml-do">✓ <strong>Faça:</strong> amarre o próximo passo a uma data concreta antes de desligar</div>
+       <div class="ml-dont">✕ <strong>Evite:</strong> aceitar "me liga daqui uns meses" sem entender o porquê</div>`},
+     {label:'Lição 9 · A arte da pergunta',title:'A letra você decora. A pergunta você treina.',html:`
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">01 · Abra, não feche</div><div class="ml-card-text">Pergunta de "sim/não" mata a conversa. Troque "você tem como investir?" por <strong>"como você costuma investir na sua evolução?"</strong></div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">02 · Camadas</div><div class="ml-card-text">Pergunta → resposta rasa → <strong>"me conta mais sobre isso"</strong>. A segunda camada é onde mora a dor de verdade.</div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">03 · O silêncio</div><div class="ml-card-text">Fez a pergunta? <strong>Cale por 3 segundos.</strong> O incômodo do silêncio faz a lead completar — e é aí que vem o ouro.</div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">04 · Espelhe</div><div class="ml-card-text">Repita a última frase dela como pergunta: <strong>"perde a banca toda?"</strong> Ela aprofunda sozinha.</div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">05 · Uma de cada vez</div><div class="ml-card-text">Empilhar três perguntas numa só confunde. <strong>Uma pergunta, uma pausa, uma resposta.</strong></div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">06 · Confirme em voz alta</div><div class="ml-card-text">Devolva o que entendeu: <strong>"então o gargalo é a gestão de risco, certo?"</strong> Mostra escuta e trava o dado.</div></div>`},
+     {label:'Lição 10 · Prospecção',title:'Falar com o lead é cadência + um bom motivo',html:`
+       <p>A maioria dos contatos não responde de primeira — e tudo bem. Quem aparece com <strong>consistência</strong> e um <strong>motivo relevante</strong> é quem consegue a conversa.</p>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">01 · Multicanal</div><div class="ml-card-text">Ligação + e-mail + LinkedIn + WhatsApp no mesmo período. Um canal reforça o outro.</div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">02 · Persistência</div><div class="ml-card-text">Boa parte das respostas vem do <strong>5º ao 8º toque</strong>. Planeje ~8 toques em 2–3 semanas.</div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">03 · Horário certo</div><div class="ml-card-text">Início da manhã (8h–10h) e fim de tarde (16h–18h) convertem mais.</div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">04 · Gatilho real</div><div class="ml-card-text">Ancore o contato num sinal: <strong>"vi que você assistiu a aula gratuita…"</strong>. Relevância vence volume.</div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">05 · Abertura curta</div><div class="ml-card-text">Na ligação, diga quem é e <strong>peça 30 segundos</strong>. Ninguém abre textão de desconhecido.</div></div>
+       <div class="ml-card"><div class="ml-card-label" style="color:var(--accent)">06 · Porta lateral</div><div class="ml-card-text">Sem retorno? Use a <strong>indicação</strong> de quem já é aluno. Conecte e aqueça antes de ligar.</div></div>`},
+     {label:'Lição 11 · Armadilhas',title:'O BANT só falha quando é mal aplicado',html:`
+       <div class="ml-dont"><strong>1 · Tratar como checklist.</strong> Disparar as 4 letras em sequência transforma conversa em formulário — e a lead foge.</div>
+       <div class="ml-dont"><strong>2 · Pular o N.</strong> Sem dor real, budget, autoridade e prazo não valem nada. A dor é o que dá sentido às outras três.</div>
+       <div class="ml-dont"><strong>3 · Falar de dinheiro cedo demais.</strong> Budget antes de valor vira cobrança e mata a confiança.</div>
+       <div class="ml-dont"><strong>4 · Aceitar resposta rasa.</strong> "Tá tudo bem", "ainda esse ano", "eu decido" — sem aprofundar, é dado falso no CRM.</div>
+       <div class="ml-dont"><strong>5 · Achar que é tudo.</strong> O BANT tria a entrada — ele não fecha negócio complexo. Para deal grande, ele entrega a lead pronta pro GPCT e o MEDDPICC assumirem.</div>`},
+     {label:'Lição 12 · Cartão de bolso',title:'Abra a dor. Mapeie quem decide. Ancore o valor. Amarre o prazo.',html:`
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--accent-dim);color:var(--accent)">N</div><div class="ml-card-text" style="align-self:center">"Qual a dor que tira seu sono?"</div></div>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--blue-dim);color:var(--blue)">A</div><div class="ml-card-text" style="align-self:center">"Quem mais decide esse investimento com você?"</div></div>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--green-dim);color:var(--green)">B</div><div class="ml-card-text" style="align-self:center">"Dá pra investir uma fração desse custo?"</div></div>
+       <div class="ml-letter-card"><div class="ml-letter" style="background:var(--purple-dim);color:var(--purple)">T</div><div class="ml-card-text" style="align-self:center">"Que evento puxa isso pra agora?"</div></div>
+       <div class="ml-card" style="border-left:3px solid var(--green);margin-top:12px"><div class="ml-card-label" style="color:var(--green)">Próximo passo</div><div class="ml-card-text"><strong>Rode o BANT em 3 calls reais esta semana</strong> e traga o que destravou. Conversa, não interrogatório.</div></div>`}
    ]},
   {id:2,title:'SPIN Selling — as 4 perguntas que abrem qualquer cliente',tag:'Framework',tagStyle:'background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-mid)',duration:'12 min',bg:'linear-gradient(135deg,#1C62C8 0%,#0A2F6E 100%)',
    desc:'Desenvolvido após análise de 35.000 calls. SPIN é uma sequência de perguntas que move o cliente do status quo à decisão — sem pressão. O cliente se convence sozinho.',
@@ -3011,6 +3118,7 @@ const LMS_DATA = [
 ];
 
 let lmsCurrentId = null;
+let mlLessonIdx = 0;
 
 function loadLmsProgress() {
   try { return JSON.parse(localStorage.getItem('hLmsProgress') || '{}'); } catch(e){ return {}; }
@@ -3030,7 +3138,6 @@ function initLmsCards() {
     if (pctEl) pctEl.textContent = pct + '%';
     if (card) card.classList.toggle('done', pct === 100);
     if (prog[d.id] && card) {
-      // add done badge
       if (!card.querySelector('.lms-done-badge')) {
         const b = document.createElement('div');
         b.className = 'lms-done-badge';
@@ -3043,6 +3150,7 @@ function initLmsCards() {
 
 function openLmsModal(id) {
   lmsCurrentId = id;
+  mlLessonIdx = 0;
   const d = LMS_DATA[id];
   const prog = loadLmsProgress();
   const done = !!prog[id];
@@ -3050,25 +3158,74 @@ function openLmsModal(id) {
   document.getElementById('lms-modal-bg').style.background = d.bg;
   document.getElementById('lms-modal-tag').textContent = d.tag;
   document.getElementById('lms-modal-tag').style.cssText += ';'+d.tagStyle+';padding:3px 10px;border-radius:20px;font-size:10px;font-family:\'Instrument Sans\',sans-serif;font-weight:600;letter-spacing:.08em;text-transform:uppercase';
-  document.getElementById('lms-modal-title').textContent = d.title;
-  document.getElementById('lms-modal-meta').innerHTML = `<span>⏱ ${d.duration}</span><span>📚 ${d.modules.length} módulos</span>${d.pdf?'<span style="color:var(--accent)">📄 Material oficial disponível</span>':''}${done?'<span style="color:var(--green)">✓ Concluído</span>':''}`;
-  document.getElementById('lms-modal-desc').textContent = d.desc;
-  document.getElementById('lms-modal-modules').innerHTML = (d.pdf?`<a href="${d.pdf}" target="_blank" style="display:flex;align-items:center;gap:12px;background:var(--accent);border-radius:10px;padding:14px 16px;margin-bottom:12px;text-decoration:none;transition:opacity .15s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-    <div style="width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:17px">📄</div>
-    <div><div style="font-size:13px;font-weight:700;color:#fff">Abrir apresentação do treinamento</div><div style="font-size:11px;color:rgba(255,255,255,.75);font-family:'Instrument Sans',sans-serif">PDF · abre em nova aba</div></div>
-    <span style="margin-left:auto;color:#fff;font-size:16px">↗</span>
-  </a>`:'') + d.modules.map(m=>`
-    <div class="lms-module">
-      <div class="lms-module-num">${m.n}</div>
-      <div><div class="lms-module-title">${m.title}</div><div class="lms-module-desc">${m.desc}</div></div>
-    </div>`).join('');
-  const btn = document.getElementById('lms-mark-btn');
-  btn.textContent = done ? '↩ Marcar como não lido' : '✓ Marcar como concluído';
-  btn.style.background = done ? '#fff' : 'var(--accent)';
-  btn.style.color = done ? 'var(--text2)' : '#fff';
-  btn.style.borderColor = done ? 'var(--border2)' : 'var(--accent)';
+
+  if (d.lessons) {
+    // MICROLEARNING MODE
+    document.getElementById('lms-modal-title').textContent = d.title;
+    document.getElementById('lms-modal-meta').innerHTML = `<span>📚 ${d.lessons.length} lições</span><span>⏱ ~1 min por lição</span>${done?'<span style="color:var(--green)">✓ Concluído</span>':''}`;
+    document.getElementById('lms-modal-desc').textContent = '';
+    renderMlLesson();
+    document.getElementById('lms-mark-btn').style.display = 'none';
+  } else {
+    // STANDARD MODE
+    document.getElementById('lms-modal-title').textContent = d.title;
+    document.getElementById('lms-modal-meta').innerHTML = `<span>⏱ ${d.duration}</span><span>📚 ${d.modules.length} módulos</span>${done?'<span style="color:var(--green)">✓ Concluído</span>':''}`;
+    document.getElementById('lms-modal-desc').textContent = d.desc;
+    document.getElementById('lms-modal-modules').innerHTML = d.modules.map(m=>`
+      <div class="lms-module">
+        <div class="lms-module-num">${m.n}</div>
+        <div><div class="lms-module-title">${m.title}</div><div class="lms-module-desc">${m.desc}</div></div>
+      </div>`).join('');
+    const btn = document.getElementById('lms-mark-btn');
+    btn.style.display = 'inline-block';
+    btn.textContent = done ? '↩ Marcar como não lido' : '✓ Marcar como concluído';
+    btn.style.background = done ? '#fff' : 'var(--accent)';
+    btn.style.color = done ? 'var(--text2)' : '#fff';
+    btn.style.borderColor = done ? 'var(--border2)' : 'var(--accent)';
+  }
 
   document.getElementById('lms-modal').classList.add('show');
+}
+
+function renderMlLesson() {
+  const d = LMS_DATA[lmsCurrentId];
+  const lesson = d.lessons[mlLessonIdx];
+  const total = d.lessons.length;
+  const isLast = mlLessonIdx === total - 1;
+  const prog = loadLmsProgress();
+  const done = !!prog[lmsCurrentId];
+
+  document.getElementById('lms-modal-modules').innerHTML = `
+    <div class="ml-progress-row">
+      ${d.lessons.map((_,i)=>`<div class="ml-progress-dot ${i<mlLessonIdx?'done':i===mlLessonIdx?'current':''}"></div>`).join('')}
+    </div>
+    <div class="ml-lesson-label">${lesson.label}</div>
+    <div class="ml-lesson-title">${lesson.title}</div>
+    <div class="ml-lesson-body">${lesson.html}</div>
+    <div class="ml-nav">
+      <div class="ml-nav-count">Lição ${mlLessonIdx+1} de ${total}</div>
+      <button class="ml-btn" onclick="mlPrev()" ${mlLessonIdx===0?'disabled':''}>‹ Anterior</button>
+      ${isLast
+        ? `<button class="ml-btn ${done?'':'success'}" onclick="mlComplete()">${done?'↩ Marcar como não concluído':'✓ Concluir treinamento'}</button>`
+        : `<button class="ml-btn primary" onclick="mlNext()">Próxima lição ›</button>`}
+    </div>`;
+  // scroll modal to top of lesson
+  document.querySelector('.lms-modal').scrollTop = 0;
+}
+
+function mlNext() { 
+  const d = LMS_DATA[lmsCurrentId];
+  if (mlLessonIdx < d.lessons.length - 1) { mlLessonIdx++; renderMlLesson(); }
+}
+function mlPrev() { 
+  if (mlLessonIdx > 0) { mlLessonIdx--; renderMlLesson(); }
+}
+function mlComplete() {
+  const prog = loadLmsProgress();
+  prog[lmsCurrentId] = !prog[lmsCurrentId];
+  saveLmsProgress(prog);
+  initLmsCards();
+  renderMlLesson();
 }
 
 function closeLmsModal() {
@@ -3080,7 +3237,7 @@ function toggleLmsDone() {
   prog[lmsCurrentId] = !prog[lmsCurrentId];
   saveLmsProgress(prog);
   initLmsCards();
-  openLmsModal(lmsCurrentId); // refresh modal
+  openLmsModal(lmsCurrentId);
 }
 
 // ── SIDEBAR GROUP TOGGLE ──
