@@ -2198,7 +2198,7 @@ td strong{color:var(--text);font-weight:500}
           <div class="lms-card" id="lc-1" onclick="openLmsModal(1)">
             <div class="lms-thumb" style="background:linear-gradient(135deg,#1A7F4B 0%,#0F4D2A 100%)">
               <div class="lms-thumb-content">
-                <span class="lms-thumb-tag" style="background:rgba(255,255,255,.2);color:#fff">Framework</span>
+                <span class="lms-thumb-tag" style="background:var(--accent);color:#fff">Treinamento oficial</span>
                 <div class="lms-thumb-title">BANT</div>
                 <div class="lms-thumb-sub">Budget · Authority · Need · Timeline</div>
               </div>
@@ -2206,10 +2206,10 @@ td strong{color:var(--text);font-weight:500}
             <div class="lms-body">
               <div class="lms-cat-row">
                 <span class="lms-cat" style="background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)">Framework</span>
-                <span class="lms-duration">10 min</span>
+                <span class="lms-duration">17 slides · PDF</span>
               </div>
               <div class="lms-title">BANT — qualificar sem parecer questionário</div>
-              <div class="lms-desc">Como descobrir budget, autoridade, necessidade e timing sem interrogar o cliente.</div>
+              <div class="lms-desc">Treinamento conduzido pelo treinador. A ordem certa é N→A→B→T: dor primeiro, dinheiro com contexto.</div>
               <div class="lms-footer">
                 <div class="lms-stars">⭐⭐⭐⭐⭐</div>
                 <div class="lms-rating">5.0</div>
@@ -2950,12 +2950,20 @@ const LMS_DATA = [
      {n:'02',title:'Por que apresentar produto antes de diagnosticar mata a venda',desc:'O erro mais comum do júnior'},
      {n:'03',title:'Como o cliente percebe a diferença — e por que isso muda o resultado',desc:'Perspectiva do cliente'}
    ]},
-  {id:1,title:'BANT — qualificar sem parecer questionário',tag:'Framework',tagStyle:'background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)',duration:'10 min',bg:'linear-gradient(135deg,#1A7F4B 0%,#0F4D2A 100%)',
-   desc:'BANT = Budget, Authority, Need, Timeline. O erro é usar como interrogatório. O closer experiente mapeia os 4 critérios sem que o cliente perceba que está sendo qualificado.',
+  {id:1,title:'BANT — qualificar sem parecer questionário',tag:'Framework',tagStyle:'background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)',duration:'17 slides',bg:'linear-gradient(135deg,#1A7F4B 0%,#0F4D2A 100%)',
+   pdf:'./treinamento_bant_horistic.pdf',
+   desc:'Treinamento oficial conduzido pelo treinador. BANT = Budget, Authority, Need, Timeline — o filtro de entrada criado pela IBM nos anos 1950 que ainda separa lead boa de curioso. A ordem certa na conversa é N → A → B → T: abra pela dor, mapeie quem decide, ancore o valor, amarre o prazo.',
    modules:[
-     {n:'01',title:'Budget — como descobrir capacidade financeira sem perguntar diretamente',desc:'Técnicas indiretas de mapeamento'},
-     {n:'02',title:'Authority & Need — confirmar decisor e fazer o cliente nomear a dor',desc:'As duas etapas mais críticas'},
-     {n:'03',title:'Timeline — identificar urgência real (emocional vs racional)',desc:'Como criar urgência sem pressionar'}
+     {n:'01',title:'O que é e de onde veio — filtro de 60 anos',desc:'IBM anos 1950 · filtro de entrada, não sistema de fechamento'},
+     {n:'02',title:'Os dados — por que qualificar bem encurta o ciclo',desc:'+59% conversão · −54% ciclo de vendas · SQL converte 20–30%'},
+     {n:'03',title:'A ordem certa: N → A → B → T, não o acrônimo',desc:'Abra pela dor — dinheiro antes de valor soa cobrança'},
+     {n:'04',title:'Need — comece pela dor, não pelo produto',desc:'Perguntas-modelo + o que escutar · dor vaga não é dor'},
+     {n:'05',title:'Authority — mapeie o círculo de decisão',desc:'"Quem mais participaria dessa decisão?" — nunca "você decide?"'},
+     {n:'06',title:'Budget — só depois do valor, e por faixa',desc:'Ancore o investimento no custo da dor · ofereça faixa primeiro'},
+     {n:'07',title:'Timeline — ache o evento que cria urgência',desc:'"Quando der" não é prazo · prazo é evento com data'},
+     {n:'08',title:'A arte da pergunta — 6 técnicas transversais',desc:'Abra não feche · camadas · silêncio · espelhe · uma de cada vez · confirme'},
+     {n:'09',title:'As 5 armadilhas que matam o BANT',desc:'Checklist · pular o N · dinheiro cedo · resposta rasa · achar que é tudo'},
+     {n:'10',title:'Onde o BANT encaixa — e onde passa o bastão',desc:'BANT tria → GPCT aprofunda → MEDDPICC fecha'}
    ]},
   {id:2,title:'SPIN Selling — as 4 perguntas que abrem qualquer cliente',tag:'Framework',tagStyle:'background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-mid)',duration:'12 min',bg:'linear-gradient(135deg,#1C62C8 0%,#0A2F6E 100%)',
    desc:'Desenvolvido após análise de 35.000 calls. SPIN é uma sequência de perguntas que move o cliente do status quo à decisão — sem pressão. O cliente se convence sozinho.',
@@ -3043,9 +3051,13 @@ function openLmsModal(id) {
   document.getElementById('lms-modal-tag').textContent = d.tag;
   document.getElementById('lms-modal-tag').style.cssText += ';'+d.tagStyle+';padding:3px 10px;border-radius:20px;font-size:10px;font-family:\'Instrument Sans\',sans-serif;font-weight:600;letter-spacing:.08em;text-transform:uppercase';
   document.getElementById('lms-modal-title').textContent = d.title;
-  document.getElementById('lms-modal-meta').innerHTML = `<span>⏱ ${d.duration}</span><span>📚 ${d.modules.length} módulos</span>${done?'<span style="color:var(--green)">✓ Concluído</span>':''}`;
+  document.getElementById('lms-modal-meta').innerHTML = `<span>⏱ ${d.duration}</span><span>📚 ${d.modules.length} módulos</span>${d.pdf?'<span style="color:var(--accent)">📄 Material oficial disponível</span>':''}${done?'<span style="color:var(--green)">✓ Concluído</span>':''}`;
   document.getElementById('lms-modal-desc').textContent = d.desc;
-  document.getElementById('lms-modal-modules').innerHTML = d.modules.map(m=>`
+  document.getElementById('lms-modal-modules').innerHTML = (d.pdf?`<a href="${d.pdf}" target="_blank" style="display:flex;align-items:center;gap:12px;background:var(--accent);border-radius:10px;padding:14px 16px;margin-bottom:12px;text-decoration:none;transition:opacity .15s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+    <div style="width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:17px">📄</div>
+    <div><div style="font-size:13px;font-weight:700;color:#fff">Abrir apresentação do treinamento</div><div style="font-size:11px;color:rgba(255,255,255,.75);font-family:'Instrument Sans',sans-serif">PDF · abre em nova aba</div></div>
+    <span style="margin-left:auto;color:#fff;font-size:16px">↗</span>
+  </a>`:'') + d.modules.map(m=>`
     <div class="lms-module">
       <div class="lms-module-num">${m.n}</div>
       <div><div class="lms-module-title">${m.title}</div><div class="lms-module-desc">${m.desc}</div></div>
