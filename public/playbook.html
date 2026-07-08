@@ -438,6 +438,79 @@ td strong{color:var(--text);font-weight:500}
 .sim-start-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .15s}
 .sim-start-btn:hover{opacity:.85}
 
+/* ─── HOME HERO PREMIUM ─── */
+.home-hero{background:linear-gradient(135deg,#141413 0%,#2a2a28 60%,#3d2a10 100%);padding:44px 36px 40px;position:relative;overflow:hidden}
+.home-hero::before{content:'';position:absolute;top:-100px;right:-60px;width:340px;height:340px;background:radial-gradient(circle,rgba(255,131,0,.18) 0%,transparent 70%);border-radius:50%}
+.home-hero::after{content:'';position:absolute;bottom:-120px;left:30%;width:280px;height:280px;background:radial-gradient(circle,rgba(255,131,0,.08) 0%,transparent 70%);border-radius:50%}
+.hh-eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-family:'Instrument Sans',sans-serif;margin-bottom:12px;display:flex;align-items:center;gap:8px;position:relative;z-index:1}
+.hh-eyebrow::after{content:'';height:1px;width:36px;background:var(--accent-mid)}
+.hh-title{font-size:36px;font-weight:700;color:#fff;line-height:1.12;margin-bottom:10px;position:relative;z-index:1}
+.hh-title em{font-style:normal;color:var(--accent)}
+.hh-sub{font-size:14px;color:rgba(255,255,255,.55);max-width:480px;line-height:1.7;margin-bottom:24px;position:relative;z-index:1}
+.hh-actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+.hh-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all .15s;text-decoration:none;border:1px solid transparent}
+.hh-btn.primary{background:var(--accent);color:#fff}
+.hh-btn.primary:hover{opacity:.88;transform:translateY(-1px)}
+.hh-btn.ghost{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.15)}
+.hh-btn.ghost:hover{background:rgba(255,255,255,.13)}
+.hh-stats{display:flex;gap:28px;margin-top:28px;position:relative;z-index:1;flex-wrap:wrap}
+.hh-stat-num{font-size:22px;font-weight:700;color:#fff;font-family:'Instrument Sans',sans-serif}
+.hh-stat-label{font-size:11px;color:rgba(255,255,255,.45);font-family:'Instrument Sans',sans-serif;margin-top:2px}
+
+/* ─── TICKETS ─── */
+.tk-wrap{padding:32px 36px 60px;max-width:920px}
+.tk-form{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:24px;margin-bottom:24px}
+.tk-field{margin-bottom:16px}
+.tk-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;font-weight:600;margin-bottom:6px;display:block}
+.tk-input,.tk-select,.tk-textarea{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:9px;padding:10px 13px;font-size:13px;font-family:'Space Grotesk',sans-serif;color:var(--text);outline:none;transition:border-color .15s}
+.tk-input:focus,.tk-select:focus,.tk-textarea:focus{border-color:var(--accent);background:#fff}
+.tk-textarea{resize:vertical;min-height:90px;line-height:1.6}
+.tk-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tk-owner-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tk-owner{background:var(--bg2);border:1.5px solid var(--border2);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s}
+.tk-owner:hover{border-color:var(--accent-mid)}
+.tk-owner.selected{border-color:var(--accent);background:var(--accent-dim)}
+.tk-owner-avatar{width:34px;height:34px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;font-family:'Instrument Sans',sans-serif}
+.tk-owner-name{font-size:12px;font-weight:600;color:var(--text)}
+/* eisenhower matrix */
+.eis-matrix{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.eis-q{border:1.5px solid var(--border2);border-radius:11px;padding:14px;cursor:pointer;transition:all .15s;position:relative}
+.eis-q:hover{transform:translateY(-1px)}
+.eis-q.selected{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.eis-q1{background:var(--red-dim)}.eis-q1:hover,.eis-q1.selected{border-color:var(--red)}
+.eis-q2{background:var(--blue-dim)}.eis-q2:hover,.eis-q2.selected{border-color:var(--blue)}
+.eis-q3{background:var(--accent-dim)}.eis-q3:hover,.eis-q3.selected{border-color:var(--accent)}
+.eis-q4{background:var(--bg2)}.eis-q4:hover,.eis-q4.selected{border-color:var(--text3)}
+.eis-tag{font-size:9px;letter-spacing:.08em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;font-weight:700;margin-bottom:4px}
+.eis-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.eis-desc{font-size:11px;color:var(--text2);line-height:1.45;margin-bottom:8px}
+.eis-sla{font-size:10px;font-family:'Instrument Sans',sans-serif;font-weight:600;padding:2px 9px;border-radius:20px;display:inline-block}
+.eis-check{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:10px;color:#fff}
+.eis-q.selected .eis-check{display:flex}
+.tk-submit{width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .15s;margin-top:6px}
+.tk-submit:hover{opacity:.87}
+.tk-submit:disabled{opacity:.4;cursor:not-allowed}
+/* ticket list */
+.tk-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px}
+.tk-item-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.tk-badge{font-size:9px;letter-spacing:.06em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.tk-item-title{font-size:14px;font-weight:700;color:var(--text);flex:1;line-height:1.3}
+.tk-status{font-size:10px;font-family:'Instrument Sans',sans-serif;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.tk-status.aberto{background:var(--red-dim);color:var(--red);border:1px solid var(--red-mid)}
+.tk-status.andamento{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid)}
+.tk-status.concluido{background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)}
+.tk-item-desc{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px}
+.tk-item-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:10px}
+.tk-item-actions{display:flex;gap:8px}
+.tk-act{font-size:11px;font-weight:600;font-family:'Space Grotesk',sans-serif;padding:6px 14px;border-radius:7px;cursor:pointer;border:1px solid var(--border2);background:#fff;color:var(--text2);transition:all .15s}
+.tk-act:hover{border-color:var(--accent);color:var(--accent)}
+.tk-act.start{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tk-act.done{background:var(--green);color:#fff;border-color:var(--green)}
+.tk-sla-timer{font-size:10px;font-family:'Instrument Sans',sans-serif;font-weight:700;padding:3px 10px;border-radius:20px}
+.tk-sla-timer.ok{background:var(--green-dim);color:var(--green)}
+.tk-sla-timer.warn{background:var(--accent-dim);color:var(--accent)}
+.tk-sla-timer.late{background:var(--red-dim);color:var(--red)}
+
 /* ─── MICROLEARNING ─── */
 .ml-progress-row{display:flex;gap:4px;margin-bottom:16px}
 .ml-progress-dot{flex:1;height:4px;border-radius:2px;background:var(--bg3);transition:background .3s}
@@ -719,6 +792,7 @@ td strong{color:var(--text);font-weight:500}
     <a class="sb-item" onclick="nav('priorizacao',this)"><span class="ic">◐</span>Priorização da base</a>
     <a class="sb-item" onclick="nav('cadencia',this)"><span class="ic">◎</span>Cadência de contato</a>
     <a class="sb-item" onclick="nav('rituais',this)"><span class="ic">⊡</span>Rituais do comercial</a>
+    <a class="sb-item" onclick="nav('tickets',this)"><span class="ic">🎫</span>Abrir Ticket</a>
 
     <div class="sb-group" style="margin-top:6px">Learning</div>
 
@@ -784,13 +858,24 @@ td strong{color:var(--text);font-weight:500}
 
   <!-- ════════════════════ HOME ════════════════════ -->
   <div class="page active" id="page-home">
-    <div style="padding:40px 36px 12px;max-width:920px">
-      <div class="eyebrow">Playbook Comercial</div>
-      <h1 style="font-size:32px;font-weight:700;line-height:1.15;color:var(--text);margin-bottom:8px">Venda com método,<br>não no <span style="color:var(--accent)">achismo.</span></h1>
-      <p style="font-size:14px;color:var(--text2);max-width:520px;line-height:1.7;margin-bottom:32px">Tudo que você precisa para fechar mais. Use o filtro de nível no topo para ver o conteúdo certo para você.</p>
+    <div class="home-hero">
+      <div class="hh-eyebrow">Playbook Comercial · Horistic</div>
+      <h1 class="hh-title">Venda com método,<br>não no <em>achismo.</em></h1>
+      <p class="hh-sub">Tudo que você precisa para fechar mais — scripts, treinos, funil e produtos em um só lugar. Use o filtro de nível no topo para ver o conteúdo certo para você.</p>
+      <div class="hh-actions">
+        <a class="hh-btn primary" onclick="nav('tickets',document.querySelector('[onclick*=tickets]'))">🎫 Abrir um ticket</a>
+        <a class="hh-btn ghost" onclick="nav('treinamentos',document.querySelector('[onclick*=treinamentos]'))">📚 Ver conteúdos</a>
+        <a class="hh-btn ghost" href="./roleplay_horistic.html" target="_blank">🎭 Role Play ↗</a>
+      </div>
+      <div class="hh-stats">
+        <div><div class="hh-stat-num">12</div><div class="hh-stat-label">Produtos no portfólio</div></div>
+        <div><div class="hh-stat-num">11</div><div class="hh-stat-label">Eventos jul–ago</div></div>
+        <div><div class="hh-stat-num">8</div><div class="hh-stat-label">Conteúdos de learning</div></div>
+        <div><div class="hh-stat-num">3</div><div class="hh-stat-label">Packs de role play</div></div>
+      </div>
     </div>
 
-    <div class="home-wrap" style="padding-top:0">
+    <div class="home-wrap" style="padding-top:24px">
 
       <!-- Lançamentos highlight -->
       <div class="tool-card-launch" onclick="nav('lancamentos',document.querySelector('[onclick*=lancamentos]'))">
@@ -2443,6 +2528,100 @@ td strong{color:var(--text);font-weight:500}
     </div>
   </div>
 
+  <!-- ════════════════════ TICKETS ════════════════════ -->
+  <div class="page" id="page-tickets">
+    <div class="tk-wrap">
+      <div class="sec-header">
+        <div class="eyebrow">Suporte interno</div>
+        <div class="sec-title">Abertura de Ticket</div>
+        <div class="sec-desc">Encontrou um problema ou precisa de algo? Abra um ticket. A prioridade segue a matriz de Eisenhower e cada nível tem um SLA de resposta. O dono recebe notificação por e-mail na abertura, e você é avisado quando o ticket for iniciado e concluído.</div>
+      </div>
+
+      <div class="tk-form">
+        <div class="tk-grid2">
+          <div class="tk-field">
+            <label class="tk-label">Seu nome</label>
+            <input class="tk-input" id="tk-autor" placeholder="Ex: João Silva">
+          </div>
+          <div class="tk-field">
+            <label class="tk-label">Seu e-mail (para receber atualizações)</label>
+            <input class="tk-input" id="tk-autor-email" type="email" placeholder="voce@horistic.com.br">
+          </div>
+        </div>
+
+        <div class="tk-field">
+          <label class="tk-label">Título do problema</label>
+          <input class="tk-input" id="tk-titulo" placeholder="Ex: Link do APTC quebrado na página de checkout">
+        </div>
+
+        <div class="tk-field">
+          <label class="tk-label">Descreva o problema</label>
+          <textarea class="tk-textarea" id="tk-desc" placeholder="O que aconteceu, onde, desde quando, e qual o impacto para o comercial..."></textarea>
+        </div>
+
+        <div class="tk-field">
+          <label class="tk-label">Dono do problema</label>
+          <div class="tk-owner-grid">
+            <div class="tk-owner" id="own-0" onclick="selOwner(0)"><div class="tk-owner-avatar" style="background:#1C62C8">C</div><div class="tk-owner-name">Caio</div></div>
+            <div class="tk-owner" id="own-1" onclick="selOwner(1)"><div class="tk-owner-avatar" style="background:#FF8300">F</div><div class="tk-owner-name">Fernando</div></div>
+            <div class="tk-owner" id="own-2" onclick="selOwner(2)"><div class="tk-owner-avatar" style="background:#1A7F4B">V</div><div class="tk-owner-name">Victor</div></div>
+            <div class="tk-owner" id="own-3" onclick="selOwner(3)"><div class="tk-owner-avatar" style="background:#7C3AED">G</div><div class="tk-owner-name">Gabriel</div></div>
+          </div>
+        </div>
+
+        <div class="tk-field">
+          <label class="tk-label">Prioridade · Matriz de Eisenhower</label>
+          <div class="eis-matrix">
+            <div class="eis-q eis-q1" id="eis-0" onclick="selEis(0)">
+              <div class="eis-check" style="background:var(--red)">✓</div>
+              <div class="eis-tag" style="color:var(--red)">Urgente + Importante</div>
+              <div class="eis-name">🔥 Fazer agora</div>
+              <div class="eis-desc">Bloqueia venda ou operação. Cliente esperando, sistema fora, prazo hoje.</div>
+              <span class="eis-sla" style="background:var(--red);color:#fff">SLA · resposta em 4h úteis</span>
+            </div>
+            <div class="eis-q eis-q2" id="eis-1" onclick="selEis(1)">
+              <div class="eis-check" style="background:var(--blue)">✓</div>
+              <div class="eis-tag" style="color:var(--blue)">Importante · Não urgente</div>
+              <div class="eis-name">📅 Agendar</div>
+              <div class="eis-desc">Melhora estrutural, processo ou material que impacta resultado.</div>
+              <span class="eis-sla" style="background:var(--blue);color:#fff">SLA · resposta em 48h úteis</span>
+            </div>
+            <div class="eis-q eis-q3" id="eis-2" onclick="selEis(2)">
+              <div class="eis-check" style="background:var(--accent)">✓</div>
+              <div class="eis-tag" style="color:var(--accent)">Urgente · Não importante</div>
+              <div class="eis-name">⚡ Delegar / resolver rápido</div>
+              <div class="eis-desc">Precisa de resposta rápida mas não trava a operação.</div>
+              <span class="eis-sla" style="background:var(--accent);color:#fff">SLA · resposta em 24h úteis</span>
+            </div>
+            <div class="eis-q eis-q4" id="eis-3" onclick="selEis(3)">
+              <div class="eis-check" style="background:var(--text3)">✓</div>
+              <div class="eis-tag" style="color:var(--text3)">Nem urgente · Nem importante</div>
+              <div class="eis-name">📋 Backlog</div>
+              <div class="eis-desc">Sugestão, ideia ou ajuste cosmético sem impacto imediato.</div>
+              <span class="eis-sla" style="background:var(--text3);color:#fff">SLA · resposta em 5 dias úteis</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="tk-submit" id="tk-submit" onclick="submitTicket()">Abrir ticket →</button>
+        <div id="tk-feedback" style="display:none;margin-top:12px;padding:12px 16px;border-radius:9px;font-size:13px"></div>
+      </div>
+
+      <!-- LISTA -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div class="eyebrow" style="margin-bottom:0">Tickets abertos</div>
+        <div style="display:flex;gap:6px">
+          <button class="tk-act" onclick="loadTickets('todos')" id="tf-todos">Todos</button>
+          <button class="tk-act" onclick="loadTickets('aberto')" id="tf-aberto">Abertos</button>
+          <button class="tk-act" onclick="loadTickets('andamento')" id="tf-andamento">Em andamento</button>
+          <button class="tk-act" onclick="loadTickets('concluido')" id="tf-concluido">Concluídos</button>
+        </div>
+      </div>
+      <div id="tk-list"><div style="text-align:center;padding:24px;color:var(--text3);font-size:13px">Carregando tickets...</div></div>
+
+    </div>
+  </div>
+
   <!-- ════════════════════ HISTÓRIA ════════════════════ -->
   <div class="page" id="page-historia">
     <div class="section">
@@ -2684,6 +2863,7 @@ td strong{color:var(--text);font-weight:500}
 <script>
 // ── SEARCH INDEX ──
 const searchIndex = [
+  {page:'tickets',label:'Abertura de Ticket',section:'Suporte',keys:['ticket','problema','suporte','chamado','eisenhower','prioridade','sla','bug','erro','ajuda']},
   {page:'treinamentos',label:'Conteúdos · Learning',section:'Learning',keys:['treinamento','conteúdo','learning','bant','spin','mindset','venda consultiva','abertura','fechamento','silêncio','módulo']},
   {page:'objecoes',label:'Contornos de objeção',section:'Ferramentas',keys:['objeção','resistência','medo','risco','preço','momento','pensar','escola','caro','não preciso','outro']},
   {page:'treino',label:'Modo treino',section:'Ferramentas',keys:['treino','quiz','teste','prática','exercício','simulação']},
@@ -2952,12 +3132,13 @@ function nav(pageId,el){
   document.getElementById('page-'+pageId).classList.add('active');
   document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
   if(el)el.classList.add('active');
-  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais',treinamentos:'Conteúdos · Learning'};
+  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais',treinamentos:'Conteúdos · Learning',tickets:'Abertura de Ticket'};
   document.getElementById('crumb-label').textContent=labels[pageId]||'';
   if(pageId==='treino')buildTreino();
   if(pageId==='lancamentos')calRender();
   if(pageId==='home')renderProgressGrid();
   if(pageId==='treinamentos')initLmsCards();
+  if(pageId==='tickets')loadTickets('todos');
   openLearningGroup(pageId);
   window.scrollTo(0,0);
 }
@@ -3611,6 +3792,156 @@ function simRestart() {
   document.querySelectorAll('.persona-card').forEach(c=>c.classList.remove('selected'));
   document.getElementById('sim-persona-brief').style.display = 'none';
   document.getElementById('sim-start-btn').style.display = 'none';
+}
+
+// ══════════ TICKETS ══════════
+// CONFIG — edite os e-mails dos donos aqui:
+const TK_SUPA_URL = 'https://feydpbqdsekolowcxska.supabase.co';
+const TK_SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZleWRwYnFkc2Vrb2xvd2N4c2thIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNDYwMDcsImV4cCI6MjA5NDgyMjAwN30.M9OzkRYM1kgdQlTRjtMxDEmw4k1vtMImGs042gQeW6E';
+const TK_OWNERS = [
+  {name:'Caio',    email:'caio@horistic.com.br',    color:'#1C62C8'},
+  {name:'Fernando',email:'fernando@horistic.com.br',color:'#FF8300'},
+  {name:'Victor',  email:'victor@horistic.com.br',  color:'#1A7F4B'},
+  {name:'Gabriel', email:'gabriel@horistic.com.br', color:'#7C3AED'}
+];
+// EmailJS — crie conta gratuita em emailjs.com, configure um service e 3 templates:
+const TK_EMAILJS = {
+  publicKey:  'COLE_SUA_PUBLIC_KEY',
+  serviceId:  'COLE_SEU_SERVICE_ID',
+  tplNovo:    'template_novo_ticket',     // vars: to_email, to_name, ticket_titulo, ticket_desc, ticket_prioridade, ticket_sla, autor_nome
+  tplStatus:  'template_status_ticket'    // vars: to_email, to_name, ticket_titulo, novo_status, dono_nome
+};
+
+const TK_QUADS = [
+  {tag:'Urgente + Importante', name:'🔥 Fazer agora', slaHoras:4,  slaLabel:'4h úteis',  color:'var(--red)',   badgeBg:'var(--red-dim)',   badgeBorder:'var(--red-mid)'},
+  {tag:'Importante · Não urgente', name:'📅 Agendar', slaHoras:48, slaLabel:'48h úteis', color:'var(--blue)',  badgeBg:'var(--blue-dim)',  badgeBorder:'var(--blue-mid)'},
+  {tag:'Urgente · Não importante', name:'⚡ Delegar', slaHoras:24, slaLabel:'24h úteis', color:'var(--accent)',badgeBg:'var(--accent-dim)',badgeBorder:'var(--accent-mid)'},
+  {tag:'Backlog', name:'📋 Backlog', slaHoras:120, slaLabel:'5 dias úteis', color:'var(--text3)', badgeBg:'var(--bg3)', badgeBorder:'var(--border2)'}
+];
+
+let tkOwnerIdx = null, tkEisIdx = null, tkFilter = 'todos';
+
+function selOwner(i){ tkOwnerIdx=i; document.querySelectorAll('.tk-owner').forEach((el,x)=>el.classList.toggle('selected',x===i)); }
+function selEis(i){ tkEisIdx=i; document.querySelectorAll('.eis-q').forEach((el,x)=>el.classList.toggle('selected',x===i)); }
+
+async function tkEmail(templateId, params){
+  if (TK_EMAILJS.publicKey.startsWith('COLE')) return; // não configurado ainda
+  try {
+    await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({service_id:TK_EMAILJS.serviceId, template_id:templateId, user_id:TK_EMAILJS.publicKey, template_params:params})
+    });
+  } catch(e){ console.warn('email falhou', e); }
+}
+
+async function submitTicket(){
+  const autor = document.getElementById('tk-autor').value.trim();
+  const autorEmail = document.getElementById('tk-autor-email').value.trim();
+  const titulo = document.getElementById('tk-titulo').value.trim();
+  const desc = document.getElementById('tk-desc').value.trim();
+  const fb = document.getElementById('tk-feedback');
+
+  if(!autor || !autorEmail || !titulo || !desc || tkOwnerIdx===null || tkEisIdx===null){
+    fb.style.display='block'; fb.style.background='var(--red-dim)'; fb.style.color='var(--red)'; fb.style.border='1px solid var(--red-mid)';
+    fb.textContent='Preencha todos os campos, selecione o dono e a prioridade.';
+    return;
+  }
+
+  const btn = document.getElementById('tk-submit');
+  btn.disabled = true; btn.textContent = 'Abrindo ticket...';
+  const owner = TK_OWNERS[tkOwnerIdx], quad = TK_QUADS[tkEisIdx];
+
+  try {
+    const res = await fetch(`${TK_SUPA_URL}/rest/v1/tickets`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY,'Prefer':'return=representation'},
+      body: JSON.stringify({titulo, descricao:desc, autor, autor_email:autorEmail, dono:owner.name, dono_email:owner.email, quadrante:tkEisIdx, sla_horas:quad.slaHoras, status:'aberto'})
+    });
+    if(!res.ok) throw new Error(await res.text());
+
+    // e-mail para o dono
+    tkEmail(TK_EMAILJS.tplNovo, {to_email:owner.email, to_name:owner.name, ticket_titulo:titulo, ticket_desc:desc, ticket_prioridade:quad.tag, ticket_sla:quad.slaLabel, autor_nome:autor});
+
+    fb.style.display='block'; fb.style.background='var(--green-dim)'; fb.style.color='var(--green)'; fb.style.border='1px solid rgba(26,127,75,.2)';
+    fb.textContent=`✓ Ticket aberto! ${owner.name} foi notificado. SLA de resposta: ${quad.slaLabel}.`;
+    document.getElementById('tk-titulo').value=''; document.getElementById('tk-desc').value='';
+    tkEisIdx=null; document.querySelectorAll('.eis-q').forEach(el=>el.classList.remove('selected'));
+    loadTickets(tkFilter);
+  } catch(e){
+    fb.style.display='block'; fb.style.background='var(--red-dim)'; fb.style.color='var(--red)'; fb.style.border='1px solid var(--red-mid)';
+    fb.textContent='Erro ao abrir o ticket. Verifique se a tabela "tickets" existe no Supabase.';
+  }
+  btn.disabled=false; btn.textContent='Abrir ticket →';
+}
+
+async function loadTickets(filter){
+  tkFilter = filter || 'todos';
+  ['todos','aberto','andamento','concluido'].forEach(f=>{
+    const b=document.getElementById('tf-'+f);
+    if(b){b.style.background=f===tkFilter?'var(--accent)':'#fff';b.style.color=f===tkFilter?'#fff':'var(--text2)';b.style.borderColor=f===tkFilter?'var(--accent)':'var(--border2)';}
+  });
+  const list = document.getElementById('tk-list');
+  let url = `${TK_SUPA_URL}/rest/v1/tickets?select=*&order=created_at.desc&limit=50`;
+  if(tkFilter!=='todos') url += `&status=eq.${tkFilter}`;
+  try {
+    const res = await fetch(url,{headers:{'apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY}});
+    const data = await res.json();
+    if(!Array.isArray(data) || !data.length){ list.innerHTML='<div style="text-align:center;padding:24px;color:var(--text3);font-size:13px">Nenhum ticket encontrado.</div>'; return; }
+    list.innerHTML = data.map(t=>{
+      const q = TK_QUADS[t.quadrante]||TK_QUADS[3];
+      const owner = TK_OWNERS.find(o=>o.name===t.dono)||TK_OWNERS[0];
+      const created = new Date(t.created_at);
+      const slaEnd = new Date(created.getTime()+t.sla_horas*3600000);
+      const now = new Date();
+      let slaHtml='';
+      if(t.status!=='concluido'){
+        const hoursLeft = Math.round((slaEnd-now)/3600000);
+        const cls = hoursLeft<0?'late':hoursLeft<4?'warn':'ok';
+        slaHtml = `<span class="tk-sla-timer ${cls}">${hoursLeft<0?'SLA estourado há '+Math.abs(hoursLeft)+'h':'SLA: '+hoursLeft+'h restantes'}</span>`;
+      }
+      const statusLabel={aberto:'Aberto',andamento:'Em andamento',concluido:'Concluído'}[t.status]||t.status;
+      let actions='';
+      if(t.status==='aberto') actions=`<button class="tk-act start" onclick="tkStatus('${t.id}','andamento')">▶ Iniciar trabalho</button>`;
+      else if(t.status==='andamento') actions=`<button class="tk-act done" onclick="tkStatus('${t.id}','concluido')">✓ Concluir</button>`;
+      return `<div class="tk-item">
+        <div class="tk-item-head">
+          <span class="tk-badge" style="background:${q.badgeBg};color:${q.color};border:1px solid ${q.badgeBorder}">${q.name}</span>
+          <div class="tk-item-title">${t.titulo}</div>
+          <span class="tk-status ${t.status}">${statusLabel}</span>
+        </div>
+        <div class="tk-item-desc">${t.descricao}</div>
+        <div class="tk-item-meta">
+          <span>👤 Aberto por: <strong>${t.autor}</strong></span>
+          <span>🎯 Dono: <strong style="color:${owner.color}">${t.dono}</strong></span>
+          <span>📅 ${created.toLocaleDateString('pt-BR')} ${created.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</span>
+          ${slaHtml}
+        </div>
+        <div class="tk-item-actions">${actions}</div>
+      </div>`;
+    }).join('');
+  } catch(e){
+    list.innerHTML='<div style="text-align:center;padding:24px;color:var(--red);font-size:13px">Erro ao carregar. A tabela "tickets" existe no Supabase?</div>';
+  }
+}
+
+async function tkStatus(id, novoStatus){
+  const patch = {status:novoStatus};
+  if(novoStatus==='andamento') patch.iniciado_em = new Date().toISOString();
+  if(novoStatus==='concluido') patch.concluido_em = new Date().toISOString();
+  try {
+    const res = await fetch(`${TK_SUPA_URL}/rest/v1/tickets?id=eq.${id}&select=*`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY,'Prefer':'return=representation'},
+      body: JSON.stringify(patch)
+    });
+    const data = await res.json();
+    const t = Array.isArray(data)?data[0]:data;
+    if(t && t.autor_email){
+      const label = novoStatus==='andamento'?'foi iniciado':'foi concluído';
+      tkEmail(TK_EMAILJS.tplStatus,{to_email:t.autor_email,to_name:t.autor,ticket_titulo:t.titulo,novo_status:label,dono_nome:t.dono});
+    }
+    loadTickets(tkFilter);
+  } catch(e){ alert('Erro ao atualizar status'); }
 }
 
 document.addEventListener('click',e=>{
