@@ -441,6 +441,32 @@ td strong{color:var(--text);font-weight:500}
 .sim-start-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .15s}
 .sim-start-btn:hover{opacity:.85}
 
+/* ─── ALL HANDS ─── */
+.ah-wrap{padding:32px 36px 60px;max-width:860px}
+.ah-form{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:22px;margin-bottom:24px}
+.ah-anon-row{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:11px 14px;margin-bottom:14px;cursor:pointer;transition:all .15s}
+.ah-anon-row:hover{border-color:var(--accent-mid)}
+.ah-anon-row.on{background:var(--accent-dim);border-color:var(--accent-mid)}
+.ah-toggle{width:38px;height:22px;border-radius:20px;background:var(--border2);position:relative;transition:background .2s;flex-shrink:0}
+.ah-anon-row.on .ah-toggle{background:var(--accent)}
+.ah-toggle::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+.ah-anon-row.on .ah-toggle::after{transform:translateX(16px)}
+.ah-anon-text{font-size:12px;color:var(--text2);line-height:1.4}
+.ah-anon-text b{color:var(--text);display:block;font-size:13px}
+.ah-q{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px}
+.ah-q-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.ah-q-text{font-size:14px;color:var(--text);flex:1;line-height:1.5;font-weight:600}
+.ah-q-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--text3);font-family:'Instrument Sans',sans-serif;align-items:center}
+.ah-tema{font-size:9px;letter-spacing:.06em;text-transform:uppercase;font-family:'Instrument Sans',sans-serif;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid);white-space:nowrap}
+.ah-vote{display:flex;align-items:center;gap:5px;background:var(--bg2);border:1.5px solid var(--border2);border-radius:8px;padding:5px 11px;cursor:pointer;transition:all .15s;font-size:12px;font-weight:700;color:var(--text2);font-family:'Instrument Sans',sans-serif;flex-shrink:0}
+.ah-vote:hover{border-color:var(--accent);color:var(--accent)}
+.ah-vote.voted{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
+.ah-answered{background:var(--green-dim);border:1px solid rgba(26,127,75,.2);border-left:3px solid var(--green);border-radius:8px;padding:11px 14px;margin-top:10px;font-size:12px;color:#0F4D2A;line-height:1.6}
+.ah-answered b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;font-family:'Instrument Sans',sans-serif;color:var(--green)}
+.ah-status{font-size:10px;font-family:'Instrument Sans',sans-serif;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.ah-status.pendente{background:var(--bg3);color:var(--text3)}
+.ah-status.respondida{background:var(--green-dim);color:var(--green);border:1px solid rgba(26,127,75,.2)}
+
 /* ─── LOGIN GATE ─── */
 .pb-login{position:fixed;inset:0;background:linear-gradient(135deg,#141413 0%,#2a2a28 60%,#3d2a10 100%);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
 .pb-login-box{background:#fff;border-radius:20px;padding:38px;width:100%;max-width:380px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.3)}
@@ -867,6 +893,7 @@ td strong{color:var(--text);font-weight:500}
     <a class="sb-item" onclick="nav('cadencia',this)"><span class="ic">◎</span>Cadência de contato</a>
     <a class="sb-item" onclick="nav('rituais',this)"><span class="ic">⊡</span>Rituais do comercial</a>
     <a class="sb-item" onclick="nav('tickets',this)"><span class="ic">🎫</span>Abrir Ticket</a>
+    <a class="sb-item" onclick="nav('allhands',this)"><span class="ic">🙋</span>All Hands · Perguntas</a>
 
     <div class="sb-group" style="margin-top:6px">Learning</div>
 
@@ -2710,6 +2737,58 @@ td strong{color:var(--text);font-weight:500}
     </div>
   </div>
 
+  <!-- ════════════════════ ALL HANDS ════════════════════ -->
+  <div class="page" id="page-allhands">
+    <div class="ah-wrap">
+      <div class="sec-header">
+        <div class="eyebrow">All Hands</div>
+        <div class="sec-title">Perguntas para a liderança</div>
+        <div class="sec-desc">Tem alguma dúvida sobre estratégia, produto, comissão ou processos? Envie aqui e ela entra na pauta do próximo All Hands. Você pode se identificar ou enviar de forma anônima — perguntas anônimas não registram quem enviou.</div>
+      </div>
+
+      <div class="ah-form">
+        <div class="ah-anon-row" id="ah-anon-row" onclick="ahToggleAnon()">
+          <div class="ah-toggle"></div>
+          <div class="ah-anon-text">
+            <b id="ah-anon-title">Enviar identificado</b>
+            <span id="ah-anon-desc">Sua pergunta aparecerá com seu nome. Toque para enviar anonimamente.</span>
+          </div>
+        </div>
+
+        <div class="tk-field">
+          <label class="tk-label">Tema</label>
+          <select class="tk-select" id="ah-tema">
+            <option value="">Selecione o tema...</option>
+            <option>Estratégia da empresa</option>
+            <option>Produto e roadmap</option>
+            <option>Comercial e metas</option>
+            <option>Comissão e remuneração</option>
+            <option>Processos e ferramentas</option>
+            <option>Outros</option>
+          </select>
+        </div>
+
+        <div class="tk-field">
+          <label class="tk-label">Sua pergunta</label>
+          <textarea class="tk-textarea" id="ah-pergunta" placeholder="Escreva sua pergunta de forma clara e objetiva..."></textarea>
+        </div>
+
+        <button class="tk-submit" id="ah-submit" onclick="submitPergunta()">Enviar pergunta →</button>
+        <div id="ah-feedback" style="display:none;margin-top:12px;padding:12px 16px;border-radius:9px;font-size:13px"></div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div class="eyebrow" style="margin-bottom:0">Perguntas enviadas</div>
+        <div style="display:flex;gap:6px">
+          <button class="tk-act" onclick="loadPerguntas('votos')" id="af-votos">Mais votadas</button>
+          <button class="tk-act" onclick="loadPerguntas('recentes')" id="af-recentes">Recentes</button>
+          <button class="tk-act" onclick="loadPerguntas('respondidas')" id="af-respondidas">Respondidas</button>
+        </div>
+      </div>
+      <div id="ah-list"><div style="text-align:center;padding:24px;color:var(--text3);font-size:13px">Carregando perguntas...</div></div>
+    </div>
+  </div>
+
   <!-- ════════════════════ GESTÃO ════════════════════ -->
   <div class="page" id="page-gestao">
     <!-- LOCK -->
@@ -2733,6 +2812,7 @@ td strong{color:var(--text);font-weight:500}
       <div class="mg-tab-row">
         <button class="mg-tab active" id="mgt-uso" onclick="mgSwitch('uso')">📊 Uso &amp; Treinamentos</button>
         <button class="mg-tab" id="mgt-tickets" onclick="mgSwitch('tickets')">🎫 Tickets</button>
+        <button class="mg-tab" id="mgt-allhands" onclick="mgSwitch('allhands')">🙋 All Hands</button>
       </div>
 
       <!-- PANEL USO -->
@@ -2782,6 +2862,26 @@ td strong{color:var(--text);font-weight:500}
         <div class="mg-section">
           <div class="mg-section-title">⏱ Tickets em aberto há mais tempo</div>
           <div id="mg-tk-antigos"><div class="mg-empty">Carregando...</div></div>
+        </div>
+      </div>
+
+      <!-- PANEL ALL HANDS -->
+      <div class="mg-panel" id="mgp-allhands">
+        <div class="mg-kpi-row">
+          <div class="mg-kpi"><div class="mg-kpi-label">Perguntas</div><div class="mg-kpi-num" id="k-ah-total">—</div><div class="mg-kpi-sub">total enviadas</div></div>
+          <div class="mg-kpi"><div class="mg-kpi-label">Pendentes</div><div class="mg-kpi-num" id="k-ah-pend">—</div><div class="mg-kpi-sub">aguardando resposta</div></div>
+          <div class="mg-kpi"><div class="mg-kpi-label">Anônimas</div><div class="mg-kpi-num" id="k-ah-anon">—</div><div class="mg-kpi-sub">sem identificação</div></div>
+          <div class="mg-kpi"><div class="mg-kpi-label">Respondidas</div><div class="mg-kpi-num" id="k-ah-resp">—</div><div class="mg-kpi-sub">já tratadas</div></div>
+        </div>
+
+        <div class="mg-section">
+          <div class="mg-section-title">📊 Perguntas por tema</div>
+          <div id="mg-ah-temas"><div class="mg-empty">Carregando...</div></div>
+        </div>
+
+        <div class="mg-section">
+          <div class="mg-section-title">🔥 Pauta sugerida — mais votadas e pendentes</div>
+          <div id="mg-ah-pauta"><div class="mg-empty">Carregando...</div></div>
         </div>
       </div>
 
@@ -3073,6 +3173,7 @@ td strong{color:var(--text);font-weight:500}
 <script>
 // ── SEARCH INDEX ──
 const searchIndex = [
+  {page:'allhands',label:'All Hands · Perguntas',section:'Operacional',keys:['all hands','allhands','pergunta','dúvida','liderança','reunião','pauta','anônimo','anonima']},
   {page:'tickets',label:'Abertura de Ticket',section:'Suporte',keys:['ticket','problema','suporte','chamado','eisenhower','prioridade','sla','bug','erro','ajuda']},
   {page:'treinamentos',label:'Conteúdos · Learning',section:'Learning',keys:['treinamento','conteúdo','learning','bant','spin','mindset','venda consultiva','abertura','fechamento','silêncio','módulo']},
   {page:'objecoes',label:'Contornos de objeção',section:'Ferramentas',keys:['objeção','resistência','medo','risco','preço','momento','pensar','escola','caro','não preciso','outro']},
@@ -3476,13 +3577,14 @@ function nav(pageId,el){
   document.getElementById('page-'+pageId).classList.add('active');
   document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
   if(el)el.classList.add('active');
-  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais',treinamentos:'Conteúdos · Learning',tickets:'Abertura de Ticket',gestao:'Painel do Gestor'};
+  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',historia:'História e mais',treinamentos:'Conteúdos · Learning',tickets:'Abertura de Ticket',gestao:'Painel do Gestor',allhands:'All Hands · Perguntas'};
   document.getElementById('crumb-label').textContent=labels[pageId]||'';
   if(pageId==='treino')buildTreino();
   if(pageId==='lancamentos'){ if(!calLoaded){ calLoadFromSupabase().then(()=>{calRender();calShowEditBtn();}); } calRender(); calShowEditBtn(); }
   if(pageId==='home')renderProgressGrid();
   if(pageId==='treinamentos')initLmsCards();
   if(pageId==='tickets')loadTickets('todos');
+  if(pageId==='allhands')loadPerguntas('votos');
   if(pageId==='gestao' && document.getElementById('mg-wrap').classList.contains('show')) mgLoadAll();
   if(typeof trackActivity==='function' && PB_USER) trackActivity('pagina', labels[pageId]||pageId);
   openLearningGroup(pageId);
@@ -4218,10 +4320,12 @@ function calShowEditBtn(){
 
 function mgSwitch(tab) {
   mgTab = tab;
-  document.getElementById('mgt-uso').classList.toggle('active', tab==='uso');
-  document.getElementById('mgt-tickets').classList.toggle('active', tab==='tickets');
-  document.getElementById('mgp-uso').classList.toggle('active', tab==='uso');
-  document.getElementById('mgp-tickets').classList.toggle('active', tab==='tickets');
+  ['uso','tickets','allhands'].forEach(t=>{
+    const btn=document.getElementById('mgt-'+t);
+    const panel=document.getElementById('mgp-'+t);
+    if(btn) btn.classList.toggle('active', tab===t);
+    if(panel) panel.classList.toggle('active', tab===t);
+  });
 }
 
 async function mgFetch(table, query) {
@@ -4236,6 +4340,7 @@ async function mgFetch(table, query) {
 async function mgLoadAll() {
   mgLoadUso();
   mgLoadTickets();
+  mgLoadAllHands();
 }
 
 async function mgLoadUso() {
@@ -4341,6 +4446,156 @@ async function mgLoadTickets() {
       const st={aberto:'Aberto',andamento:'Em andamento'}[t.status]||t.status;
       return `<tr><td><strong>${t.titulo}</strong></td><td>${t.dono}</td><td style="color:${estourou?'var(--red)':'var(--text2)'}">${idade}${estourou?' ⚠':''}</td><td>${st}</td></tr>`;
     }).join('')}</tbody></table>` : '<div class="mg-empty">Nenhum ticket em aberto.</div>';
+}
+
+// ══════════ ALL HANDS ══════════
+let ahAnon = false, ahFilter = 'votos';
+
+function ahToggleAnon(){
+  ahAnon = !ahAnon;
+  const row = document.getElementById('ah-anon-row');
+  row.classList.toggle('on', ahAnon);
+  document.getElementById('ah-anon-title').textContent = ahAnon ? 'Enviar anonimamente' : 'Enviar identificado';
+  document.getElementById('ah-anon-desc').textContent = ahAnon
+    ? 'Ninguém verá quem enviou — nem o gestor. Toque para se identificar.'
+    : 'Sua pergunta aparecerá com seu nome. Toque para enviar anonimamente.';
+}
+
+function ahLoadVotes(){
+  try{ return JSON.parse(localStorage.getItem('hAhVotes')||'[]'); }catch(e){ return []; }
+}
+function ahSaveVotes(v){
+  try{ localStorage.setItem('hAhVotes', JSON.stringify(v)); }catch(e){}
+}
+
+async function submitPergunta(){
+  const tema = document.getElementById('ah-tema').value;
+  const pergunta = document.getElementById('ah-pergunta').value.trim();
+  const fb = document.getElementById('ah-feedback');
+
+  if(!tema || !pergunta){
+    fb.style.display='block'; fb.style.background='var(--red-dim)'; fb.style.color='var(--red)'; fb.style.border='1px solid var(--red-mid)';
+    fb.textContent='Selecione o tema e escreva sua pergunta.';
+    return;
+  }
+
+  const btn = document.getElementById('ah-submit');
+  btn.disabled=true; btn.textContent='Enviando...';
+
+  try{
+    const res = await fetch(`${TK_SUPA_URL}/rest/v1/allhands`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY},
+      body: JSON.stringify({
+        pergunta, tema,
+        autor: ahAnon ? null : (PB_USER||null),
+        anonima: ahAnon,
+        votos: 0, status:'pendente'
+      })
+    });
+    if(!res.ok) throw new Error(await res.text());
+    fb.style.display='block'; fb.style.background='var(--green-dim)'; fb.style.color='var(--green)'; fb.style.border='1px solid rgba(26,127,75,.2)';
+    fb.textContent = ahAnon
+      ? '✓ Pergunta enviada anonimamente! Ela entra na pauta do próximo All Hands.'
+      : '✓ Pergunta enviada! Ela entra na pauta do próximo All Hands.';
+    document.getElementById('ah-pergunta').value='';
+    document.getElementById('ah-tema').value='';
+    loadPerguntas(ahFilter);
+  }catch(e){
+    fb.style.display='block'; fb.style.background='var(--red-dim)'; fb.style.color='var(--red)'; fb.style.border='1px solid var(--red-mid)';
+    fb.textContent='Erro ao enviar. A tabela "allhands" existe no Supabase?';
+  }
+  btn.disabled=false; btn.textContent='Enviar pergunta →';
+}
+
+async function loadPerguntas(filter){
+  ahFilter = filter || 'votos';
+  ['votos','recentes','respondidas'].forEach(f=>{
+    const b=document.getElementById('af-'+f);
+    if(b){b.style.background=f===ahFilter?'var(--accent)':'#fff';b.style.color=f===ahFilter?'#fff':'var(--text2)';b.style.borderColor=f===ahFilter?'var(--accent)':'var(--border2)';}
+  });
+  const list = document.getElementById('ah-list');
+  let url = `${TK_SUPA_URL}/rest/v1/allhands?select=*&limit=60`;
+  if(ahFilter==='votos') url += '&order=votos.desc,created_at.desc';
+  else if(ahFilter==='recentes') url += '&order=created_at.desc';
+  else if(ahFilter==='respondidas') url += '&status=eq.respondida&order=created_at.desc';
+
+  try{
+    const res = await fetch(url,{headers:{'apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY}});
+    const data = await res.json();
+    if(!Array.isArray(data) || !data.length){
+      list.innerHTML='<div style="text-align:center;padding:24px;color:var(--text3);font-size:13px">Nenhuma pergunta ainda. Seja o primeiro!</div>';
+      return;
+    }
+    const myVotes = ahLoadVotes();
+    list.innerHTML = data.map(q=>{
+      const d = new Date(q.created_at);
+      const voted = myVotes.includes(q.id);
+      const autorLabel = q.anonima ? '🕶️ Anônimo' : (q.autor||'—');
+      return `<div class="ah-q">
+        <div class="ah-q-head">
+          <div class="ah-q-text">${q.pergunta}</div>
+          <div class="ah-vote${voted?' voted':''}" onclick="votarPergunta('${q.id}',${q.votos||0})">▲ ${q.votos||0}</div>
+        </div>
+        <div class="ah-q-meta">
+          <span class="ah-tema">${q.tema||'Outros'}</span>
+          <span>${autorLabel}</span>
+          <span>${d.toLocaleDateString('pt-BR')}</span>
+          <span class="ah-status ${q.status}">${q.status==='respondida'?'✓ Respondida':'Pendente'}</span>
+        </div>
+        ${q.resposta?`<div class="ah-answered"><b>Resposta da liderança</b>${q.resposta}</div>`:''}
+      </div>`;
+    }).join('');
+  }catch(e){
+    list.innerHTML='<div style="text-align:center;padding:24px;color:var(--red);font-size:13px">Erro ao carregar. A tabela "allhands" existe no Supabase?</div>';
+  }
+}
+
+async function votarPergunta(id, votosAtuais){
+  const myVotes = ahLoadVotes();
+  const already = myVotes.includes(id);
+  const novoTotal = already ? Math.max(0,votosAtuais-1) : votosAtuais+1;
+  try{
+    await fetch(`${TK_SUPA_URL}/rest/v1/allhands?id=eq.${id}`,{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY},
+      body: JSON.stringify({votos: novoTotal})
+    });
+    if(already) ahSaveVotes(myVotes.filter(v=>v!==id));
+    else ahSaveVotes([...myVotes, id]);
+    loadPerguntas(ahFilter);
+  }catch(e){}
+}
+
+async function mgLoadAllHands(){
+  const qs = await mgFetch('allhands','select=*&order=votos.desc&limit=200');
+  if(!Array.isArray(qs)) return;
+
+  document.getElementById('k-ah-total').textContent = qs.length;
+  document.getElementById('k-ah-pend').textContent = qs.filter(q=>q.status!=='respondida').length;
+  document.getElementById('k-ah-anon').textContent = qs.filter(q=>q.anonima).length;
+  document.getElementById('k-ah-resp').textContent = qs.filter(q=>q.status==='respondida').length;
+
+  // por tema
+  const byTema = {};
+  qs.forEach(q=>{ const t=q.tema||'Outros'; byTema[t]=(byTema[t]||0)+1; });
+  const temaRank = Object.entries(byTema).sort((a,b)=>b[1]-a[1]);
+  const maxT = temaRank.length?temaRank[0][1]:1;
+  document.getElementById('mg-ah-temas').innerHTML = temaRank.length ? temaRank.map(([t,n])=>`
+    <div class="mg-bar-row"><div class="mg-bar-name" style="width:190px">${t}</div>
+    <div class="mg-bar-track"><div class="mg-bar-fill" style="width:${Math.max(Math.round(n/maxT*100),14)}%;background:var(--accent)"><span class="mg-bar-val">${n}</span></div></div></div>
+  `).join('') : '<div class="mg-empty">Nenhuma pergunta ainda.</div>';
+
+  // pauta sugerida: pendentes ordenadas por votos
+  const pauta = qs.filter(q=>q.status!=='respondida').slice(0,10);
+  document.getElementById('mg-ah-pauta').innerHTML = pauta.length ? `<table class="mg-table">
+    <thead><tr><th style="width:44px">Votos</th><th>Pergunta</th><th>Tema</th><th>Quem</th></tr></thead><tbody>
+    ${pauta.map(q=>`<tr>
+      <td style="font-weight:700;color:var(--accent);font-family:'Instrument Sans',sans-serif">▲ ${q.votos||0}</td>
+      <td><strong style="color:var(--text)">${q.pergunta}</strong></td>
+      <td>${q.tema||'—'}</td>
+      <td>${q.anonima?'<span style="color:var(--text3)">🕶️ Anônimo</span>':(q.autor||'—')}</td>
+    </tr>`).join('')}</tbody></table>` : '<div class="mg-empty">Nenhuma pergunta pendente.</div>';
 }
 
 // ══════════ TICKETS ══════════
