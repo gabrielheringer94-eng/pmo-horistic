@@ -514,6 +514,30 @@ td strong{color:var(--text);font-weight:500}
 .mg-table tr:last-child td{border-bottom:none}
 .mg-empty{text-align:center;padding:30px;color:var(--text3);font-size:13px}
 
+/* ─── OPERAÇÃO ─── */
+.op-wrap{padding:28px 36px 60px;max-width:960px}
+.op-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+.op-kpi{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:15px 16px}
+.op-kpi.accent{background:var(--accent-dim);border-color:var(--accent-mid)}
+.op-kpi-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;margin-bottom:6px}
+.op-kpi-val{font-size:24px;font-weight:700;color:var(--text);font-family:'Instrument Sans',sans-serif;line-height:1}
+.op-kpi.accent .op-kpi-val{color:var(--accent)}
+.op-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden}
+.op-table th{text-align:right;padding:11px 13px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);font-family:'Instrument Sans',sans-serif;border-bottom:1px solid var(--border);white-space:nowrap}
+.op-table th:first-child{text-align:left}
+.op-table td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--border);color:var(--text2);font-family:'Instrument Sans',sans-serif;white-space:nowrap}
+.op-table td:first-child{text-align:left;font-weight:600;color:var(--text);font-family:'Space Grotesk',sans-serif}
+.op-table tr:last-child td{border-bottom:none}
+.op-rev{color:var(--accent);font-weight:700}
+.op-conv{background:var(--green-dim);color:var(--green);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700}
+.op-act{width:28px;height:28px;border-radius:7px;border:1px solid var(--border2);background:#fff;color:var(--text2);cursor:pointer;font-size:12px;transition:all .15s}
+.op-act:hover{border-color:var(--accent);color:var(--accent)}
+.op-act.del:hover{border-color:var(--red);color:var(--red)}
+.op-rank{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;background:var(--bg3);font-size:11px;font-weight:700;margin-right:8px;font-family:'Instrument Sans',sans-serif;color:var(--text3)}
+.op-rank.g1{background:linear-gradient(135deg,#FFD66B,#F5B84A);color:#141413}
+.op-rank.g2{background:linear-gradient(135deg,#D8DEE9,#A9B2C2);color:#141413}
+.op-rank.g3{background:linear-gradient(135deg,#E0A878,#C07A45);color:#fff}
+
 /* ─── LOGIN GATE END ─── */
 
 /* ─── HOME HERO PREMIUM ─── */
@@ -933,6 +957,7 @@ td strong{color:var(--text);font-weight:500}
       <span style="font-size:9px;font-family:'Instrument Sans',sans-serif;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-mid);padding:1px 6px;border-radius:10px;margin-left:auto">↗</span>
     </a>
     <a class="sb-item" onclick="nav('allhands',this)"><span class="ic">💬</span>Perguntas · All Hands</a>
+    <a class="sb-item" onclick="nav('operacao',this)"><span class="ic">📈</span>Operação · Resultado</a>
     <a class="sb-item" onclick="nav('gestao',this)"><span class="ic">📊</span>Painel do Gestor</a>
   </nav>
   <div class="sb-foot">Gabriel Heringer · Sales Consulting</div>
@@ -2821,6 +2846,53 @@ td strong{color:var(--text);font-weight:500}
     </div>
   </div>
 
+  <!-- ════════════════════ OPERAÇÃO ════════════════════ -->
+  <div class="page" id="page-operacao">
+    <div class="op-wrap">
+      <div class="sec-header">
+        <div class="eyebrow">Resultado da consultoria</div>
+        <div class="sec-title">Operação comercial</div>
+        <div class="sec-desc">Funil, receita e conversão por semana. Lance os números aqui — ficam salvos para todo o time acompanhar o resultado da consultoria.</div>
+      </div>
+
+      <div class="op-kpis" id="op-kpis"></div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div class="eyebrow" style="margin-bottom:0">Operação por semana</div>
+        <button class="tk-act start" onclick="opOpenModal()" style="padding:7px 14px">+ Nova semana</button>
+      </div>
+      <table class="op-table">
+        <thead><tr><th>Semana</th><th>Leads</th><th>Conversas</th><th>Propostas</th><th>Vendas</th><th>Receita</th><th>Conv.</th><th></th></tr></thead>
+        <tbody id="op-body"><tr><td colspan="8" style="text-align:center;color:var(--text3);padding:24px">Carregando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- OPERAÇÃO MODAL -->
+  <div class="modal-overlay" id="op-modal" onclick="if(event.target===this)opClose()">
+    <div class="modal" style="max-width:440px">
+      <button class="modal-close" onclick="opClose()">✕</button>
+      <div class="modal-title" id="op-modal-title">Nova semana</div>
+      <div style="margin-top:16px">
+        <div class="tk-field"><label class="tk-label">Rótulo da semana</label><input class="tk-input" id="op-semana" placeholder="ex: Semana 12 · 19–23 mai"></div>
+        <div class="tk-grid2">
+          <div class="tk-field"><label class="tk-label">Leads</label><input class="tk-input" type="number" id="op-leads" placeholder="0"></div>
+          <div class="tk-field"><label class="tk-label">Conversas</label><input class="tk-input" type="number" id="op-conversas" placeholder="0"></div>
+        </div>
+        <div class="tk-grid2">
+          <div class="tk-field"><label class="tk-label">Propostas</label><input class="tk-input" type="number" id="op-propostas" placeholder="0"></div>
+          <div class="tk-field"><label class="tk-label">Vendas</label><input class="tk-input" type="number" id="op-vendas" placeholder="0"></div>
+        </div>
+        <div class="tk-field"><label class="tk-label">Receita gerada (R$)</label><input class="tk-input" type="number" step="0.01" id="op-receita" placeholder="0"></div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button class="tk-submit" style="margin-top:0" onclick="opSave()">Salvar</button>
+          <button id="op-del" onclick="opDelete()" style="display:none;background:var(--red-dim);color:var(--red);border:1px solid var(--red-mid);border-radius:10px;padding:13px 20px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer">Excluir</button>
+        </div>
+        <div id="op-fb" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ════════════════════ GESTÃO ════════════════════ -->
   <div class="page" id="page-gestao">
     <!-- LOCK -->
@@ -3763,13 +3835,14 @@ function nav(pageId,el){
   document.getElementById('page-'+pageId).classList.add('active');
   document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
   if(el)el.classList.add('active');
-  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',principios:'Princípios da Cultura',historia:'História e mais',treinamentos:'Conteúdos · Learning',tickets:'Abertura de Ticket',placar:'Placar Role Play',allhands:'Perguntas · All Hands',gestao:'Painel do Gestor'};
+  const labels={home:'Visão geral',scripts:'Scripts de venda',objecoes:'Contornos de objeção',treino:'Modo treino',funil:'Funil interativo',canal:'Comunicação por canal',priorizacao:'Priorização da base',cadencia:'Cadência de contato',rituais:'Rituais do comercial',lancamentos:'Lançamentos',produtos:'Preço & Produtos',principios:'Princípios da Cultura',historia:'História e mais',treinamentos:'Conteúdos · Learning',tickets:'Abertura de Ticket',placar:'Placar Role Play',allhands:'Perguntas · All Hands',operacao:'Operação · Resultado',gestao:'Painel do Gestor'};
   document.getElementById('crumb-label').textContent=labels[pageId]||'';
   if(pageId==='treino')buildTreino();
   if(pageId==='lancamentos'){ if(!calLoaded){ calLoadFromSupabase().then(()=>{calRender();calShowEditBtn();}); } calRender(); calShowEditBtn(); calInitDnD(); }
   if(pageId==='home')renderProgressGrid();
   if(pageId==='treinamentos')initLmsCards();
   if(pageId==='tickets')loadTickets('todos');
+  if(pageId==='operacao')opLoad();
   if(pageId==='placar')loadPlacar();
   if(pageId==='allhands')ahLoadTema();
   if(pageId==='gestao' && document.getElementById('mg-wrap').classList.contains('show')) mgLoadAll();
@@ -4827,6 +4900,71 @@ async function mgLoadTickets() {
       const st={aberto:'Aberto',andamento:'Em andamento'}[t.status]||t.status;
       return `<tr><td><strong>${t.titulo}</strong></td><td>${t.dono}</td><td style="color:${estourou?'var(--red)':'var(--text2)'}">${idade}${estourou?' ⚠':''}</td><td>${st}</td></tr>`;
     }).join('')}</tbody></table>` : '<div class="mg-empty">Nenhum ticket em aberto.</div>';
+}
+
+// ══════════ OPERAÇÃO ══════════
+let opEditId = null;
+const opN = v => Number(v)||0;
+function opMoney(v){return 'R$ '+opN(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function opMoneyShort(v){v=opN(v);if(v>=1e6)return 'R$ '+(v/1e6).toFixed(1).replace('.',',')+'M';if(v>=1000)return 'R$ '+(v/1000).toFixed(0)+'k';return 'R$ '+Math.round(v)}
+function opPct(a,b){b=opN(b);if(!b)return '0%';return Math.round(opN(a)/b*100)+'%'}
+
+async function opLoad(){
+  const body=document.getElementById('op-body');
+  try{
+    const res=await fetch(`${TK_SUPA_URL}/rest/v1/operacao?select=*&order=created_at.asc`,{headers:{'apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY}});
+    const data=await res.json();
+    if(!Array.isArray(data)){body.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--red);padding:24px">Erro ao carregar. A tabela "operacao" existe no Supabase?</td></tr>';return;}
+    const T=data.reduce((t,w)=>({leads:t.leads+opN(w.leads),conversas:t.conversas+opN(w.conversas),propostas:t.propostas+opN(w.propostas),vendas:t.vendas+opN(w.vendas),receita:t.receita+opN(w.receita)}),{leads:0,conversas:0,propostas:0,vendas:0,receita:0});
+    document.getElementById('op-kpis').innerHTML=[
+      ['Leads',T.leads.toLocaleString('pt-BR'),''],['Propostas',T.propostas.toLocaleString('pt-BR'),''],
+      ['Vendas',T.vendas.toLocaleString('pt-BR'),''],['Receita',opMoneyShort(T.receita),'accent'],['Conversão',opPct(T.vendas,T.leads),'accent']
+    ].map(([l,v,c])=>`<div class="op-kpi ${c}"><div class="op-kpi-label">${l}</div><div class="op-kpi-val">${v}</div></div>`).join('');
+    body.innerHTML=data.length?data.map(w=>`<tr>
+      <td>${w.semana}</td><td>${opN(w.leads)}</td><td>${opN(w.conversas)}</td><td>${opN(w.propostas)}</td><td>${opN(w.vendas)}</td>
+      <td class="op-rev">${opMoney(w.receita)}</td><td><span class="op-conv">${opPct(w.vendas,w.leads)}</span></td>
+      <td style="text-align:right"><button class="op-act" onclick='opOpenModal(${JSON.stringify(w).replace(/'/g,"&#39;")})'>✎</button></td>
+    </tr>`).join(''):'<tr><td colspan="8" style="text-align:center;color:var(--text3);padding:24px">Nenhuma semana lançada. Clique em "Nova semana".</td></tr>';
+  }catch(e){body.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--red);padding:24px">Erro ao carregar.</td></tr>';}
+}
+
+function opOpenModal(w){
+  document.getElementById('op-fb').style.display='none';
+  if(w && w.id){
+    opEditId=w.id;
+    document.getElementById('op-modal-title').textContent='Editar semana';
+    document.getElementById('op-semana').value=w.semana||'';
+    document.getElementById('op-leads').value=w.leads||'';
+    document.getElementById('op-conversas').value=w.conversas||'';
+    document.getElementById('op-propostas').value=w.propostas||'';
+    document.getElementById('op-vendas').value=w.vendas||'';
+    document.getElementById('op-receita').value=w.receita||'';
+    document.getElementById('op-del').style.display='block';
+  }else{
+    opEditId=null;
+    document.getElementById('op-modal-title').textContent='Nova semana';
+    ['op-semana','op-leads','op-conversas','op-propostas','op-vendas','op-receita'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('op-del').style.display='none';
+  }
+  document.getElementById('op-modal').classList.add('show');
+}
+function opClose(){document.getElementById('op-modal').classList.remove('show');}
+
+async function opSave(){
+  const semana=document.getElementById('op-semana').value.trim();
+  if(!semana){const fb=document.getElementById('op-fb');fb.style.display='block';fb.style.background='var(--red-dim)';fb.style.color='var(--red)';fb.textContent='Informe o rótulo da semana.';return;}
+  const payload={semana,leads:opN(document.getElementById('op-leads').value),conversas:opN(document.getElementById('op-conversas').value),propostas:opN(document.getElementById('op-propostas').value),vendas:opN(document.getElementById('op-vendas').value),receita:opN(document.getElementById('op-receita').value)};
+  try{
+    let res;
+    if(opEditId) res=await fetch(`${TK_SUPA_URL}/rest/v1/operacao?id=eq.${opEditId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY},body:JSON.stringify(payload)});
+    else res=await fetch(`${TK_SUPA_URL}/rest/v1/operacao`,{method:'POST',headers:{'Content-Type':'application/json','apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY},body:JSON.stringify(payload)});
+    if(!res.ok)throw new Error();
+    opClose();opLoad();
+  }catch(e){const fb=document.getElementById('op-fb');fb.style.display='block';fb.style.background='var(--red-dim)';fb.style.color='var(--red)';fb.textContent='Erro ao salvar. A tabela "operacao" existe no Supabase?';}
+}
+async function opDelete(){
+  if(!opEditId||!confirm('Excluir esta semana?'))return;
+  try{await fetch(`${TK_SUPA_URL}/rest/v1/operacao?id=eq.${opEditId}`,{method:'DELETE',headers:{'apikey':TK_SUPA_KEY,'Authorization':'Bearer '+TK_SUPA_KEY}});opClose();opLoad();}catch(e){}
 }
 
 // ══════════ TICKETS ══════════
